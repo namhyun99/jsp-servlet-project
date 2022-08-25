@@ -1,0 +1,579 @@
+@charset "UTF-8";
+@import url("./NanumGothic.css");
+
+:root {
+	/* color */
+	--bg-color: #cdcdcd;
+	--top-bg-color: #444444;
+	--silde-menu-bg-color: #dcdcdc;
+	--main-color: #063b87;
+	--red-color: #e54545;
+	--yellow-color: #ffc107;
+	--black-color: #000;
+	--white-color: #fff;
+	--gray-dark-color: #343a40;
+	--gray-color-1: #f8f9fa;
+	--gray-color-2: #e9ecef;
+	--gray-color-3: #dee2e6;
+	--gray-color-4: #ced4da;
+	--gray-color-5: #adb5bd;
+	--gray-color-6: #6c757d;
+	--gray-color-7: #495057;
+	--gray-color-8: #343a40;
+	--gray-color-9: #212529;
+
+	/* font-size */
+	--fs-xxl: 2rem;
+	--fs-xl: 1.5rem;
+	--fs-large: 1.25rem;
+	--fs-medium: 0.9rem;
+	--fs-small: 0.75rem;
+
+	/* font-weight */
+	--fw-extra-bold : 900;
+	--fw-bold : 700;
+	--fw-medium : 500;
+	--fw-light : 300;
+}
+
+
+* {
+	font-family: NanumGothic;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+input[type="button"] {
+	border: 0;
+	padding: 0;
+	background-color: var(--main-color);
+	color: var(--white-color);
+	cursor: pointer;
+}
+
+input {
+	border: 0;
+	padding-left: 0 3%;
+	overflow: hidden;
+}
+
+input:focus {
+	outline: none;
+}
+
+
+ul {
+	list-style: none;
+	margin: 0px auto;
+	padding-inline-start: 0;
+}
+
+.selected {
+	color: var(--main-color) !important;
+	font-weight: var(--fw-bold) !important;
+}
+
+.noselected {
+	color: var(--gray-color-6);
+}
+
+
+.error {
+	border: 1px solid var(--red-color) !important;
+}
+
+
+
+/* load 영역 */
+#load {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	display: block;
+	opacity: 0.8;
+	background: white;
+	z-index: 99;
+	text-align: center;
+}
+
+#load>img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+}
+
+/* top 영역 */
+#top-wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 70px;
+	background-color: var(--top-bg-color);
+}
+
+#top-wrap .title-wrap {
+	display: flex;
+	align-items: flex-end;
+	width: 280px;
+	margin-left : 20px;
+}
+
+#top-wrap .title-wrap .title {
+	font-size: var(--fs-xxl);
+	font-weight: var(--fw-extra-bold);
+	padding: 0 10px;
+	color: var(--white-color);
+}
+
+#top-wrap .title-wrap .subtitle {
+	padding-bottom: 5px;
+	color: var(--gray-color-6);
+}
+
+#top-wrap .icon-wrap {
+	display: flex;
+	width: 100px;
+}
+
+
+/* sideMenu 영역 */
+#side-menu-wrap {
+	position: fixed;
+	float: left;
+	width: 15%;
+	height: 100%;
+	background-color: var(--silde-menu-bg-color);
+	z-index: 1;
+}
+
+#side-menu-wrap .menu-box {
+	padding: 18px 18px;
+}
+
+#side-menu-wrap .menu-box .box-userInfo {
+	padding: 30px 0;
+	border-bottom: 1px solid var(--gray-color-6);
+	text-align: center;
+}
+
+#side-menu-wrap .menu-box .box-userInfo span {
+	font-size: var(--fs-xl);
+	font-weight: var(--fw-bold);
+}
+
+#side-menu-wrap .menu-box .box {
+	padding: 30px 0;
+	border-bottom: 1px solid var(--gray-color-6);
+}
+
+#side-menu-wrap .menu-box .box:last-child {
+	border-bottom: 0;
+}
+
+#side-menu-wrap .menu-box .box .txt-cate {
+	padding: 0 0 20px 10px;
+	font-size: var(--fs-large);
+	font-weight: var(--fw-bold);
+	color: var(--black-color);
+}
+
+#side-menu-wrap .menu-box .box .txt-cate a {
+	color: var(--black-color);
+}
+
+
+#side-menu-wrap .menu-box .box ul {
+	padding-left: 15px;
+}
+
+#side-menu-wrap .menu-box .box ul li {
+	padding: 6px 0;
+}
+
+
+
+/* container 영역 */
+#container {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+}
+
+#container .left {
+	width: 15%;
+}
+
+#container .main-wrap {
+	width: 80%;
+	margin: 30px;
+}
+
+#container .main-wrap .main-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#container .main-top .search-wrap {
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
+}
+
+#container .main-top .search-wrap .select-option select {
+	width: 80px;
+	height: 40px;
+	padding: 0 4px;
+}
+
+#container .main-top .search-wrap .search-input {
+	border: 1px solid var(--gray-color-6);
+	width: 200px;
+	height: 40px;
+	padding: 0 8px;
+	margin-left: 8px;
+}
+
+#container .main-top .search-wrap .search-input input {
+	width: inherit;
+	height: inherit;
+}
+
+#container .main-top .search-wrap .search-btn {
+	width: 50px;
+	height: 40px;
+}
+
+#container .main-top .search-wrap .search-btn input[type="button"] {
+	width: inherit;
+	height: inherit;
+	padding: 7px 10px;
+}
+
+
+#container .main-content {
+	margin-top: 50px;
+}
+
+
+#container .main-content table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#container .main-content table tr {
+	height: 60px;
+	border-bottom: 1px solid var(--gray-color-6);
+}
+
+#container .main-content table thead {
+	background-color: var(--gray-color-5);
+	border-bottom: 3px solid var(--gray-color-6);
+	height: 60px;
+}
+
+#container .main-content table tr td {
+	text-align: center;
+}
+
+/* 반응영 영역*/
+@media screen and (max-width: 1100px) {
+
+	#side-menu-wrap,
+	#container .left {
+		display: none;
+	}
+
+	#container .main-wrap {
+		width: 100%;
+	}
+
+}
+
+
+/* 아이디,패스워드 찾기 영역*/
+#remind-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	width: 100%;
+	height: 100%;
+}
+
+#remind-wrap .tab-box {
+	width: 480px;
+	height: auto;
+	background-color: var(--white-color);
+	padding: 10px 10px;
+}
+
+#remind-wrap .tab-box .tab-menu {
+	display: flex;
+	overflow: hidden;
+}
+
+#remind-wrap .tab-box .tab-menu li {
+	width: 100%;
+	padding: 3% 0;
+	border: 1px solid var(--gray-color-6);
+	border-bottom: 3px solid var(--black-color);
+	cursor: pointer;
+	text-align: center;
+}
+
+#remind-wrap .tab-box .tab-menu li.on {
+	background-color: var(--black-color);
+	color: var(--white-color);
+	cursor: pointer;
+}
+
+#remind-wrap .tab-box .menu-cont {
+	display: none;
+	background-color: var(--white-color);
+}
+
+#remind-wrap .tab-box .menu-cont.on {
+	display: block;
+}
+
+#remind-wrap .tab-box .menu-cont {
+	padding: 30px 20px;
+	border: 1px solid var(--gray-color-6);
+}
+
+#remind-wrap .tab-box .menu-cont .title-wrap .title {
+	font-size: var(--fs-large);
+	font-weight: var(--fw-bold);
+	margin: 0;
+}
+
+#remind-wrap .tab-box .menu-cont .title-wrap .desc {
+	font-size: var(--fs-medium);
+	font-weight: var(--fw-light);
+	margin: 10px 0 20px;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap {
+	text-align: center;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .label {
+	width: 15%;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .label span {
+	font-weight: var(--fw-medium);
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-name-box,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-phone-box,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-id-box,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-email2-box {
+	width: 90%;
+	height: 48px;
+	margin: 8px 0;
+	border: 1px solid var(--gray-color-5);
+	border-radius: 10px;
+	background-color: var(--white-color);
+	transition: 0.3s;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-name-box input,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-phone-box input,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-id-box input,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-email2-box input {
+	width: 90%;
+	height: 48px;
+	min-height: 48px;
+	padding: 0 2%;
+}
+
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-email1-box {
+	width: 50%;
+	height: 48px;
+	margin: 8px 0;
+	border: 1px solid var(--gray-color-5);
+	border-radius: 10px;
+	background-color: var(--white-color);
+	transition: 0.3s;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-email1-box input {
+	width: 80%;
+	height: 48px;
+	min-height: 48px;
+	padding: 0 2%;
+}
+
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-name-box:hover,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-phone-box:hover,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-id-box:hover,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-email1-box:hover,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .input-email2-box:hover,
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .select-input .select-box select:hover {
+	border: 1px solid var(--top-bg-color);
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .select-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 90%;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .select-input .select-box {
+	width: 20%;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .input-wrap .select-input .select-box select {
+	width: 100%;
+	height: 48px;
+	padding: 0 2%;
+	border-radius: 10px;
+	border: 1px solid var(--gray-color-5);
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .result-wrap {
+	text-align: right;
+	margin: 8px 0;
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .result-wrap .result-id,
+#remind-wrap .tab-box .menu-cont .form-wrap .result-wrap .result-pwd {
+	font-weight: var(--fw-bold);
+	color: var(--red-color);
+}
+
+#remind-wrap .tab-box .menu-cont .form-wrap .btn-wrap input {
+	width: 100%;
+	height: 48px;
+	border-radius: 10px;
+	margin-top: 12px;
+	transition: 0.3s;
+	background-color: var(--black-color);
+}
+
+
+/* 로그인 페이지 영역 */
+#login-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	width: 100%;
+	height: 100%;
+	background-color: var(--bg-color);
+}
+
+#login-wrap>.login-box {
+	width: 380px;
+	height: auto;
+	background-color: rgba(240, 240, 240, 0.7);
+	padding: 40px 40px;
+	border-radius: 5%;
+	text-align: center;
+}
+
+#login-wrap .login-box .title-wrap .title {
+	margin: 5px 0;
+}
+
+#login-wrap .login-box .title-wrap .title span {
+	font-size: var(--fs-xxl);
+	font-weight: var(--fw-extra-bold);
+}
+
+#login-wrap .login-box .title-wrap .subtitle {
+	margin-bottom: 20px;
+}
+
+#login-wrap .login-box .form-wrap .input-wrap .input-id-box,
+#login-wrap .login-box .form-wrap .input-wrap .input-pwd-box {
+	width: 100%;
+	height: 48px;
+	margin: 8px 0;
+	border: 1px solid var(--gray-color-5);
+	border-radius: 10px;
+	background-color: var(--white-color);
+	transition: 0.3s;
+}
+
+#login-wrap .login-box .form-wrap .input-wrap .input-id-box:hover,
+#login-wrap .login-box .form-wrap .input-wrap .input-pwd-box:hover {
+	border: 1px solid var(--top-bg-color);
+}
+
+#login-wrap .login-box .form-wrap .input-wrap .input-id-box input,
+#login-wrap .login-box .form-wrap .input-wrap .input-pwd-box input {
+	width: 90%;
+	height: 48px;
+	min-height: 48px;
+	padding: 0 2%;
+}
+
+#login-wrap .login-box .form-wrap .info-wrap {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin: 12px 0;
+}
+
+#login-wrap .login-box .form-wrap .info-wrap .save-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#login-wrap .login-box .form-wrap .info-wrap .save-box input[type="checkbox"] {
+	outline: none;
+	border-radius: 5px;
+}
+
+#login-wrap .login-box .form-wrap .info-wrap .remind-box a span,
+#login-wrap .login-box .form-wrap .info-wrap .save-box span {
+	font-size: var(--fs-medium);
+	color: var(--gray-color-6);
+}
+
+#login-wrap .login-box .form-wrap .info-wrap .remind-box a span:hover {
+	text-decoration: underline;
+	color: var(--black-color);
+}
+
+#login-wrap .login-box .form-wrap .button-wrap input[type="button"] {
+	width: 100%;
+	height: 48px;
+	border-radius: 10px;
+	margin-top: 12px;
+	transition: 0.3s;
+}
+
+
+
+/* 하단 영역 */
+#footer-wrap {
+	clear: both;
+}

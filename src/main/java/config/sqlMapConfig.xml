@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">  <!-- mybatis 문서설정 -->
+
+<!-- mybatis 기본환결설정 -->
+<configuration>
+  <!-- 알리아스 설정 -->
+  <typeAliases>
+  	<typeAlias type="dto.MemberDTO" alias="mDto"/>
+  </typeAliases>
+  
+  <!-- DB 연결 -->
+  <environments default="">
+    <environment id="">
+      <transactionManager type="JDBC" />
+      <dataSource type="JNDI">
+        <property name="data_source" value="java:comp/env/oraDB"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <!-- 주의 : 실제 sql quert가 있는 매퍼파일은 반드시 등록해야한다. -->
+  <mappers>
+  	<mapper resource="/mapper/member.xml"/>
+  </mappers>
+</configuration>
+
