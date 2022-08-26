@@ -19,8 +19,19 @@
   </select>
   
   <select id="getUserList" resultType="mDto">
-  	select * from member 
-  	where authority='사용자'
+  	select * 
+  	from (
+  		select A.*, rownum as rn
+  		from (
+  			select * from member 
+  			where authority='사용자' and ${searchkey} like #{keyword}
+  			order by ${order} desc) A
+  	) where rn between #{start} and #{end}
+  </select>
+  
+  <select id="getMemberCount" resultType="int">
+    select count(*) from member
+    where ${searchkey} like #{keyword}
   </select>
   
   <insert id="join" parameterType="mDto">
@@ -30,6 +41,8 @@
   #{userid}, #{passwd}, #{name}, #{email},
   #{phone}, #{profile_img}, #{consent}, #{privacy}, #{authority})
   </insert>
+  
+  
   
 </mapper>
 
