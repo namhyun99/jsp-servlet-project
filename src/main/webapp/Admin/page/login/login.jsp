@@ -24,7 +24,6 @@
 	})
 </script>
 
-
 <div id="login-wrap">
 	<div class="login-box">
 		<div class="title-wrap">
