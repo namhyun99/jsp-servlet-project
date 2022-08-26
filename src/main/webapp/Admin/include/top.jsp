@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<div class="container">
+
 <div id="load">
 	<img src="./resources/asset/images/load_img.gif" alt="loading">
 </div>

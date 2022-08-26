@@ -5,3 +5,6 @@
 <div id="footer_wrap">
 	<h2>하단영역</h2>
 </div>
+
+
+</div>

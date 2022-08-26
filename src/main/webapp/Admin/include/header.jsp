@@ -18,12 +18,13 @@
     	<link rel="stylesheet" type="text/css" href="../Admin/resources/asset/css/common.css">
 
     	<script type="text/javascript" src="../Admin/resources/asset/js/jquery-3.6.0.min.js"></script>
+    	<script type="text/javascript" src="../Admin/resources/asset/js/login.js"></script>
     	<script type="text/javascript" src="../Admin/resources/asset/js/common.js"></script>
-   		<script type="text/javascript" src="../Admin/resources/asset/js/login_cookies.js"></script>
     	<script src="https://kit.fontawesome.com/fbdfc0aa10.js"></script>
 
     	<script type="text/javascript">
         	sessionStorage.setItem("contextPath", "${path}");
+        	sessionStorage.setItem("url", "${url}");
     	</script>
 
     	<title>관리자 페이지</title>
