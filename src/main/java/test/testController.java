@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import config.Constants;
+import config.FileUpload;
 import dao.MemberDAO;
 import dto.MemberDTO;
 
@@ -30,13 +30,13 @@ public class testController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		
 		if(uri.indexOf("join.do") != -1) {
-			File uploadDir = new File(Constants.UPLOAD_PATH);
+			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if(!uploadDir.exists()) {
 				uploadDir.mkdir();
 			}
 			
-			MultipartRequest multi = new MultipartRequest(request, Constants.UPLOAD_PATH,
-					Constants.MAX_UPLOAD, "utf-8", new DefaultFileRenamePolicy());
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH,
+					FileUpload.MAX_UPLOAD, "utf-8", new DefaultFileRenamePolicy());
 			
 			String userid = multi.getParameter("userid");
 			String passwd = multi.getParameter("passwd");
@@ -89,13 +89,13 @@ public class testController extends HttpServlet {
 			response.sendRedirect(ctx + page);
 		
 		} else if(uri.indexOf("writer.do") != -1) {
-			File uploadDir = new File(Constants.UPLOAD_PATH);
+			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if(!uploadDir.exists()) {
 				uploadDir.mkdir();
 			}
 			
-			MultipartRequest multi = new MultipartRequest(request, Constants.UPLOAD_PATH,
-					Constants.MAX_UPLOAD, "utf-8", new DefaultFileRenamePolicy());
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.UPLOAD_PATH,
+					FileUpload.MAX_UPLOAD, "utf-8", new DefaultFileRenamePolicy());
 			
 			String cate = multi.getParameter("cate");
 			String subject = multi.getParameter("subject");

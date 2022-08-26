@@ -21,7 +21,7 @@
 <script type="text/javascript" src="../Admin/resources/asset/js/summernote-lite.js"></script>
 <script type="text/javascript" src="../Admin/resources/asset/js/summernote-ko-KR.js"></script>
 
-<title>데이터 입력</title>
+<title>데이터 입력 테스트</title>
 
 <script type="text/javascript">
 $(function() {
@@ -95,10 +95,12 @@ $(function() {
 		제목 <input name="subject"> <br> 
 		내용
 		<textarea name="content" id="summernote"></textarea>
-		<input type="file" name="thumb">
+		<input type="file" name="thumb"><br><br>
 		<button>저장</button>
 	</form>
 
+	<br><hr>
+	<br>
 </body>
 </html>
 
