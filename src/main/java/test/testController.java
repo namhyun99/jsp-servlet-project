@@ -14,8 +14,8 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import config.FileUpload;
-import dao.MemberDAO;
-import dto.MemberDTO;
+import admin.dao.MemberDAO;
+import admin.dto.MemberDTO;
 
 @WebServlet("/pageTest/*")
 public class testController extends HttpServlet {
@@ -30,7 +30,7 @@ public class testController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		
 		if(uri.indexOf("join.do") != -1) {
-			File uploadDir = new File(FileUpload.UPLOAD_PATH);
+			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
 			if(!uploadDir.exists()) {
 				uploadDir.mkdir();
 			}
@@ -46,6 +46,7 @@ public class testController extends HttpServlet {
 			String consent = multi.getParameter("consent");
 			String privacy = multi.getParameter("privacy");
 			String authority = multi.getParameter("authority");
+	
 			
 			String profile_img = " ";
 			int filesize = 0;
@@ -72,6 +73,10 @@ public class testController extends HttpServlet {
 			dto.setPhone(phone);
 			dto.setConsent(consent);
 			dto.setPrivacy(privacy);
+			//파일 첨부를 하지 않을 경우
+			if(profile_img == null || profile_img.trim().equals("")) { //null값이거나 빈문자열일때
+				profile_img = "-";
+			}
 			dto.setProfile_img(profile_img);
 			dto.setAuthority(authority);
 			
@@ -127,9 +132,27 @@ public class testController extends HttpServlet {
 			response.sendRedirect(ctx + page);
 			
 			
+		} else if ( uri.indexOf("idCheck.do") != -1) {
+			
+			String userid = request.getParameter("userid");	
+			
+			System.out.println(userid);
+			MemberDTO dto = new MemberDTO();
+			dto.setUserid(userid);
+			
+			String result = dao.useridCheck(userid);
+			
+			System.out.println("dao결과값 : " + result);
+			
+			if(result == null){
+				result = "";
+				response.getWriter().write("true");
+			}
+			
+			if(result.equals(userid)) {
+				response.getWriter().write("false");
+			} 
 		}
-		
-		
 		
 	}
 

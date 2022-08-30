@@ -40,13 +40,16 @@ public class Pager {
 		}
 		//[이전] 11 12 13 14 15 16 17 18 19 20 [다음]
 		//[이전]을 눌렀을 때 이동할 페이지, 현재블럭이 1이면 1로감,[이전]이란표시는 빼야함
-		prevPage=curBlock==1 ? 1 : (curBlock-1) * BLOCK_SCALE;
+//		prevPage=curBlock==1 ? 1 : (curBlock-1) * BLOCK_SCALE;
+		prevPage = curPage - 1;
 		//[다음]을 눌렀을 때 이동할 페이지
-		nextPage=curBlock>totBlock 
-				? (curBlock*BLOCK_SCALE) : (curBlock*BLOCK_SCALE)+1;
+//		nextPage=curBlock>totBlock 
+//				? (curBlock*BLOCK_SCALE) : (curBlock*BLOCK_SCALE)+1;
+		nextPage = curPage + 1;
 		if(nextPage >= totPage){//다음페이지가 토탈페이지보다 크면 [다음]표시뺌
 			nextPage = totPage;
 		}
+		
 	}
 	public void setPageRange(){
 		//시작번호=(현재페이지 - 1 ) * 페이지당게시물수 + 1
