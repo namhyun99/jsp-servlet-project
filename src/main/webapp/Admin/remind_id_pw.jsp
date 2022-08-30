@@ -3,6 +3,5 @@
 
     
 <%@ include file="./include/header.jsp" %>
-<%@ include file="./include/login_top.jsp" %>
 <%@ include file="./page/login/remind_id_pw.jsp" %>
 

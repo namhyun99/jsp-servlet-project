@@ -25,7 +25,7 @@
 					<div class="label">
 						<span>이름</span>
 					</div>
-					<div class="input-name-box">
+					<div class="input-box">
 						<input name="name" id="name" placeholder="이름을 입력해주세요."
 							autocomplete="off">
 					</div>
@@ -41,7 +41,7 @@
 								<option value="010">011</option>
 							</select>
 						</div>
-						<div class="input-phone-box">
+						<div class="input-box">
 							<input name="phone2" id="phone2" placeholder="나머지 연락처를 입력해주세요."
 								autocomplete="off">
 						</div>
@@ -53,7 +53,8 @@
 				</div>
 
 				<div class="btn-wrap">
-					<input type="button" id="btnRemindId" value="아이디 찾기">
+					<input type="button" id="btnRemindId" value="아이디 찾기"
+						onclick="btnRemindIdClick()">
 				</div>
 			</div>
 		</div>
@@ -69,7 +70,7 @@
 					<div class="label">
 						<span>아이디</span>
 					</div>
-					<div class="input-id-box">
+					<div class="input-box">
 						<input name="userid" id="userid" placeholder="아이디를 입력해주세요"
 							autocomplete="off">
 					</div>
@@ -79,12 +80,12 @@
 						<span>이메일</span>
 					</div>
 					<div class="select-input">
-						<div class="input-email1-box">
+						<div class="input-box">
 							<input name="email1" id="email1" placeholder="앞자리"
 								autocomplete="off">
 						</div>
 						<span> @ </span>
-						<div class="input-email2-box">
+						<div class="input-box">
 							<input name="email2" id="email2" placeholder="직접입력"
 								autocomplete="off">
 						</div>
@@ -96,7 +97,8 @@
 				</div>
 
 				<div class="btn-wrap">
-					<input type="button" id="btnRemindPw" value="임시비밀번호발급">
+					<input type="button" id="btnRemindPw" value="임시비밀번호발급"
+						onclick="btnRemindPwdClick();">
 				</div>
 			</div>
 		</div>

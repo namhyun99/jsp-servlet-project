@@ -47,16 +47,34 @@ $(function() {
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36']
 	});
-	
+		
 });
+
+
+function joinCheck(f){
+	var userid = $("#userid").val();
+	
+	$.ajax({
+		type : "post",
+		url : "${path}/pageTest/idCheck.do",
+		data : {"userid" : userid},
+		success : function(data){
+			if(data == 'false'){
+				alert("중복된 아이디 입니다.");
+			} else { 
+				f.submit();
+			}
+		}
+	});
+}
 </script>
 
 </head>
 <body>
 
 	<h2>회원등록</h2>
-	<form method="post" action="${path}/pageTest/join.do" enctype="multipart/form-data">
-		아이디 <input name="userid"> <br> 
+	<form method="post" id="joinForm" action="${path}/pageTest/join.do" enctype="multipart/form-data">
+		아이디 <input id="userid" name="userid"> <br> 
 		비밀번호 <input name="passwd"> <br> 
 		이름 <input name="name"> <br> 
 		이메일 <input name="email"><br> 
@@ -69,7 +87,7 @@ $(function() {
 		<input type="radio" name="authority" value="관리자">관리자 <br> 
 		
 		<br>
-		<button>가입하기</button>
+		<button type="button" onclick="joinCheck(joinForm)">가입하기</button>
 	</form>
 
 	<br>

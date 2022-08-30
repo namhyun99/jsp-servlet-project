@@ -9,7 +9,7 @@
 	<div class="menu-box">
 
 		<div class="box-userInfo">
-			<span>${authority}님 안녕하세요!</span>
+			<span>${authority}님, 안녕하세요!</span>
 		</div>
 
 		<div class="box">
@@ -18,8 +18,8 @@
 			</div>
 
 			<ul class="link">
-				<li><a href="${path}/admin/userList" class="txt-name <c:if test="${not fn:contains(url, '/admin/userList')}">no</c:if>selected">회원목록</a></li>
-				<li><a href="${path}/admin/adminList" class="txt-name <c:if test="${not fn:contains(url, '/admin/adminList')}">no</c:if>selected">관리자목록</a></li>
+				<li><a href="${path}/admin/member/userList" class="txt-name <c:if test="${not fn:contains(url, '/admin/userList')}">no</c:if>selected">회원목록</a></li>
+				<li><a href="${path}/admin/member/adminList" class="txt-name <c:if test="${not fn:contains(url, '/admin/adminList')}">no</c:if>selected">관리자목록</a></li>
 			</ul>
 		</div>
 
@@ -37,7 +37,7 @@
 
 		<div class="box">
 			<div class="txt-cate">
-				<a href="${path}/admin/logout.do">로그아웃 하기</a>
+				<a href="${path}/admin/login/logout.do">로그아웃 하기</a>
 			</div>
 			<!-- <div class="item_list">
                         <ul>
