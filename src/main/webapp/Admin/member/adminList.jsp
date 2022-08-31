@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -8,17 +8,15 @@
 	<div class="main-wrap">
 		<div class="main-top">
 			<div class="nav-bar">
-				<span>게시판관리 > 컨텐츠목록</span>
+				<span>회원관리 > 관리자목록</span>
 			</div>
 			<div class="title-search">
 				<div class="title">
-					<h2>
-						컨텐츠목록<span>(${count})</span>
-					</h2>
+					<h2>관리자목록<span>(${count})</span></h2>
 				</div>
 				<div class="search-order">
 					<div class="order-wrap">
-						<form id="orderForm" name="orderForm">
+						<form method="get" id="orderForm" name="orderForm">
 							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${op}', '${keyword}')">
 								<option value="name"
 									<c:if test="${order=='name'}">selected</c:if>>이름순</option>
@@ -28,7 +26,7 @@
 						</form>
 					</div>
 					<div class="search-wrap">
-						<form id="searchForm" name="searchForm" action="${url}">
+						<form method="post" id="searchForm" name="searchForm" action="${url}">
 							<select name="op" id="op">
 								<option value="userid" <c:if test="${op=='userid'}">selected</c:if>>아이디</option>
 								<option value="name" <c:if test="${op=='name'}">selected</c:if>>이름</option>
@@ -46,7 +44,6 @@
 				</div>
 			</div>
 		</div>
-<%-- 		<h2>${list}</h2> --%>
 		<div class="main-content">
 			<table>
 				<thead>
@@ -63,16 +60,11 @@
 				
 				<tbody>
 					<c:choose>
-						<c:when test="${list == ' '}">
-							<tr>
-								<td>검색 결과가 없습니다</td>
-							</tr>
-						</c:when>
-						<c:otherwise>
+						<c:when test="${count > 0}">
 							<c:forEach var="dto" items="${list}">
-								<tr id="resutl">
+								<tr>
 									<td>${dto.m_idx}</td>
-									<td>${dto.userid}</td>
+									<td><a href="${path}/admin/member/editMember?m_idx=${dto.m_idx}">${dto.userid}</a></td>
 									<td>${dto.name}</td>
 									<td>${dto.email}</td>
 									<td>${dto.phone}</td>
@@ -80,43 +72,28 @@
 									<td>${dto.authority}</td>
 								</tr>
 							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="7">
+								<span class="keyword">'${keyword}'</span> 에 대한 검색 결과가 없습니다
+								</td>
+							</tr>
 						</c:otherwise>
 					</c:choose>
-
 				</tbody>
 			</table>
 		</div>
-
-		<div class="pagination">
-			<ul>
-				<c:if test="${page.curPage > 1}">
-					<li><a href="#" onclick="pagination('1','${order}','${op}','${keyword}')"><span>[처음]</span></a></li>
-				</c:if>
-				<c:if test="${page.curBlock > 1}">
-					<li><a href="#"
-						onclick="pagination('${page.prevPage}','${order}','${op}','${keyword}')"><span>[이전]</span></a></li>
-				</c:if>
-				<c:forEach var="num" begin="${page.blockStart}"
-					end="${page.blockEnd}">
-					<c:choose>
-						<c:when test="${num == page.curPage }">
-							<span class="now-page">[${num}]</span>
-						</c:when>
-						<c:otherwise>
-							<li><a href="#" onclick="pagination('${num}','${order}','${op}','${keyword}')"><span>[${num}]</span></a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-				<c:if test="${page.curBlock < page.totBlock}">
-					<li><a href="#"
-						onclick="pagination('${page.nextPage}','${order}','${searchkey}','${op}')"><span>[다음]</span></a></li>
-				</c:if>
-				<c:if test="${page.curPage < page.totPage}">
-					<li><a href="#"
-						onclick="pagination('${page.totPage}','${order}','${op}','${keyword}')"><span>[끝]</span></a></li>
-				</c:if>
-			</ul>
+		
+		<!-- 버튼 -->
+		<div class="footer-btn-wrap">
+			<a href="${path}/admin/member/addMember">
+				<img src="${path}/Admin/resources/asset/images/btn_add.png" alt="추가하기">
+			</a>
 		</div>
-
+		
+		<!-- 페이징 -->
+		<%@ include file="../page.jsp" %>
+		
 	</div>
 </div>

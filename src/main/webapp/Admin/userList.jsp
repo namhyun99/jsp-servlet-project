@@ -5,4 +5,4 @@
 <%@ include file="./include/session_check.jsp" %>
 <%@ include file="./include/top.jsp" %>
 <%@ include file="./include/sideMenu.jsp" %>
-<%@ include file="./page/member/userList.jsp" %>
+<%@ include file="./member/userList.jsp" %>

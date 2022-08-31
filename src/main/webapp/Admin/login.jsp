@@ -2,4 +2,4 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="./include/header.jsp" %>
-<%@ include file="./page/login/login.jsp" %>
+<%@ include file="./login/login.jsp" %>

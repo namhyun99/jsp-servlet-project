@@ -18,8 +18,8 @@
 			</div>
 
 			<ul class="link">
-				<li><a href="${path}/admin/member/userList" class="txt-name <c:if test="${not fn:contains(url, '/admin/userList')}">no</c:if>selected">회원목록</a></li>
-				<li><a href="${path}/admin/member/adminList" class="txt-name <c:if test="${not fn:contains(url, '/admin/adminList')}">no</c:if>selected">관리자목록</a></li>
+				<li><a href="${path}/admin/member/userList" class="txt-name <c:if test="${not fn:contains(url, '/admin/member/userList')}">no</c:if>selected">회원목록</a></li>
+				<li><a href="${path}/admin/member/adminList" class="txt-name <c:if test="${not fn:contains(url, '/admin/member/adminList')}">no</c:if>selected">관리자목록</a></li>
 			</ul>
 		</div>
 
@@ -28,13 +28,22 @@
 				<span>게시판 관리</span>
 			</div>
 			<ul class="link">
-				<li><a href="${path}/admin/contentsList" class="txt-name <c:if test="${not fn:contains(url, '/admin/contentsList')}">no</c:if>selected">컨텐츠 목록</a></li>
-				<li><a href="${path}/admin/noticeList" class="txt-name <c:if test="${not fn:contains(url, '/admin/noticeList')}">no</c:if>selected">공지사항</a></li>
-				<li><a href="${path}/admin/faqList" class="txt-name <c:if test="${not fn:contains(url, '/admin/faqList')}">no</c:if>selected">FAQ</a></li>
+				<c:forEach var="dto" items="${sessionScope.boardList}">
+					<li><a href="${path}/admin/board?board_no=${dto.board_no}" class="txt-name <c:if test="${not fn:contains(url, '/admin/board?board_no=${dto.board_no}')}">no</c:if>selected">${dto.title}</a></li>
+				</c:forEach>
 			</ul>
-
 		</div>
-
+		
+		<div class="box">
+			<div class="txt-cate">
+				<span>설정</span>
+			</div>
+			<ul class="link">
+				<li><a href="#" class="txt-name <c:if test="${not fn:contains(url, '/admin/userList')}">no</c:if>selected">게시판 추가/삭제</a></li>
+				<li><a href="#" class="txt-name <c:if test="${not fn:contains(url, '/admin/adminList')}">no</c:if>selected">카테고리 관리</a></li>
+			</ul>
+		</div>
+		
 		<div class="box">
 			<div class="txt-cate">
 				<a href="${path}/admin/login/logout.do">로그아웃 하기</a>

@@ -15,22 +15,22 @@
 			</c:when>
 		</c:choose>
 	</div>
-	<form method="post" name="detailForm" id="detailForm" enctype="multipart/form-data">
+	<form method="post" name="detailForm" enctype="multipart/form-data">
 		<table> 
 			<tr>
 				<td colspan="2" class="thumb"><img src="${path}/Admin/resources/asset/images/profile_x.png"></td>
 			</tr>
 			<tr>
-				<td>권한</td>
+				<td>권한*</td>
 				<td colspan="1" class="input-box-noborder">
 					<input type="radio" name="authority" value="사용자">사용자 
 					<input type="radio" name="authority" value="관리자">관리자
 				</td>
 			</tr>		
 			<tr>
-				<td>아이디</td>
+				<td>아이디*</td>
 				<td class="input-box-underline">
-					<input id="userid" name="userid" placeholder="아이디를 입력해주세요." autoComplete="off" onkeyup="useridDuplicateCheck()">
+					<input id="userid" name="userid" placeholder="아이디를 입력해주세요." autocomplete="off" onkeyup="useridDuplicateCheck()">
 				</td>
 			</tr>
 			<tr>
@@ -38,9 +38,15 @@
 				<td class="error-msg userid"></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
+				<td>비밀번호*</td>
 				<td class="input-box-underline">
-					<input type="password" id="passwd" name="passwd" placeholder="비밀번호를 입력해주세요." autoComplete="off">
+					<input type="password" id="passwd" name="passwd" placeholder="비밀번호를 입력해주세요." autocomplete="off">
+				</td>
+			</tr>
+			<tr>
+				<td>비밀번호 체크*</td>
+				<td class="input-box-underline">
+					<input type="password" id="passwd2" placeholder="비밀번호를 다시 입력해주세요."  autoComplete="off" onkeyup="passwdDuplicateCheck()">
 				</td>
 			</tr>
 			<tr>
@@ -48,17 +54,7 @@
 				<td class="error-msg passwd"></td>
 			</tr>
 			<tr>
-				<td>비밀번호 체크</td>
-				<td class="input-box-underline">
-					<input type="password" id="passwd2" name="passwd2" placeholder="비밀번호를 다시 입력해주세요."  autoComplete="off">
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td class="error-msg passwd2"></td>
-			</tr>
-			<tr>
-				<td>이름</td>
+				<td>이름*</td>
 				<td class="input-box-underline">
 					<input id="name" name="name" placeholder="이름을 입력해주세요" >
 				</td>
@@ -72,7 +68,7 @@
 				<td class="input-box-underline-email">
 					<input id="email1" name="email1" placeholder="앞자리">
 					<span class="link">@</span>
-					<input id="email2" name="email2">
+					<input id="email2" name="email2" placeholder="직접입력">
 					<select name="emailSelect" onchange="e_select(this)">
 						<option value="">직접입력</option>
 						<option value="naver.com">naver.com</option>
@@ -88,8 +84,9 @@
 			<tr>
 				<td>연락처</td>
 				<td class="input-box-underline-phone">
-					<select name="phone1">
-						<option value="010" selected>010</option>
+					<select id="phone1" name="phone1">
+						<option value="">선택</option>
+						<option value="010">010</option>
 						<option value="011">011</option>
 					</select>
 					<span class="link">-</span>
@@ -110,6 +107,8 @@
 			</tr>	
 			<tr>
 				<td colspan="2">
+					<input type="hidden" name="consent" value="Y">
+					<input type="hidden" name="privacy" value="Y">
 					<input type="button" id="btnAdd" value="멤버추가">			
 				</td>
 			</tr>
@@ -120,7 +119,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#btnAdd").click(function(){
-		memberAdd(detailForm);
+		memberJoinSubmit(detailForm);
 	});	
 })
 

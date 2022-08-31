@@ -15,7 +15,7 @@
 			</c:when>
 		</c:choose>
 	</div>
-	<form method="post" name="detailForm" id="detailForm" enctype="multipart/form-data">
+	<form method="post" name="detailForm" enctype="multipart/form-data">
 		<table> 
 			<tr>
 				<c:choose>
@@ -42,7 +42,7 @@
 			<tr>
 				<td>비밀번호</td>
 				<td class="input-box">
-					<input type="password" id="passwd" name="passwd" value="${dto.passwd}">
+					<input type="password" id="passwd" name="passwd" value="${dto.passwd}" autocomplete="off">
 				</td>
 			</tr>
 			<tr>
@@ -111,7 +111,7 @@
 				<c:if test="${dto.authority == '사용자'}">
 					<input type="button" id="btnDelete" value="회원삭제">		
 				</c:if>
-				<c:if test="${dto.authority == '관리자' && sessionScope.userid != dto.userid}">
+				<c:if test="${dto.authority == '관리자' && sessionScope.userid == 'admin'}">
 					<input type="button" id="btnDelete" value="관리자삭제">
 				</c:if>
 							
@@ -124,11 +124,11 @@
 <script type="text/javascript">
 $(function(){
 	$("#btnDelete").click(function(){
-		memberInfoDelete(detailForm);
+		memberDeleteSubmit(detailForm);
 	});
 	
 	$("#btnSave").click(function(){
-		memberInfoUpdate(detailForm);
+		memberUpdateSubmit(detailForm);
 	})
 })
 </script>

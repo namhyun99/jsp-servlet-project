@@ -6,4 +6,4 @@
 <%@ include file="./include/session_check.jsp" %>
 <%@ include file="./include/top.jsp" %>
 <%@ include file="./include/sideMenu.jsp" %>
-<%@ include file="./page/member/adminList.jsp" %>
+<%@ include file="./member/adminList.jsp" %>
