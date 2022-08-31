@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="contents" >
+  <!-- 멤버 리스트 -->
+  <select id="getContentsList" resultType="cDto">
+  	select * 
+  	from (
+  		select A.*, rownum as rn
+  		from ( select c.p_idx, 
+  		c.subject, 
+  		c.m_idx,
+  		m.userid, 
+  		c.view_cnt, 
+  		c.write_date 
+  		from contents c join member m on c.m_idx = m.m_idx
+  		where ${op} like #{keyword}
+  		order by ${order} asc) A
+  	) where rn between #{start} and #{end}
+  </select> 
+  
+  <!-- 멤버 갯수 -->
+  <select id="getContentsCount" resultType="int">
+    select count(*) from contents
+    where ${op} like #{keyword}
+  </select>
+  
+  <!-- 작성자 조회 -->
+  <select id="getWriter" parameterType="int" resultType="String">
+  	select userid from member
+  	where m_idx=#{m_idx}
+  </select>
+</mapper>
+

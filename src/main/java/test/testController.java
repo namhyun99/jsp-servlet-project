@@ -80,8 +80,7 @@ public class testController extends HttpServlet {
 			dto.setProfile_img(profile_img);
 			dto.setAuthority(authority);
 			
-			int result = dao.join(dto);
-			response.getWriter().write(result);
+			 dao.joinMember(dto);
 			response.sendRedirect(ctx + page);
 			
 		} else if(uri.indexOf("insertBoard.do") != -1) {

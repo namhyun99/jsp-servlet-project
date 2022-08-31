@@ -188,7 +188,7 @@ ul {
 	text-align: left;
 }
 
-input.error {
+.input.error {
 	border: 1px solid var(--red-color);
 	background-color: rgba(255,155,155,.06);
 }
@@ -494,6 +494,13 @@ view-wrap title {
 
 #view-wrap table td:first-child{
 	width: 20%;
+}
+
+#view-wrap .info {
+	font-size: var(--fs-small);
+	font-weight: var(--fw-medium);
+	color: var(--gray-color-6);
+	padding: 0 2%;
 }
 
 #view-wrap .thumb{

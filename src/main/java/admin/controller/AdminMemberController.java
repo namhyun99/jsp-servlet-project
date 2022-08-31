@@ -34,18 +34,7 @@ public class AdminMemberController extends HttpServlet {
 		String ctx = request.getContextPath();
 		MemberDAO dao = new MemberDAO();
 		
-		if (url.indexOf("search.do") != -1) {
-			String op = request.getParameter("op");
-			String keyword = request.getParameter("keyword");
-			String authority = request.getParameter("authority");
-			
-			if(keyword == null) keyword = "";
-			 
-			int result = dao.getMemberCount(authority, op, keyword);
-			if(result > 0) {
-				response.getWriter().write("true");
-			}
-		} else if (url.indexOf("userList") != -1) { // 회원목록 리스트
+		if (url.indexOf("userList") != -1) { // 회원목록 리스트
 
 			String order = request.getParameter("order");
 			String op = request.getParameter("op");
@@ -80,6 +69,7 @@ public class AdminMemberController extends HttpServlet {
 			String page = "/Admin/userList.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
+			
 		} else if (url.indexOf("adminList") != -1) {
 			String order = request.getParameter("order");
 			String op = request.getParameter("op");
@@ -116,6 +106,18 @@ public class AdminMemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		} else if (url.indexOf("search.do") != -1) {
+			String op = request.getParameter("op");
+			String keyword = request.getParameter("keyword");
+			String authority = request.getParameter("authority");
+			
+			if(keyword == null) keyword = "";
+			 
+			int result = dao.getMemberCount(authority, op, keyword);
+			if(result > 0) {
+				response.getWriter().write("true");
+			}
+			
 		} else if (url.indexOf("editMember") != -1) {
 			int m_idx = Integer.parseInt(request.getParameter("m_idx"));
 			MemberDTO dto = dao.detailVeiw(m_idx);
@@ -213,12 +215,88 @@ public class AdminMemberController extends HttpServlet {
 			rd.forward(request, response);
 
 		} else if (url.indexOf("duplicate.do") != -1) {
+			//아이디 중복체크
 			String userid = request.getParameter("userid");
 			String result = dao.useridCheck(userid);
 			if (result == null) {
 				response.getWriter().write("0");
 			}
+		
+		} else if (url.indexOf("joinMember.do") != -1) {
+			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
+			if(!uploadDir.exists()) {
+				uploadDir.mkdir();
+			}
+			
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH,
+					FileUpload.MAX_UPLOAD, "utf-8", new DefaultFileRenamePolicy());
+			
+			String userid = multi.getParameter("userid");
+			String passwd = multi.getParameter("passwd");
+			String name = multi.getParameter("name");
+			String email1 = multi.getParameter("email1");
+			String email2 = multi.getParameter("email2");
+			String phone1 = multi.getParameter("phone1");
+			String phone2 = multi.getParameter("phone2");
+			String phone3 = multi.getParameter("phone3");
+			String consent = multi.getParameter("consent");
+			String privacy = multi.getParameter("privacy");
+			String authority = multi.getParameter("authority");
 
+					
+			String email = email1 + "@" + email2;
+			String phone = phone1 + phone2 + phone3;	
+			//이메일, 전화번호 값이 없다면..
+			if(email1.equals("") || email2.equals("")) {
+				email = "-";
+			} 
+			
+			if(phone1.equals("") || phone2.equals("") || phone3.equals("")) {
+				phone = "-";
+			}
+				
+			String profile_img = " ";
+			int filesize = 0;
+			
+			try {
+				Enumeration files = multi.getFileNames();
+				while(files.hasMoreElements()) {
+					String file1 = (String) files.nextElement();
+					profile_img = multi.getFilesystemName(file1);
+					File f1 = multi.getFile(file1);
+					if(f1 != null) {
+						filesize = (int)f1.length();
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			MemberDTO dto = new MemberDTO();
+			dto.setUserid(userid);
+			dto.setPasswd(passwd);
+			dto.setName(name);
+			dto.setEmail(email);
+			dto.setPhone(phone);
+			dto.setConsent(consent);
+			dto.setPrivacy(privacy);
+			//파일 첨부를 하지 않을 경우
+			if(profile_img == null || profile_img.trim().equals("")) { //null값이거나 빈문자열일때
+				profile_img = "-";
+			}
+			dto.setProfile_img(profile_img);
+			dto.setAuthority(authority);
+			
+			dao.joinMember(dto);
+			
+			String page = "";
+			if (authority.equals("관리자")) {
+				page = "/admin/member/adminList";
+			} else if (authority.equals("사용자")) {
+				page = "/admin/member/userList";
+			}
+			
+			response.sendRedirect(ctx + page);
 		}
 	}
 

@@ -45,9 +45,12 @@ public class Pager {
 		//[다음]을 눌렀을 때 이동할 페이지
 //		nextPage=curBlock>totBlock 
 //				? (curBlock*BLOCK_SCALE) : (curBlock*BLOCK_SCALE)+1;
+//		if(nextPage >= totPage){//다음페이지가 토탈페이지보다 크면 [다음]표시뺌
+//			nextPage = totPage;
+//		}
 		nextPage = curPage + 1;
-		if(nextPage >= totPage){//다음페이지가 토탈페이지보다 크면 [다음]표시뺌
-			nextPage = totPage;
+		if(nextPage == totPage) {
+			totPage += 1;
 		}
 		
 	}

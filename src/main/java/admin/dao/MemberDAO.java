@@ -88,18 +88,16 @@ public class MemberDAO {
 	}
 
 	// 회원가입 하기
-	public int join(MemberDTO dto) {
-		int result = -1;
+	public void joinMember(MemberDTO dto) {
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
 			// BCrypt 비밀번호 암호화
 			String passwd = BCrypt.hashpw(dto.getPasswd(), BCrypt.gensalt());
 			dto.setPasswd(passwd);
-			result = (int) session.insert("member.join", dto);
+			session.insert("member.join", dto);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 
 	// 멤버 갯수 가져오기

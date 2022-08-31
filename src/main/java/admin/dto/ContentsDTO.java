@@ -4,18 +4,19 @@ import java.util.Date;
 
 public class ContentsDTO {
 
-	private int p_idx;   //글번호
-	private int board_no;  //게시판 고유번호
-	private int cate_no;  //카테고리번호
-	private int m_idx;  //작성자 번호
-	private String subject;  //제목
-	private String content;  //내용
-	private int view_cnt;  //조회수
-	private String ip;  //아이피
-	private String filename;  //파일이름
-	private int filesize;  //파일사이즈
-	private Date write_date; //작성일자
-	private Date update_date;  //수정일자
+	private int p_idx; // 글번호
+	private int board_no; // 게시판 고유번호
+	private int cate_no; // 카테고리번호
+	private int m_idx; // 작성자 번호
+	private String subject; // 제목
+	private String content; // 내용
+	private int view_cnt; // 조회수
+	private String ip; // 아이피
+	private String filename; // 파일이름
+	private int filesize; // 파일사이즈
+	private Date write_date; // 작성일자
+	private Date update_date; // 수정일자
+	private String userid; // 필요의 한 생성
 
 	// getter, setter ,toString
 	public int getP_idx() {
@@ -114,12 +115,20 @@ public class ContentsDTO {
 		this.update_date = update_date;
 	}
 
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
 	@Override
 	public String toString() {
 		return "ContentsDTO [p_idx=" + p_idx + ", board_no=" + board_no + ", cate_no=" + cate_no + ", m_idx=" + m_idx
 				+ ", subject=" + subject + ", content=" + content + ", view_cnt=" + view_cnt + ", ip=" + ip
 				+ ", filename=" + filename + ", filesize=" + filesize + ", write_date=" + write_date + ", update_date="
-				+ update_date + "]";
+				+ update_date + ", userid=" + userid + "]";
 	}
 
 }

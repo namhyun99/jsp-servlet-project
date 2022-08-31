@@ -198,7 +198,7 @@ function remindPopOpen() {
 
 
 //회원정보 수정
-function memberInfoUpdate(f){
+function memberUpdateSubmit(f){
 	var PATH = getContextPath();
 	var passwd = $("#passwd").val();
 	var name = $("#name").val();
@@ -210,11 +210,13 @@ function memberInfoUpdate(f){
 		$(".error-msg.passwd").show();
 		$(".error-msg.passwd").text("비밃번호를 입력하세요");
 		return false;	
+		
 	} else if(!check["passwd-exp"].test(passwd)){
 		$("#passwd").addClass("error");
 		$(".error-msg.passwd").show();
 		$(".error-msg.passwd").text("비밀번호는 영문소문자,숫자,특수기호(!@#$%^*+=-)를 모두 사용해서 8~12자리로 입력하세요.");
 		return false;
+		
 	} else {
 		$("#passwd").removeClass("error");
 		$(".error-msg.passwd").hide();
@@ -226,6 +228,7 @@ function memberInfoUpdate(f){
 		$(".error-msg.name").show();
 		$(".error-msg.name").text("이름을 입력해주세요");
 		return false;
+		
 	}  else {
 		$("#name").removeClass("error");
 		$(".error-msg.name").hide();
@@ -236,6 +239,7 @@ function memberInfoUpdate(f){
 		$(".error-msg.email").show();
 		$(".error-msg.email").text("이메일 주소를 입력해주세요");
 		return false;
+		
 	} else if(email != ""){
 		if(!check["email-exp"].test(email)){
 			$("#email").addClass("error");
@@ -253,6 +257,7 @@ function memberInfoUpdate(f){
 		$(".error-msg.phone").show();
 		$(".error-msg.phone").text("전화번호를 입력해주세요.");
 		return false;
+		
 	} else if(phone != ""){
 		if(!check["phone-exp"].test(phone) || phone.length < 10){
 			$("#phone").addClass("error");
@@ -260,6 +265,7 @@ function memberInfoUpdate(f){
 			$(".error-msg.phone").text("전화번호는 11자리 숫자만 입력해주세요.");
 			return false;
 		}
+		
 	} else {
 		$("#phone").removeClass("error");
 		$(".error-msg.phone").hide();
@@ -270,7 +276,7 @@ function memberInfoUpdate(f){
 }
 
 //회원정보 삭제
-function memberInfoDelete(f){
+function memberDeleteSubmit(f){
 	var PATH = getContextPath();
 	if(confirm("정말 삭제하시겠습니까?")){
 		f.action = PATH + "/admin/member/deleteMember.do";
@@ -279,12 +285,97 @@ function memberInfoDelete(f){
 }
 
 //회원추가
-function memberAdd(f){
+function memberJoinSubmit(f){
 	var PATH = getContextPath();
 	var authority = $("input:radio[name='authority']");
-	
+	var userid = $("#userid").val();
+	var passwd = $("#passwd").val();
+	var passwd2 = $("#passwd2").val();
+	var name = $("#name").val();
+	var email1 = $("#email1").val();
+	var email2 = $("#email2").val()
+	var phone1 = $("#phone1").val();
+	var phone2 = $("#phone2").val();
+	var phone3 = $("#phone3").val();
+		
 	if(!authority.is(":checked")){
 		alert("권한을 체크해주세요.");
+		return false;
+	}
+	
+	if(userid == ""){
+		alert("아이디를 입력해주세요. (4자이상 20자미만)");
+		return false;
+	} else if ($(".error-msg.userid").text() == "중복된 아이디입니다."){
+		alert("중복된 아이디입니다.");
+		return false;
+		
+	} else if(!check["userid-exp"].test(userid)){
+		alert("아이디에는 영문숫자 포함 4~10자로 입력가능합니다.");
+		return false;
+	}
+		
+	if(passwd == ""){
+		alert("비밀번호를 입력해주세요.")
+		return false;	
+	} 
+	
+	if(!check["passwd-exp"].test(passwd)){
+		alert("비밀번호는 영문소문자,숫자,특수기호(!@#$%^*+=-)를 모두 사용해서 8~12자리로 입력하세요.");
+		return false;
+	} 
+	
+	if(passwd != passwd2){
+		alert("비밀번호 체크를 확인해주세요.");
+		return false;
+	}
+		
+	if(name == ""){
+		alert("이름을 입력해주세요");
+		$("#name").focus();
+		return false;
+	}  
+	
+	if(email1 != "" || email2 != ""){
+		var email = email1 + "@" + email2;
+		if(!check["email-exp"].test(email)){
+			alert("이메일 형식에 맞춰 작성해 주세요.")
+			return false;
+		}
+	} 
+
+	
+	if(phone1 != "" || phone2 != "" || phone3 != ""){
+		var phone = phone1 + phone2 + phone3;
+		if(!check["phone-exp"].test(phone) || phone.length < 10){
+			alert("전화번호는 11자리 숫자만 입력해주세요.");
+			return false;
+		}
+	} 
+	
+	f.action = PATH + "/admin/member/joinMember.do";
+	f.submit();
+	
+}
+
+//비밀번호 체크 확인 
+function passwdDuplicateCheck(){
+	var passwd = $("#passwd").val();
+	var passwd2 = $("#passwd2").val();
+	
+	if(!check["passwd-exp"].test(passwd)){
+		$(".error-msg.passwd").text("영문소문자,숫자,특수기호(!@#$%^*+=-)를 모두 사용해서 8~12자리로 입력해주세요.");
+		$(".error-msg").show();
+	} 
+	
+	else if(passwd != passwd2){
+		$(".error-msg.passwd").text("비밀번호가 일치하지 않습니다.");
+		$(".error-msg").show();
+	} 
+	
+	else {
+		$(".error-msg.passwd").text("");
+		$(".error-msg").hide();
 	}
 }
 
@@ -306,12 +397,18 @@ function useridDuplicateCheck(){
                 if (userid.length == 0) {
                     $(".error-msg.userid").text("아이디는 필수 입력 값입니다.");
                     $(".error-msg").show();
-                } else if (str_space.exec(userid)) {
+                }
+                else if (str_space.exec(userid)) {
                     $(".error-msg.userid").text("아이디에는 띄어쓰기를 하실 수 없습니다.");
                     $(".error-msg").show();
-                }else {
-                    $(".error-msg.userid").text("사용 가능한 아이디입니다.");
+                }
+                else if (!check["userid-exp"].test(userid)) {
+                    $(".error-msg.userid").text("아이디에는 영문숫자 포함 4~10자로 입력가능합니다.");
                     $(".error-msg").show();
+                }
+                else {
+					$(".error-msg.userid").text("");
+                    $(".error-msg").hide();
                 }
             }
         }
@@ -319,7 +416,6 @@ function useridDuplicateCheck(){
         error: function () {
             alert("데이터베이스에 접근이 필요합니다!");
         }
-
 	});
 }
 
