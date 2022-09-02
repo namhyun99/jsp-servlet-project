@@ -59,6 +59,7 @@ public class AdminMemberController extends HttpServlet {
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
 			List<MemberDTO> list = dao.getMemberList(authority, start, end, order, op, keyword);
+			
 			request.setAttribute("list", list);
 			request.setAttribute("page", pager);
 			request.setAttribute("count", count);
@@ -106,18 +107,6 @@ public class AdminMemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
-		} else if (url.indexOf("search.do") != -1) {
-			String op = request.getParameter("op");
-			String keyword = request.getParameter("keyword");
-			String authority = request.getParameter("authority");
-			
-			if(keyword == null) keyword = "";
-			 
-			int result = dao.getMemberCount(authority, op, keyword);
-			if(result > 0) {
-				response.getWriter().write("true");
-			}
-			
 		} else if (url.indexOf("editMember") != -1) {
 			int m_idx = Integer.parseInt(request.getParameter("m_idx"));
 			MemberDTO dto = dao.detailVeiw(m_idx);

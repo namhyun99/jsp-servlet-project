@@ -30,14 +30,17 @@
   
   
   <!-- 멤버 리스트 -->
-  <select id="getMemberList" resultType="mDto">
+  <select id="getMemberList"  parameterType="HashMap"  resultType="mDto">
   	select * 
   	from (
   		select A.*, rownum as rn
   		from (
   			select * from member 
   			where authority=#{authority} and ${op} like #{keyword}
-  			order by ${order} asc) A
+  			order by ${order}
+  			<if test="order == 'join_date'">desc</if>
+  			<if test="order == 'name'">asc</if>
+  			 ) A
   	) where rn between #{start} and #{end}
   </select> 
   

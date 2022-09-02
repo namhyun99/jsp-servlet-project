@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class MemberDTO {
 
+	private int rn; // 열번호
 	private int m_idx; // 회원 일련 번호
 	private String userid; // 회원 아이디
 	private String passwd; // 회원 비밀번호
@@ -17,6 +18,14 @@ public class MemberDTO {
 	private Date join_date; // 가입일시
 
 	// getter, setter ,toString
+	public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+	
 	public int getM_idx() {
 		return m_idx;
 	}
@@ -107,9 +116,11 @@ public class MemberDTO {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [m_idx=" + m_idx + ", userid=" + userid + ", passwd=" + passwd + ", name=" + name + ", email="
-				+ email + ", phone=" + phone + ", profile_img=" + profile_img + ", consent=" + consent + ", privacy="
-				+ privacy + ", authority=" + authority + ", join_date=" + join_date + "]";
+		return "MemberDTO [rn=" + rn + ", m_idx=" + m_idx + ", userid=" + userid + ", passwd=" + passwd
+				+ ", name=" + name + ", email=" + email + ", phone=" + phone + ", profile_img=" + profile_img
+				+ ", consent=" + consent + ", privacy=" + privacy + ", authority=" + authority + ", join_date="
+				+ join_date + "]";
 	}
+
 
 }

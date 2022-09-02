@@ -5,7 +5,7 @@
 <div class="container">
 
 <div id="load">
-	<img src="../Admin/resources/asset/images/load_img.gif" alt="loading">
+	<img src="${path}/resources/static/images/load_img.gif" alt="loading">
 </div>
 
 <div id="top-wrap">

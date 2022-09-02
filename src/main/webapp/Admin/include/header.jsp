@@ -15,12 +15,14 @@
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    	<link rel="stylesheet" type="text/css" href="${path}/Admin/resources/asset/css/common.css">
+		<link rel="stylesheet" type="text/css" href="${path}/resources/static/css/summernote-lite.css">
+    	<link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
 
-    	<script type="text/javascript" src="${path}/Admin/resources/asset/js/jquery-3.6.0.min.js"></script>
-    	<script type="text/javascript" src="${path}/Admin/resources/asset/js/login.js"></script>
-    	<script type="text/javascript" src="${path}/Admin/resources/asset/js/common.js"></script>
-
+    	<script type="text/javascript" src="${path}/resources/static/js/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript" src="${path}/resources/static/js/summernote-lite.js"></script>
+		<script type="text/javascript" src="${path}/resources/static/js/summernote-ko-KR.js"></script>
+    	<script type="text/javascript" src="${path}/resources/static/js/common.js"></script>
+    	<script type="text/javascript" src="${path}/resources/static/js/login.js"></script>
 		<script src="https://kit.fontawesome.com/fbdfc0aa10.js"></script>
     	<script type="text/javascript">
         	sessionStorage.setItem("contextPath", "${path}");

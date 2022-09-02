@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id="load" style="display:none;">
-	<img src="../Admin/resources/asset/images/load_img.gif" alt="loading">
+	<img src="${path}/resources/static/images/load_img.gif" alt="loading">
 </div>
 
 <div id="remind-wrap">

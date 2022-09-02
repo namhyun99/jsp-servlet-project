@@ -9,7 +9,6 @@ public class ContentsCommentDTO {
 	private int m_idx;  //작성자 고유번호
 	private String content;  //댓글 내용
 	private Date write_date;  //작성일자
-	private Date update_date;  //수정일자
 
 	// getter, setter ,toString
 	public int getCmt_idx() {
@@ -52,18 +51,12 @@ public class ContentsCommentDTO {
 		this.write_date = write_date;
 	}
 
-	public Date getUpdate_date() {
-		return update_date;
-	}
 
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
-	}
 
 	@Override
 	public String toString() {
 		return "ContentsCommentDTO [cmt_idx=" + cmt_idx + ", p_idx=" + p_idx + ", m_idx=" + m_idx + ", content="
-				+ content + ", write_date=" + write_date + ", update_date=" + update_date + "]";
+				+ content + ", write_date=" + write_date + " ]";
 	}
 
 }

@@ -25,25 +25,15 @@
 
 		<div class="box">
 			<div class="txt-cate">
-				<span>게시판 관리</span>
+				<span>게시판 글 관리</span>
 			</div>
 			<ul class="link">
-				<c:forEach var="dto" items="${sessionScope.boardList}">
-					<li><a href="${path}/admin/board?board_no=${dto.board_no}" class="txt-name <c:if test="${not fn:contains(url, '/admin/board?board_no=${dto.board_no}')}">no</c:if>selected">${dto.title}</a></li>
-				</c:forEach>
+				<li><a href="${path}/admin/board/contents" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/contents')}">no</c:if>selected">컨텐츠 관리</a></li>
+				<li><a href="${path}/admin/board/notice" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/notice')}">no</c:if>selected">공지사항 관리</a></li>
+				<li><a href="${path}/admin/board/faq" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/faq')}">no</c:if>selected">FAQ</a></li>
 			</ul>
 		</div>
-		
-		<div class="box">
-			<div class="txt-cate">
-				<span>설정</span>
-			</div>
-			<ul class="link">
-				<li><a href="#" class="txt-name <c:if test="${not fn:contains(url, '/admin/userList')}">no</c:if>selected">게시판 추가/삭제</a></li>
-				<li><a href="#" class="txt-name <c:if test="${not fn:contains(url, '/admin/adminList')}">no</c:if>selected">카테고리 관리</a></li>
-			</ul>
-		</div>
-		
+			
 		<div class="box">
 			<div class="txt-cate">
 				<a href="${path}/admin/login/logout.do">로그아웃 하기</a>

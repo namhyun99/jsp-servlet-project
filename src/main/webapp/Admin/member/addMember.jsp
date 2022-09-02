@@ -18,7 +18,7 @@
 	<form method="post" name="detailForm" enctype="multipart/form-data">
 		<table> 
 			<tr>
-				<td colspan="2" class="thumb"><img src="${path}/Admin/resources/asset/images/profile_x.png"></td>
+				<td colspan="2" class="thumb"><img src="${path}/resources/static/images/no_profile.png"></td>
 			</tr>
 			<tr>
 				<td>권한*</td>

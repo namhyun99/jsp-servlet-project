@@ -24,7 +24,6 @@
   <!-- 주의 : 실제 sql quert가 있는 매퍼파일은 반드시 등록해야한다. -->
   <mappers>
   	<mapper resource="/admin/mapper/member.xml"/>
-  	<mapper resource="/admin/mapper/contents.xml"/>
   	<mapper resource="/admin/mapper/board.xml"/>
   </mappers>
 </configuration>
