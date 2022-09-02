@@ -117,7 +117,7 @@ ul {
 	width: 90%;
 	height: 48px;
 	min-height: 48px;
-	padding: 0 4%;
+	padding: 0 2%;
 	margin : 5px 0;
 	border-bottom: 1px solid var(--gray-color-5);
 }
@@ -381,7 +381,6 @@ ul {
 
 #contents-wrap .main-top .search-order select
  {
-	width: 85px;
 	height: 40px;
 	padding: 0 4px;
 }
@@ -457,6 +456,12 @@ ul {
 	opacity: 0.7;
 }
 
+#contents-wrap .main-content .thumb img{
+	width: 80px;
+	height: 50px;
+}
+
+
 #contents-wrap .pagination{
 	margin-top: 20px;
 }
@@ -467,7 +472,7 @@ ul {
 
 #contents-wrap .pagination ul li {
 	display: inline-block;
-	padding: 2px 6px;
+	padding: 0 6px;
 }
 
 #contents-wrap .pagination ul li a{
@@ -479,21 +484,56 @@ ul {
 }
 
 
+
+/*게시글 보기*/
+#content-view-wrap {
+	width: 860px;
+	margin : 50px auto;
+}
+
+#content-view-wrap table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#content-view-wrap table tr{
+	height: 48px;
+}
+
+#content-view-wrap table .outline {
+	border-bottom: 1px solid var(--gray-color-4);
+}
+
+#content-view-wrap .txt_item_input input {
+	width: 90%;
+	height: 48px;
+	min-height: 48px;
+	font-size: 1rem;
+	border: 1px solid var(--gray-color-5);
+	border-radius: 4px;
+}
+
+#content-view-wrap .txt_item_input input:focus{
+	outline: none;
+}
+
+#content-view-wrap .thumb img {
+	width: 30%;
+	height: auto;
+	border-radius: 5%;
+}
+
+
+
+/*회원 보기*/
+
 #view-wrap {
 	width: 600px;
 	margin : 50px auto;
 }
 
-view-wrap title {
-	margin : 20px;
-}
-
 #view-wrap table {
 	width: 100%;
-}
-
-#view-wrap table td:first-child{
-	width: 20%;
 }
 
 #view-wrap .info {
@@ -513,8 +553,9 @@ view-wrap title {
 	border-radius: 50%;
 }
 
-#view-wrap table #btnSave,
-#view-wrap table #btnAdd{
+
+#btnSave,
+#btnAdd{
 	width: 100%;
 	height: 48px;
 	margin-top: 10px;
@@ -523,7 +564,7 @@ view-wrap title {
 	border-radius: 10px;	 
 }
 
-#view-wrap table #btnDelete {
+#btnDelete {
 	width: 100%;
 	height: 48px;
 	margin-top: 10px;
@@ -535,13 +576,11 @@ view-wrap title {
 	border-radius: 10px;	  
 }
 
-#view-wrap table #btnDelete:hover {
+#btnDelete:hover {
 	background-color: var(--red-color);
 	color: var(--white-color);
 	transition : 0.3s;
 }
-
-
 
 
 

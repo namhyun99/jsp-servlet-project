@@ -70,7 +70,7 @@
 						<c:when test="${count > 0}">
 							<c:forEach var="dto" items="${list}">
 								<tr>
-									<td>${dto.m_idx}</td>
+									<td>${dto.rn}</td>
 									<td><a href="${path}/admin/member/editMember?m_idx=${dto.m_idx}">${dto.userid}</a></td>
 									<td>${dto.name}</td>
 									<td>${dto.email}</td>
@@ -95,7 +95,7 @@
 		<!-- 버튼 -->
 		<div class="footer-btn-wrap">
 			<a href="${path}/admin/member/addMember">
-				<img src="${path}/Admin/resources/asset/images/btn_add.png" alt="추가하기">
+				<img src="${path}/resources/static/images/btn_add.png" alt="추가하기">
 			</a>
 		</div>
 		
