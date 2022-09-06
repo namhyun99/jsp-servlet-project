@@ -20,10 +20,10 @@
 			<tr>
 				<c:choose>
 					<c:when test="${dto.profile_img == '-'}">
-						<td colspan="2" class="thumb"><img src="${path}/resources/static/images/no_profile.png"></td>
+						<td colspan="2" class="thumb"><img src="${path}/Admin/resources/asset/images/no_profile.png"></td>
 					</c:when>
 					<c:otherwise>
-						<td colspan="2" class="thumb"><img src="${path}/resources/static/upload/profile/${dto.profile_img}"></td>
+						<td colspan="2" class="thumb"><img src="${path}/upload/profile/${dto.profile_img}"></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>
@@ -88,7 +88,7 @@
 			<tr>
 				<td>프로필사진수정</td>
 				<td class="file-box">
-					<input type="file" name="profile_img" value="${dto.profile_img}">
+					<input type="file" id="filename" name="profile_img" value="${dto.profile_img}" onchange="uploadFileCheck()">
 					<c:if test="${dto.profile_img != '-'}">
 						<input type="checkbox" name="fileDel">프로필사진 삭제
 					</c:if>

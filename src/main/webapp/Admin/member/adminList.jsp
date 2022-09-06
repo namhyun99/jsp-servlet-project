@@ -17,7 +17,7 @@
 				<div class="search-order">
 					<div class="order-wrap">
 						<form method="get" id="orderForm" name="orderForm">
-							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${op}', '${keyword}')">
+							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${searchkey
 								<option value="name"
 									<c:if test="${order=='name'}">selected</c:if>>이름순</option>
 								<option value="join_date"
@@ -27,11 +27,11 @@
 					</div>
 					<div class="search-wrap">
 						<form method="post" id="searchForm" name="searchForm" action="${url}">
-							<select name="op" id="op">
-								<option value="userid" <c:if test="${op=='userid'}">selected</c:if>>아이디</option>
-								<option value="name" <c:if test="${op=='name'}">selected</c:if>>이름</option>
-								<option value="email" <c:if test="${op=='email'}">selected</c:if>>이메일</option>
-								<option value="phone" <c:if test="${op=='phone'}">selected</c:if>>연락처</option>
+							<select name="searchkey" id="searchkey">
+								<option value="userid" <c:if test="${searchkey=='userid'}">selected</c:if>>아이디</option>
+								<option value="name" <c:if test="${searchkey=='name'}">selected</c:if>>이름</option>
+								<option value="email" <c:if test="${searchkey=='email'}">selected</c:if>>이메일</option>
+								<option value="phone" <c:if test="${searchkey=='phone'}">selected</c:if>>연락처</option>
 							</select>
 							<div class="search-input">
 								<input name="keyword" id="keyword" onkeypress="javascript:if(event.keyCode==13) listSearch(searchForm)">
@@ -87,8 +87,8 @@
 		
 		<!-- 버튼 -->
 		<div class="footer-btn-wrap">
-			<a href="${path}/admin/member/editMember">
-				<img src="${path}/resources/static/images/btn_add.png" alt="추가하기">
+			<a href="${path}/admin/member/addMember">
+				<img src="${path}/Admin/resources/asset/images/btn_add.png" alt="추가하기">
 			</a>
 		</div>
 		

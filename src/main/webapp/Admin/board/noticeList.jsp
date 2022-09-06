@@ -17,7 +17,7 @@
 				<div class="search-order">
 					<div class="order-wrap">
 						<form method="get" id="orderForm" name="orderForm">
-							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${op}', '${keyword}')">
+							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
 								<option value="write_date"
 									<c:if test="${order=='write_date'}">selected</c:if>>작성일순</option>
 								<option value="view_cnt"
@@ -27,8 +27,8 @@
 					</div>
 					<div class="search-wrap">
 						<form method="post" id="searchForm" name="searchForm" action="${url}">
-							<select name="op" id="op">
-								<option value="subject" <c:if test="${op=='subject'}">selected</c:if>>제목</option>
+							<select name="searchkey" id="searchkey">
+								<option value="title" <c:if test="${searchkey=='title'}">selected</c:if>>제목</option>
 							</select>
 							<div class="search-input">
 								<input name="keyword" id="keyword" onkeypress="javascript:if(event.keyCode==13) listSearch(searchForm)">
@@ -59,7 +59,7 @@
 							<c:forEach var="dto" items="${list}">
 								<tr>
 									<td>${dto.rn}</td>
-									<td><a href="${path}/admin/board/editBoard?board_no=${dto.board_no}&c_idx=${dto.c_idx}">${dto.subject}</a></td>
+									<td><a href="${path}/admin/board/editNotice?f_idx=${dto.f_idx}">${dto.title}</a></td>
 									<td>${dto.userid}</td>
 									<td>${dto.view_cnt}</td>
 									<td><fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd"/></td>
@@ -81,8 +81,8 @@
 		
 		<!-- 버튼 -->
 		<div class="footer-btn-wrap">
-			<a href="${path}/admin/board/addBoard">
-				<img src="${path}/resources/static/images/btn_add.png" alt="추가하기">
+			<a href="${path}/admin/board/addNotice">
+				<img src="${path}/Admin/resources/asset/images/btn_add.png" alt="추가하기">
 			</a>
 		</div>
 		

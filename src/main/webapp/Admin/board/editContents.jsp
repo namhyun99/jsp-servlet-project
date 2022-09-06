@@ -6,17 +6,7 @@
 
 <div id="content-view-wrap">
 	<div class="title">
-		<c:choose>
-			<c:when test="${param.board_no == 1}">
-				<h2>공지사항 수정</h2>
-			</c:when>
-			<c:when test="${param.board_no == 2}">
-				<h2>faq 수정</h2>
-			</c:when>
-			<c:when test="${param.board_no == 5}">
-				<h2>컨텐츠 수정</h2>
-			</c:when>
-		</c:choose>
+		<h2>컨텐츠 글 수정</h2>
 	</div>
 	<form method="post" name="detailForm" enctype="multipart/form-data">
 		<table>
@@ -37,19 +27,19 @@
 				</td>
 			</tr>
 			<tr class="outline">
-				<td>게시판이름</td>
-				<td class="txt_item">
-					<span id="write_date">${bdTitle}</span>
-				</td>
-				<td>조회수</td>
-				<td class="txt_item">
-					<span>${dto.view_cnt}</span>
-				</td>
-			</tr>
-			<tr class="outline">
 				<td>작성일</td>
 				<td class="txt_item">
 					<span><fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd(E) HH:mm:ss"/></span>
+				</td>
+				<td>마지막 수정일</td>
+				<td class="txt_item">
+					<span><fmt:formatDate value="${dto.update_date}" pattern="yyyy-MM-dd(E) HH:mm:ss"/></span>
+				</td>
+			</tr>
+			<tr class="outline">
+				<td>조회수</td>
+				<td class="txt_item">
+					<span>${dto.view_cnt}</span>
 				</td>
 				<td>댓글수</td>
 				<td class="txt_item">
@@ -57,9 +47,13 @@
 				</td>
 			</tr>
 			<tr class="outline">
-				<td>마지막 수정일</td>
+				<td>카테고리</td>
 				<td class="txt_item">
-					<span><fmt:formatDate value="${dto.update_date}" pattern="yyyy-MM-dd(E) HH:mm:ss"/></span>
+				    <select name="cate_no">
+				    	<c:forEach var="c" items="${cateList}">
+				    	<option value="${c.cate_no}" <c:if test="${c.cate_no == dto.cate_no}">selected</c:if>>${c.cate_name}</option>
+				    	</c:forEach>
+				    </select>
 				</td>
 				<td>공개여부</td>
 				<td class="txt_item">
@@ -72,18 +66,21 @@
 			<tr class="outline">
 				<td>썸네일수정</td>
 				<td class="file-box">
-					<input type="file" name="filename">
-					<c:if test="${dto.filesize > 0}">
-						<br><input type="checkbox" name="fileDel">썸네일 삭제 (${dto.filename})
-					</c:if>
+					<input type="file" id="filename" name="filename" onchange="uploadFileCheck()">
 				</td>
 				<td>미리보기</td>
 				<c:choose>
 					<c:when test="${dto.filesize > 0}">
-						<td class="thumb"><img src="${path}/resources/static/upload/${dto.filename}"></td>
+						<td class="thumb">
+							<img src="${path}/upload/content/${dto.filename}">
+							<input type="checkbox" name="fileDel">썸네일 삭제
+						</td>
 					</c:when>
 					<c:otherwise>
-						<td class="thumb"><img src="${path}/resources/static/images/no_thumb.png"></td>
+						<td class="thumb">
+							<img src="${path}/Admin/resources/asset/images/no_thumb.png">
+							업로드된 썸네일 없음
+						</td>
 					</c:otherwise>
 				</c:choose>
 			</tr>	
@@ -101,7 +98,6 @@
 			<tr>
 				<td colspan="4">
 					<input type="hidden" name="c_idx" value="${dto.c_idx}">
-					<input type="hidden" name="board_no" value="${dto.board_no}">
 					<input type="button" id="btnSave" value="게시글 수정">		
 				</td>
 			</tr>
@@ -117,11 +113,11 @@
 <script type="text/javascript">
 $(function(){
 	$("#btnDelete").click(function(){
-		deleteBoardSubmit(detailForm);
+		deleteContentsSubmit(detailForm);
 	});
 	
 	$("#btnSave").click(function(){
-		editBoardSubmit(detailForm);
+		editContentsSubmit(detailForm);
 	})
 
 	$("#content").summernote({

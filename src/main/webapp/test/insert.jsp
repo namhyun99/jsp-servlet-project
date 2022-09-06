@@ -15,11 +15,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<link rel="stylesheet" type="text/css" href="../Admin/resources/asset/css/summernote-lite.css">
+<link rel="stylesheet" type="text/css" href="../resources/asset/css/summernote-lite.css">
 
-<script type="text/javascript" src="../Admin/resources/asset/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../Admin/resources/asset/js/summernote-lite.js"></script>
-<script type="text/javascript" src="../Admin/resources/asset/js/summernote-ko-KR.js"></script>
+<script type="text/javascript" src="../resources/asset/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../resources/asset/js/summernote-lite.js"></script>
+<script type="text/javascript" src="../resources/asset/js/summernote-ko-KR.js"></script>
 
 <title>데이터 입력 테스트</title>
 
@@ -45,10 +45,44 @@ $(function() {
 		    ['view', ['codeview']]
 		  ],
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36']
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36'],
+		callbacks: {
+			onImageUpload : function(files){
+				$summernote.summernote('insertNode', imgNode);
+			}
+		}
 	});
-		
 });
+
+//summernote.image.upload
+$('#summernote').on('summernote.image.upload', function(we, files) {
+  // upload image to server and create imgNode...
+  console.log('Summernote is launched');
+  $summernote.summernote('insertNode', imgNode);
+});
+
+
+
+function sendFile(file, editor){
+	var data = new FormData();
+	data.append("file", file);
+	console.log(file);
+	console.log(typeof(file));
+	$.ajax({
+		data : data,
+		type : "post",
+		url : "${path}/pageTest/SummerNoteImageFile",
+		cache: false,
+		contentType : false,
+		processData : false,
+		enctype: 'multipart/form-data',
+		success : function(data){
+			console.log(data);
+			console.log(editor);
+			$(editor).summernote("insertImage",data.url);
+		}
+	});
+}
 
 
 function joinCheck(f){
@@ -67,38 +101,44 @@ function joinCheck(f){
 		}
 	});
 }
+
+function logout(){
+	
+	location.href= requset.getContextPath()
+	
+}
 </script>
 
 </head>
 <body>
 
-	<h2>회원등록</h2>
-	<form method="post" id="joinForm" action="${path}/pageTest/join.do" enctype="multipart/form-data">
-		아이디 <input id="userid" name="userid"> <br> 
-		비밀번호 <input name="passwd"> <br> 
-		이름 <input name="name"> <br> 
-		이메일 <input name="email"><br> 
-		전화번호 <input name="phone"><br>
-		프로필이미지 <input type="file" name="profile_img"> <br> 
-		<input type="checkbox" name="consent" value="Y">이용약관 동의 
-		<input type="checkbox" name="privacy" value="Y">개인정보약관 동의 <br> 
+<!-- 	<h2>회원등록</h2> -->
+<%-- 	<form method="post" id="joinForm" action="${path}/pageTest/join.do" enctype="multipart/form-data"> --%>
+<!-- 		아이디 <input id="userid" name="userid"> <br>  -->
+<!-- 		비밀번호 <input name="passwd"> <br>  -->
+<!-- 		이름 <input name="name"> <br>  -->
+<!-- 		이메일 <input name="email"><br>  -->
+<!-- 		전화번호 <input name="phone"><br> -->
+<!-- 		프로필이미지 <input type="file" name="profile_img"> <br>  -->
+<!-- 		<input type="checkbox" name="consent" value="Y">이용약관 동의  -->
+<!-- 		<input type="checkbox" name="privacy" value="Y">개인정보약관 동의 <br>  -->
 		
-		<input type="radio" name="authority" value="사용자">사용자 
-		<input type="radio" name="authority" value="관리자">관리자 <br> 
+<!-- 		<input type="radio" name="authority" value="사용자">사용자  -->
+<!-- 		<input type="radio" name="authority" value="관리자">관리자 <br>  -->
 		
-		<br>
-		<button type="button" onclick="joinCheck(joinForm)">가입하기</button>
-	</form>
+<!-- 		<br> -->
+<!-- 		<button type="button" onclick="joinCheck(joinForm)">가입하기</button> -->
+<!-- 	</form> -->
 
-	<br>
-	<hr>
+<!-- 	<br> -->
+<!-- 	<hr> -->
 	
-	<h2>게시판 생성</h2>
-	<form method="post" action="${path}/pageTest/insertBoard.do">
-		게시판 이름 <input name="title"> <br> 
-		게시판 설명 <input name="sub_title"><br><br>
-		<button>저장</button>
-	</form>
+<!-- 	<h2>게시판 생성</h2> -->
+<%-- 	<form method="post" action="${path}/pageTest/insertBoard.do"> --%>
+<!-- 		게시판 이름 <input name="title"> <br>  -->
+<!-- 		게시판 설명 <input name="sub_title"><br><br> -->
+<!-- 		<button>저장</button> -->
+<!-- 	</form> -->
 
 
 	<hr>

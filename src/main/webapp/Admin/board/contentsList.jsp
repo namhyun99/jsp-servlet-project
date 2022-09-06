@@ -20,7 +20,7 @@
 				<div class="search-order">
 					<div class="order-wrap">
 						<form method="get" id="orderForm" name="orderForm">
-							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${op}', '${keyword}')">
+							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
 								<option value="write_date"
 									<c:if test="${order=='write_date'}">selected</c:if>>작성일순</option>
 								<option value="view_cnt"
@@ -33,8 +33,8 @@
 					</div>
 					<div class="search-wrap">
 						<form method="post" id="searchForm" name="searchForm" action="${url}">
-							<select name="op" id="op">
-								<option value="subject" <c:if test="${op=='subject'}">selected</c:if>>제목</option>
+							<select name="searchkey" id="searchkey">
+								<option value="subject" <c:if test="${searchkey=='subject'}">selected</c:if>>제목</option>
 							</select>
 							<div class="search-input">
 								<input name="keyword" id="keyword" onkeypress="javascript:if(event.keyCode==13) listSearch(searchForm)">
@@ -57,6 +57,8 @@
 						<th>작성자</th>
 						<th>조회수</th>
 						<th>댓글수</th>
+						<th>카테고리</th>
+						<th>공개여부</th>
 						<th>작성일자</th>
 					</tr>
 				</thead>
@@ -69,17 +71,24 @@
 									<td>${dto.rn}</td>
 									<c:choose>
 										<c:when test="${dto.filename == '-'}">
-											<td class="thumb"><img src="${path}/resources/static/images/no_thumb.png"></td>
+											<td class="thumb"><img src="${path}/Admin/resources/asset/images/no_thumb.png"></td>
 										</c:when>
 										<c:otherwise>
-											<td class="thumb"><img src="${path}/resources/static/upload/${dto.filename}"></td>
+											<td class="thumb"><img src="${path}/upload/content/${dto.filename}"></td>
 										</c:otherwise>
 									</c:choose>
-									<td><a href="${path}/admin/board/editBoard?board_no=${dto.board_no}&c_idx=${dto.c_idx}">${dto.subject}</a></td>
+									<td><a href="${path}/admin/board/editContents?c_idx=${dto.c_idx}">${dto.subject}</a></td>
 									<td>${dto.userid}</td>
 									<td>${dto.view_cnt}</td>
 									<td>${dto.cmt_count}</td>
-									<td><fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd"/></td>
+									<td>${dto.cate_name}</td>
+									<td>
+										<c:if test="${dto.show == 'y'}">공개</c:if>
+										<c:if test="${dto.show == 'n'}">비공개</c:if>
+									</td>
+									<td>
+										<fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd"/>
+									</td>
 								</tr>
 								
 							</c:forEach>
@@ -98,8 +107,8 @@
 		
 		<!-- 버튼 -->
 		<div class="footer-btn-wrap">
-			<a href="${path}/admin/board/addBoard">
-				<img src="${path}/resources/static/images/btn_add.png" alt="추가하기">
+			<a href="${path}/admin/board/addContents">
+				<img src="${path}/Admin/resources/asset/images/btn_add.png" alt="추가하기">
 			</a>
 		</div>
 		

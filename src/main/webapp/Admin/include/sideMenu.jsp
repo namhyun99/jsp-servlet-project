@@ -30,7 +30,7 @@
 			<ul class="link">
 				<li><a href="${path}/admin/board/contents" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/contents')}">no</c:if>selected">컨텐츠 관리</a></li>
 				<li><a href="${path}/admin/board/notice" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/notice')}">no</c:if>selected">공지사항 관리</a></li>
-				<li><a href="${path}/admin/board/faq" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/faq')}">no</c:if>selected">FAQ</a></li>
+				<li><a href="${path}/admin/board/inquiry" class="txt-name <c:if test="${not fn:contains(url, '/admin/board/inquiry')}">no</c:if>selected">1:1문의관리</a></li>
 			</ul>
 		</div>
 			

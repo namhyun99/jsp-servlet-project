@@ -6,7 +6,7 @@
 
 <div id="content-view-wrap">
 	<div class="title">
-		<h2>게시판 글 작성</h2>
+		<h2>컨텐츠 글 작성</h2>
 	</div>
 	<form method="post" name="detailForm" enctype="multipart/form-data">
 		<table> 
@@ -15,12 +15,12 @@
             	<col width="80%">
             </colgroup>
 			<tr>
-				<td>게시판 선택</td>
+				<td>카테고리 선택</td>
 				<td colspan="1" class="input-box-noborder">
-					<select id="board_no" name="board_no">
+					<select id="cate_no" name="cate_no">
 						<option value="">선택</option>
-						<c:forEach var="b" items="${boardlist}">
-							<option value="${b.board_no}">${b.title}</option>
+						<c:forEach var="c" items="${cateList}">
+							<option value="${c.cate_no}">${c.cate_name}</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -39,7 +39,7 @@
 			<tr>
 				<td>썸네일등록</td>
 				<td class="input-box-noborder">
-					<input type="file" name="filename">
+					<input type="file" id="filename" name="filename" onchange="uploadFileCheck()">
 				</td>
 			</tr>	
 			<tr>
@@ -62,7 +62,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#btnAdd").click(function(){
-		writeBoardSubmit(detailForm);
+		writeContentsSubmit(detailForm);
 	});
 	
 	

@@ -18,7 +18,7 @@
 	<form method="post" name="detailForm" enctype="multipart/form-data">
 		<table> 
 			<tr>
-				<td colspan="2" class="thumb"><img src="${path}/resources/static/images/no_profile.png"></td>
+				<td colspan="2" class="thumb"><img src="${path}/Admin/resources/asset/images/no_profile.png"></td>
 			</tr>
 			<tr>
 				<td>권한*</td>
@@ -102,7 +102,7 @@
 			<tr>
 				<td>썸네일등록</td>
 				<td class="input-box-noborder">
-					<input type="file" name="profile_img">
+					<input type="file" id="filename" name="profile_img" onchange="uploadFileCheck()">
 				</td>
 			</tr>	
 			<tr>

@@ -49,6 +49,7 @@
 						<th style="width: 50%">제목</th>
 						<th>작성자</th>
 						<th>조회수</th>
+						<th>공개여부</th>
 						<th>작성일자</th>
 					</tr>
 				</thead>
@@ -62,6 +63,10 @@
 									<td><a href="${path}/admin/board/editBoard?board_no=${dto.board_no}&c_idx=${dto.c_idx}">${dto.subject}</a></td>
 									<td>${dto.userid}</td>
 									<td>${dto.view_cnt}</td>
+									<td>
+										<c:if test="${dto.show == 'y'}">공개</c:if>
+										<c:if test="${dto.show == 'n'}">비공개</c:if>
+									</td>
 									<td><fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd"/></td>
 								</tr>
 								
@@ -82,7 +87,7 @@
 		<!-- 버튼 -->
 		<div class="footer-btn-wrap">
 			<a href="${path}/admin/board/addBoard">
-				<img src="${path}/resources/static/images/btn_add.png" alt="추가하기">
+				<img src="${path}/Admin/resources/asset/images/btn_add.png" alt="추가하기">
 			</a>
 		</div>
 		

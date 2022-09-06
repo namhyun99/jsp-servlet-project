@@ -801,3 +801,44 @@ ul {
 #footer-wrap {
 	clear: both;
 }
+
+
+
+/* 에러페이지 */
+#error-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	width: 100%;
+	height: 100%;
+	background-color: #ececec;
+}
+
+#error-wrap .info {
+	text-align: center;
+}
+
+#error-wrap .info .title{
+	font-size : 7rem;
+	margin-bottom: 12px;
+}
+
+#error-wrap .info .desc{
+	font-size : 1.25rem;
+	line-height: 2rem;
+	font-weight: 300;
+}
+
+#error-wrap .info button {
+	width: 100%;
+	height: 48px;
+	margin-top: 12px;
+	background-color: var(--main-color);
+	font-size: 1rem;
+	color: var(--white-color);
+	border: 0;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: 0.3s;
+}
