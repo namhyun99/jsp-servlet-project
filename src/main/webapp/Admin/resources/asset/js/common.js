@@ -40,18 +40,18 @@ function getUrl() {
 }
 
 //페이지네이션
-function pagination(page, order, op, keyword) {
+function pagination(page, order, searchkey, keyword) {
 	var url = getUrl();
 	if (keyword != "") {
-		location.href = url + "?order=" + order + "&op="
-			+ op + "&keyword=" + keyword + "&page=" + page
+		location.href = url + "?order=" + order + "&searchkey="
+			+ searchkey + "&keyword=" + keyword + "&page=" + page
 	} else {
 		location.href = url + "?order=" + order + "&page=" + page;
 	}
 }
 
 //리스트 정렬
-function orderSelect(f, order, op, keyword) {
+function orderSelect(f, order, searchkey, keyword) {
 	var url = getUrl();
 	var order = $("#order").val();
 
@@ -61,8 +61,8 @@ function orderSelect(f, order, op, keyword) {
 		data: { "order": order },
 		success: function() {
 			if (keyword != "") {
-				location.href = url + "?order=" + order + "&op="
-					+ op + "&keyword=" + keyword;
+				location.href = url + "?order=" + order + "&searchkey="
+					+ searchkey + "&keyword=" + keyword;
 			} else {
 				f.submit();
 			}
@@ -298,8 +298,8 @@ function useridDuplicateCheck(){
 }
 
 
-//게시글 수정 
-function editBoardSubmit(f){
+//컨텐츠 게시글 수정 
+function editContentsSubmit(f){
 	var PATH = getContextPath();
 	var subject = $("#subject").val();
 	
@@ -308,29 +308,29 @@ function editBoardSubmit(f){
 		return false;
 	}
 	
-	f.action = PATH + "/admin/board/update.do";
+	f.action = PATH + "/admin/board/updateContents.do";
 	f.submit()
 }
 
-//게시글 삭제
-function deleteBoardSubmit(f){
+//컨텐츠 게시글 삭제
+function deleteContentsSubmit(f){
 	var PATH = getContextPath();
 	if(confirm("정말 삭제하시겠습니까?")){
-		f.action = PATH + "/admin/board/deleteBoard.do";
+		f.action = PATH + "/admin/board/deleteContents.do";
 		f.submit();
 	}	
 }
 
-
-//게시글 등록
-function writeBoardSubmit(f){
+//컨텐츠 게시글 등록
+function writeContentsSubmit(f){
 	var PATH = getContextPath();
-	var board_no = $("#board_no").val();
+	var cate_no = $("#cate_no").val();
 	var subject = $("#subject").val();
 	var show = $("#show");
 	
-	if(board_no == ""){
-		alert("게시판 선택은 필수 사항입니다.");
+	
+	if(cate_no == ""){
+		alert("카테고리 선택은 필수 사항입니다.");
 		return false;
 	}
 	
@@ -344,8 +344,66 @@ function writeBoardSubmit(f){
 		return false;
 	}
 	
-	f.action = PATH + "/admin/board/write.do";
+	f.action = PATH + "/admin/board/writeContents.do";
 	f.submit();
+}
+
+//파일 업로드 체크
+function uploadFileCheck(){
+	var maxSize = 10 * 1024 * 1024; //10MB
+	var filename = $("#filename").val();
+	var filesize = $("#filename")[0].files[0].size;
+	
+	if(filename != ""){
+		var ext = filename.split('.').pop().toLowerCase();
+		if($.inArray(ext, ['jpg','jpeg','gif','png']) == -1){
+			alert("jpg, gif, gpeg, png 파일만 업로드 할수 있습니다.");
+			$("#filename").val("");
+			return false;
+		};
+	}
+	
+	if(filesize > maxSize){
+		alert("첨부파일 사이즈는 10MB 이내로 등록 가능합니다.");
+		$("#filename").val("");
+		return false;
+	}
+}
+
+// 공지사항 글 작성
+function writeNoticeSubmit(f){
+	var PATH = getContextPath();
+	var title = $("#title").val();
+	
+	if(title == ""){
+		alert("제목은 필수입력 사항입니다.");
+		return false;
+	}
+	
+	f.action = PATH + "/admin/board/writeNotice.do";
+	f.submit();
+}
+
+function editNoticeSubmit(f){
+	var PATH = getContextPath();
+	var title = $("#title").val();
+	
+	if(title == ""){
+		alert("제목은 필수입력 사항입니다.");
+		return false;
+	}
+	
+	f.action = PATH + "/admin/board/updateNotice.do";
+	f.submit();
+}
+
+// 공지사항 글 삭제
+function deleteNoticeSubmit(f){
+	var PATH = getContextPath();
+	if(confirm("정말 삭제하시겠습니까?")){
+		f.action = PATH + "/admin/board/deleteNotice.do";
+		f.submit();
+	}	
 }
 
 

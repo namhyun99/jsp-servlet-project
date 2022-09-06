@@ -1,11 +1,10 @@
-package admin.dto;
+package dto;
 
 import java.util.Date;
 
 public class ContentsDTO {
 
 	private int c_idx; // 글번호
-	private int board_no; // 게시판 고유번호
 	private int cate_no; // 카테 고리번호
 	private int m_idx; // 작성자 번호
 	private String subject; // 제목
@@ -18,6 +17,7 @@ public class ContentsDTO {
 	private Date write_date; // 작성일자
 	private Date update_date; // 수정일자
 	private String ext; // 첨부파일의 확장자, 테이블에는 없음.(필요에 의해 임의추가)
+	private String cate_name; //카테고리 이름
 	private int cmt_count; // 댓글 갯수
 	private String userid; // 아이디
 	private int rn; // row넘버
@@ -29,14 +29,6 @@ public class ContentsDTO {
 
 	public void setC_idx(int c_idx) {
 		this.c_idx = c_idx;
-	}
-
-	public int getBoard_no() {
-		return board_no;
-	}
-
-	public void setBoard_no(int board_no) {
-		this.board_no = board_no;
 	}
 
 	public int getCate_no() {
@@ -159,12 +151,21 @@ public class ContentsDTO {
 		this.cmt_count = cmt_count;
 	}
 
+	public String getCate_name() {
+		return cate_name;
+	}
+
+	public void setCate_name(String cate_name) {
+		this.cate_name = cate_name;
+	}
+
 	@Override
 	public String toString() {
-		return "ContentsDTO [c_idx=" + c_idx + ", board_no=" + board_no + ", cate_no=" + cate_no + ", m_idx=" + m_idx
-				+ ", subject=" + subject + ", content=" + content + ", view_cnt=" + view_cnt + ", ip=" + ip + ", show="
-				+ show + ", filename=" + filename + ", filesize=" + filesize + ", write_date=" + write_date
-				+ ", update_date=" + update_date + ", ext=" + ext + ", userid=" + userid + ", rn=" + rn + "]";
+		return "ContentsDTO [c_idx=" + c_idx + ", cate_no=" + cate_no + ", m_idx=" + m_idx + ", subject=" + subject
+				+ ", content=" + content + ", view_cnt=" + view_cnt + ", ip=" + ip + ", show=" + show + ", filename="
+				+ filename + ", filesize=" + filesize + ", write_date=" + write_date + ", update_date=" + update_date
+				+ ", ext=" + ext + ", cate_name=" + cate_name + ", cmt_count=" + cmt_count + ", userid=" + userid
+				+ ", rn=" + rn + "]";
 	}
 
 }

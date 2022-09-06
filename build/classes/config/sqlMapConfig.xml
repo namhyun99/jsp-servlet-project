@@ -6,9 +6,11 @@
 <configuration>
   <!-- 알리아스 설정 -->
   <typeAliases>
-  	<typeAlias type="admin.dto.MemberDTO" alias="mDto"/>
-  	<typeAlias type="admin.dto.ContentsDTO" alias="cDto"/>
-  	<typeAlias type="admin.dto.BoardDTO" alias="bDto"/>
+  	<typeAlias type="dto.MemberDTO" alias="mDto"/>
+  	<typeAlias type="dto.ContentsDTO" alias="cDto"/>
+  	<typeAlias type="dto.NoticeDTO" alias="nDto"/>
+  	<typeAlias type="dto.InquiryDTO" alias="iDto"/>
+  	<typeAlias type="dto.CategoryDTO" alias="cateDto"/>
   </typeAliases>
   
   <!-- DB 연결 -->
@@ -24,7 +26,8 @@
   <!-- 주의 : 실제 sql quert가 있는 매퍼파일은 반드시 등록해야한다. -->
   <mappers>
   	<mapper resource="/admin/mapper/member.xml"/>
-  	<mapper resource="/admin/mapper/board.xml"/>
+  	<mapper resource="/admin/mapper/contents.xml"/>
+  	<mapper resource="/admin/mapper/notice.xml"/>
   </mappers>
 </configuration>
 

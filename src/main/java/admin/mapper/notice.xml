@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+
+  <!-- 컨텐츠 리스트 -->
+  <select id="getNoticeList" parameterType="map" resultType="nDto">
+  	select * 
+  	from (
+  		select A.*, rownum as rn
+  		from ( select n.f_idx, 
+  		n.title, 
+  		n.m_idx,
+  		m.userid, 
+  		n.view_cnt, 
+  		n.write_date,
+  		n.update_date
+  		from notice n join member m on n.m_idx = m.m_idx
+  		where ${searchkey} like #{keyword}
+  		order by ${order} desc) A
+  	) where rn between #{start} and #{end}
+  </select> 
+  
+  <!-- 컨텐츠 갯수 -->
+  <select id="getNoticeCount" parameterType="map" resultType="int">
+    select count(*) from notice
+    where ${searchkey} like #{keyword}
+  </select>
+  
+         
+  <!-- 게시글 조회 -->
+  <select id="detailNoticeVeiw" parameterType="map" resultType="nDto">
+  	select  
+        n.f_idx, 
+  		n.title, 
+        n.content,
+  		m.userid, 
+  		n.view_cnt, 
+  		n.write_date,
+  		n.update_date
+    from notice n join member m
+    on n.m_idx = m.m_idx
+  	where f_idx=#{f_idx}
+  </select>
+  
+ 
+  <!-- 게시물 업데이트 -->
+  <update id="updateNotice" parameterType="nDto">
+  	update notice 
+  	set title=#{title}, content=#{content}, update_date=#{update_date}
+  	where f_idx=#{f_idx}
+  </update>
+  
+  
+  <!-- 작성자 m_idx값 가져오기 -->
+  <select id="getM_idx" parameterType="String" resultType="int">
+  	select m_idx from member
+  	where userid=#{userid}
+  </select>
+  
+  <!-- 게시글 작성 -->
+  <insert id="writeNotice" parameterType="nDto">
+  	 insert into notice
+  	 (f_idx, m_idx, title, content)
+  	 values
+  	 ((select nvl(max(f_idx)+1,1) from notice)
+  	 ,#{m_idx}, #{title}, #{content})
+  </insert>
+  
+  <!-- 게시글 삭제 -->
+  <delete id="deleteNotice" parameterType="int">
+  	delete from notice
+  	where f_idx=#{f_idx}
+  </delete>
+  
+</mapper>
+

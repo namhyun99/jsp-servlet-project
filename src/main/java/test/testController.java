@@ -3,6 +3,7 @@ package test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,12 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import config.FileUpload;
 import admin.dao.MemberDAO;
-import admin.dto.MemberDTO;
+import dto.MemberDTO;
+import util.FileUpload;
 
 @WebServlet("/pageTest/*")
 public class testController extends HttpServlet {
@@ -151,6 +153,26 @@ public class testController extends HttpServlet {
 			if(result.equals(userid)) {
 				response.getWriter().write("false");
 			} 
+		
+		} else if(uri.indexOf("SummerNoteImageFile") != -1) {
+			
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.UPLOAD_PATH,
+					FileUpload.MAX_UPLOAD, "utf-8");
+//			
+//			
+			String filename = multi.getParameter("data");
+			System.out.println("filename :" + filename);
+
+			String originalFileName = multi.getOriginalFileName(filename);
+			System.out.println("originalFileName :" + originalFileName);
+
+			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+			System.out.println("extension :" + extension);
+
+			String savedFileName = UUID.randomUUID() + extension;
+			System.out.println("savedFileName :" + savedFileName);
+			
+			
 		}
 		
 	}

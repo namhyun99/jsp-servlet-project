@@ -13,16 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import admin.dao.MemberDAO;
-import admin.dto.MemberDTO;
-import config.FileUpload;
-import config.Pager;
+import dto.MemberDTO;
+import util.FileRenamePoicy;
+import util.FileUpload;
+import util.Pager;
 
-/**
- * Servlet implementation class AdminMemberController
- */
 @WebServlet("/admin/member/*")
 public class AdminMemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,18 +34,18 @@ public class AdminMemberController extends HttpServlet {
 		if (url.indexOf("userList") != -1) { // 회원목록 리스트
 
 			String order = request.getParameter("order");
-			String op = request.getParameter("op");
+			String searchkey = request.getParameter("searchkey");
 			String keyword = request.getParameter("keyword");
 			String authority = "사용자";
 
 			if (keyword == null)
 				keyword = "";
-			if (op == null)
-				op = "userid";
+			if (searchkey == null)
+				searchkey = "userid";
 			if (order == null)
 				order = "join_date";
 
-			int count = dao.getMemberCount(authority, op, keyword);
+			int count = dao.getMemberCount(authority, searchkey, keyword);
 
 			int curPage = 1;
 			if (request.getParameter("page") != null) {
@@ -58,13 +55,13 @@ public class AdminMemberController extends HttpServlet {
 			Pager pager = new Pager(count, curPage);
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
-			List<MemberDTO> list = dao.getMemberList(authority, start, end, order, op, keyword);
+			List<MemberDTO> list = dao.getMemberList(authority, start, end, order, searchkey, keyword);
 			
 			request.setAttribute("list", list);
 			request.setAttribute("page", pager);
 			request.setAttribute("count", count);
 			request.setAttribute("order", order);
-			request.setAttribute("op", op);
+			request.setAttribute("searchkey", searchkey);
 			request.setAttribute("keyword", keyword);
 
 			String page = "/Admin/userList.jsp";
@@ -73,18 +70,18 @@ public class AdminMemberController extends HttpServlet {
 			
 		} else if (url.indexOf("adminList") != -1) {
 			String order = request.getParameter("order");
-			String op = request.getParameter("op");
+			String searchkey = request.getParameter("searchkey");
 			String keyword = request.getParameter("keyword");
 			String authority = "관리자";
 
 			if (keyword == null)
 				keyword = "";
-			if (op == null)
-				op = "userid";
+			if (searchkey == null)
+				searchkey = "userid";
 			if (order == null)
 				order = "join_date";
 
-			int count = dao.getMemberCount(authority, op, keyword);
+			int count = dao.getMemberCount(authority, searchkey, keyword);
 			int curPage = 1;
 			if (request.getParameter("page") != null) {
 				curPage = Integer.parseInt(request.getParameter("page"));
@@ -94,13 +91,13 @@ public class AdminMemberController extends HttpServlet {
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
 
-			List<MemberDTO> list = dao.getMemberList(authority, start, end, order, op, keyword);
+			List<MemberDTO> list = dao.getMemberList(authority, start, end, order, searchkey, keyword);
 
 			request.setAttribute("list", list);
 			request.setAttribute("page", pager);
 			request.setAttribute("count", count);
 			request.setAttribute("order", order);
-			request.setAttribute("op", op);
+			request.setAttribute("searchkey", searchkey);
 			request.setAttribute("keyword", keyword);
 
 			String page = "/Admin/adminList.jsp";
@@ -122,8 +119,7 @@ public class AdminMemberController extends HttpServlet {
 			}
 
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
-					"utf-8", new DefaultFileRenamePolicy());
-
+					"utf-8", new FileRenamePoicy() );
 			int m_idx = Integer.parseInt(multi.getParameter("m_idx"));
 			String userid = multi.getParameter("userid");
 			String passwd = multi.getParameter("passwd");
@@ -183,10 +179,15 @@ public class AdminMemberController extends HttpServlet {
 
 		} else if (url.indexOf("deleteMember.do") != -1) {
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
-					"utf-8", new DefaultFileRenamePolicy());
+					"utf-8", new FileRenamePoicy());
 
-			int m_idx = Integer.parseInt(multi.getParameter("m_idx"));
+			int m_idx = Integer.parseInt(multi.getParameter("m_idx"));	
 			String authority = multi.getParameter("authority");
+			
+			//프로필 이미지 파일삭제
+			String filename = dao.getProfileImg(m_idx);
+			File f = new File(FileUpload.PRO_UPLOAD_PATH + filename);
+			f.delete();
 
 			dao.deleteMember(m_idx);
 
@@ -218,9 +219,9 @@ public class AdminMemberController extends HttpServlet {
 			}
 			
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH,
-					FileUpload.MAX_UPLOAD, "utf-8", new DefaultFileRenamePolicy());
-			
-			String userid = multi.getParameter("userid");
+					FileUpload.MAX_UPLOAD, "utf-8", new FileRenamePoicy());
+
+						String userid = multi.getParameter("userid");
 			String passwd = multi.getParameter("passwd");
 			String name = multi.getParameter("name");
 			String email1 = multi.getParameter("email1");

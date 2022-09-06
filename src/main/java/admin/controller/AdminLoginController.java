@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import admin.dao.MemberDAO;
-import admin.dto.MemberDTO;
-import config.BCrypt;
-import config.Common;
+import dto.MemberDTO;
+import util.BCrypt;
+import util.RandomPwd;
 
 /**
  * Servlet implementation class AdminLoginController
@@ -80,7 +80,7 @@ public class AdminLoginController extends HttpServlet {
 			dto.setEmail(email);
 			String result = dao.remindPwd(dto);
 			if(result != null) {
-				Common c = new Common();
+				RandomPwd c = new RandomPwd();
 				String passwd = c.getRandomPassword(10);
 				dto.setPasswd(passwd);
 				dao.updatePasswd(dto);

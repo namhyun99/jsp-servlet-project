@@ -1,9 +1,9 @@
-package config;
+package util;
 
 import java.security.SecureRandom;
 import java.util.Date;
 
-public class Common {
+public class RandomPwd {
 
 	public String getRandomPassword(int size) {
 		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',

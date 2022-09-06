@@ -32,7 +32,7 @@ function loginAction() {
 				$("#loginError").text("아이디 또는 비밀번호가 일치하지 않습니다.");
 				$("#loginError").show();
 			} else {
-				location.href = PATH + "/admin/main";
+				location.href = PATH + "/admin/member/userList";
 			}
 		},
 		beforeSend: function() {

@@ -36,7 +36,7 @@
   		select A.*, rownum as rn
   		from (
   			select * from member 
-  			where authority=#{authority} and ${op} like #{keyword}
+  			where authority=#{authority} and ${searchkey} like #{keyword}
   			order by ${order}
   			<if test="order == 'join_date'">desc</if>
   			<if test="order == 'name'">asc</if>
@@ -47,7 +47,7 @@
   <!-- 멤버 갯수 -->
   <select id="getMemberCount" resultType="int">
     select count(*) from member
-    where authority=#{authority} and ${op} like #{keyword}
+    where authority=#{authority} and ${searchkey} like #{keyword}
   </select>
   
   <!-- 아이디 중복 체크 -->

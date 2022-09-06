@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import config.BCrypt;
-import admin.dto.MemberDTO;
+import dto.MemberDTO;
 import mybatis.MybatisManager;
+import util.BCrypt;
 
 public class MemberDAO {
 
@@ -69,7 +69,7 @@ public class MemberDAO {
 	}
 
 	// 회원 멤버 리스트 불러오기
-	public List<MemberDTO> getMemberList(String authority, int start, int end, String order, String op,
+	public List<MemberDTO> getMemberList(String authority, int start, int end, String order, String searchkey,
 			String keyword) {
 		List<MemberDTO> list = null;
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
@@ -78,7 +78,7 @@ public class MemberDAO {
 			map.put("start", start);
 			map.put("end", end);
 			map.put("order", order);
-			map.put("op", op);
+			map.put("searchkey", searchkey);
 			map.put("keyword", "%" + keyword + "%");
 			list = session.selectList("member.getMemberList", map);
 		} catch (Exception e) {
@@ -101,12 +101,12 @@ public class MemberDAO {
 	}
 
 	// 멤버 갯수 가져오기
-	public int getMemberCount(String authority, String op, String keyword) {
+	public int getMemberCount(String authority, String searchkey, String keyword) {
 		int result = 0;
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("authority", authority);
-			map.put("op", op);
+			map.put("searchkey", searchkey);
 			map.put("keyword", "%" + keyword + "%");
 			result = (int) session.selectOne("member.getMemberCount", map);
 		} catch (Exception e) {
@@ -187,5 +187,4 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-
 }

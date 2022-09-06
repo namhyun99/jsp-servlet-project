@@ -1,4 +1,4 @@
-package config;
+package util;
 
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //

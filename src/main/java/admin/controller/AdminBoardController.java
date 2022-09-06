@@ -15,13 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import admin.dao.BoardDAO;
-import admin.dto.BoardDTO;
-import admin.dto.ContentsDTO;
-import config.FileUpload;
-import config.Pager;
+import admin.dao.ContentsDAO;
+import admin.dao.InquiryDAO;
+import admin.dao.NoticeDAO;
+import dto.CategoryDTO;
+import dto.ContentsDTO;
+import dto.NoticeDTO;
+import util.FileRenamePoicy;
+import util.FileUpload;
+import util.Pager;
 
 @WebServlet("/admin/board/*")
 public class AdminBoardController extends HttpServlet {
@@ -31,21 +34,23 @@ public class AdminBoardController extends HttpServlet {
 			throws ServletException, IOException {
 		String url = request.getRequestURL().toString();
 		String ctx = request.getContextPath();
-		BoardDAO dao = new BoardDAO();
-
+		ContentsDAO c_dao = new ContentsDAO();
+		NoticeDAO n_dao = new NoticeDAO();
+		InquiryDAO i_dao = new InquiryDAO();
+		
 		if (url.indexOf("contents") != -1) {
 			String order = request.getParameter("order");
-			String op = request.getParameter("op");
+			String searchkey = request.getParameter("searchkey");
 			String keyword = request.getParameter("keyword");
 
 			if (keyword == null)
 				keyword = "";
-			if (op == null)
-				op = "subject";
+			if (searchkey == null)
+				searchkey = "subject";
 			if (order == null)
 				order = "write_date";
 
-			int count = dao.getContestsCount(op, keyword);
+			int count = c_dao.getContestsCount(searchkey, keyword);
 
 			int curPage = 1;
 			if (request.getParameter("page") != null) {
@@ -55,112 +60,40 @@ public class AdminBoardController extends HttpServlet {
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
 
-			List<ContentsDTO> list = dao.getContentsList(start, end, order, op, keyword);
+			List<ContentsDTO> list = c_dao.getContentsList(start, end, order, searchkey, keyword);
 
 			request.setAttribute("list", list);
 			request.setAttribute("page", pager);
 			request.setAttribute("count", count);
 			request.setAttribute("order", order);
-			request.setAttribute("op", op);
+			request.setAttribute("searchkey", searchkey);
 			request.setAttribute("keyword", keyword);
 
 			String page = "/Admin/contentsList.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
-		} else if (url.indexOf("notice") != -1) {
-			String order = request.getParameter("order");
-			String op = request.getParameter("op");
-			String keyword = request.getParameter("keyword");
-
-			if (keyword == null)
-				keyword = "";
-			if (op == null)
-				op = "subject";
-			if (order == null)
-				order = "write_date";
-
-			int count = dao.getNoticeCount(op, keyword);
-
-			int curPage = 1;
-			if (request.getParameter("page") != null) {
-				curPage = Integer.parseInt(request.getParameter("page"));
-			}
-			Pager pager = new Pager(count, curPage);
-			int start = pager.getPageBegin();
-			int end = pager.getPageEnd();
-
-			List<ContentsDTO> list = dao.getNoticeList(start, end, order, op, keyword);
-
-			request.setAttribute("list", list);
-			request.setAttribute("page", pager);
-			request.setAttribute("count", count);
-			request.setAttribute("order", order);
-			request.setAttribute("op", op);
-			request.setAttribute("keyword", keyword);
-
-			String page = "/Admin/noticeList.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(page);
-			rd.forward(request, response);
-		
-		} else if (url.indexOf("faq") != -1) {
-			String order = request.getParameter("order");
-			String op = request.getParameter("op");
-			String keyword = request.getParameter("keyword");
-
-			if (keyword == null)
-				keyword = "";
-			if (op == null)
-				op = "subject";
-			if (order == null)
-				order = "write_date";
-
-			int count = dao.getFaqCount(op, keyword);
-
-			int curPage = 1;
-			if (request.getParameter("page") != null) {
-				curPage = Integer.parseInt(request.getParameter("page"));
-			}
-			Pager pager = new Pager(count, curPage);
-			int start = pager.getPageBegin();
-			int end = pager.getPageEnd();
-
-			List<ContentsDTO> list = dao.getFaqList(start, end, order, op, keyword);
-
-			request.setAttribute("list", list);
-			request.setAttribute("page", pager);
-			request.setAttribute("count", count);
-			request.setAttribute("order", order);
-			request.setAttribute("op", op);
-			request.setAttribute("keyword", keyword);
-
-			String page = "/Admin/faqList.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(page);
-			rd.forward(request, response);
-		
-		} else if(url.indexOf("editBoard") != -1) {
-			int board_no = Integer.parseInt(request.getParameter("board_no"));
+		} else if(url.indexOf("editContents") != -1) {
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 			
-			ContentsDTO dto = dao.detailBoardVeiw(board_no, c_idx);
-			String bdTitle = dao.getBoardTitle(dto.getBoard_no());
-
+			ContentsDTO dto = c_dao.detailContentsVeiw(c_idx);
+			List<CategoryDTO> cateList = c_dao.getCateName();
 			request.setAttribute("dto", dto);
-			request.setAttribute("bdTitle", bdTitle);
-			String page = "/Admin/editBoard.jsp";
+			request.setAttribute("cateList", cateList);
+			String page = "/Admin/editContents.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
-		} else if(url.indexOf("update.do") != -1) {
+		} else if(url.indexOf("updateContents.do") != -1) {
 			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if (!uploadDir.exists()) {
 				uploadDir.mkdir();
 			}
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.UPLOAD_PATH, FileUpload.MAX_UPLOAD,
-					"utf-8", new DefaultFileRenamePolicy());
+					"utf-8", new FileRenamePoicy());
 			
 			int c_idx = Integer.parseInt(multi.getParameter("c_idx"));
-			int board_no = Integer.parseInt(multi.getParameter("board_no"));
+			int cate_no = Integer.parseInt(multi.getParameter("cate_no"));
 			String subject = multi.getParameter("subject");
 			String content = multi.getParameter("content");
 			String show = multi.getParameter("show");
@@ -187,7 +120,7 @@ public class AdminBoardController extends HttpServlet {
 			
 			ContentsDTO dto = new ContentsDTO();
 			dto.setC_idx(c_idx);
-			dto.setBoard_no(board_no);
+			dto.setCate_no(cate_no);
 			dto.setSubject(subject);
 			dto.setContent(content);
 			dto.setShow(show);
@@ -196,7 +129,7 @@ public class AdminBoardController extends HttpServlet {
 			
 			if (filename == null || filename.trim().equals("")) {
 				// 새로운 썸네일이 없을때
-				ContentsDTO dto2 = dao.detailBoardVeiw(board_no, c_idx);
+				ContentsDTO dto2 = c_dao.detailContentsVeiw(c_idx);
 				String fName = dto2.getFilename();
 				int fSize = dto2.getFilesize();
 				dto.setFilename(fName);
@@ -210,44 +143,38 @@ public class AdminBoardController extends HttpServlet {
 			// 첨부파일 삭제
 			String fileDel = multi.getParameter("fileDel");
 			if (fileDel != null && fileDel.equals("on")) {
-				String fileName = dao.getFileName(c_idx);
+				String fileName = c_dao.getFileName(c_idx);
 				File f = new File(FileUpload.PRO_UPLOAD_PATH + fileName);
 				f.delete(); // 파일 삭제
 				dto.setFilename("-");
 				dto.setFilesize(0);
 			}
 			
-			dao.updateBoard(dto);
-
-			String page = " ";
-			if(board_no == 1) {
-				page = "/admin/board/notice";				
-			} else if(board_no == 2) {
-				page = "/admin/board/faq";
-			} else if(board_no == 5) {
-				page = "/admin/board/contents";
-			}
+			c_dao.updateContents(dto);
+			String page = "/admin/board/contents";
 			response.sendRedirect(ctx + page);
 		
-		} else if (url.indexOf("addBoard") != -1) {
-			List<BoardDTO> boardlist = dao.getBoardList();
-			request.setAttribute("boardlist", boardlist);
-			String page = "/Admin/addBoard.jsp";
+		} else if (url.indexOf("addContents") != -1) {
+			
+			List<CategoryDTO> cateList = c_dao.getCateName();
+			request.setAttribute("cateList", cateList);
+			
+			String page = "/Admin/addContents.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
-		} else if (url.indexOf("write.do") != -1) {
+		} else if (url.indexOf("writeContents.do") != -1) {
 			
 			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if (!uploadDir.exists()) {
 				uploadDir.mkdir();
 			}
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.UPLOAD_PATH, FileUpload.MAX_UPLOAD,
-					"utf-8", new DefaultFileRenamePolicy());
+					"utf-8", new FileRenamePoicy());
 			
-			int board_no = Integer.parseInt(multi.getParameter("board_no"));
 			String userid = multi.getParameter("userid");
-			int m_idx = dao.getM_idx(userid);
+			int m_idx = c_dao.getM_idx(userid);
+			int cate_no = Integer.parseInt(multi.getParameter("cate_no"));
 			String subject = multi.getParameter("subject");
 			String content = multi.getParameter("content");
 			String show = multi.getParameter("show");
@@ -273,8 +200,8 @@ public class AdminBoardController extends HttpServlet {
 			}
 			
 			ContentsDTO dto = new ContentsDTO();
-			dto.setBoard_no(board_no);
 			dto.setM_idx(m_idx);
+			dto.setCate_no(cate_no);
 			dto.setSubject(subject);
 			dto.setContent(content);
 			dto.setShow(show);
@@ -287,35 +214,114 @@ public class AdminBoardController extends HttpServlet {
 			dto.setFilename(filename);
 			dto.setFilesize(filesize);
 						
-			dao.writeBoard(dto);
+			c_dao.writeContents(dto);
 
-			String page = " ";
-			if(board_no == 1) {
-				page = "/admin/board/notice";				
-			} else if(board_no == 2) {
-				page = "/admin/board/faq";
-			} else if(board_no == 5) {
-				page = "/admin/board/contents";
-			}
+			String page = "/admin/board/contents";
 			response.sendRedirect(ctx + page);
 		
-		} else if (url.indexOf("deleteBoard.do") != -1) {
+		} else if (url.indexOf("deleteContents.do") != -1) {
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
-					"utf-8", new DefaultFileRenamePolicy());
+					"utf-8", new FileRenamePoicy());
 
 			int c_idx = Integer.parseInt(multi.getParameter("c_idx"));
-			int board_no = Integer.parseInt(multi.getParameter("board_no"));
-
-			dao.deleteBoard(c_idx);
+			//썸네일 이미지 삭제
+			String filename = c_dao.getFileName(c_idx);
+			File f = new File(FileUpload.UPLOAD_PATH + filename);
+			f.delete();
+					
+			c_dao.deleteContents(c_idx);
 			
-			String page = " ";
-			if(board_no == 1) {
-				page = "/admin/board/notice";				
-			} else if(board_no == 2) {
-				page = "/admin/board/faq";
-			} else if(board_no == 5) {
-				page = "/admin/board/contents";
+			String page = "/admin/board/contents";
+			response.sendRedirect(ctx + page);
+			
+		} else if (url.indexOf("notice") != -1) {
+			String order = request.getParameter("order");
+			String searchkey = request.getParameter("searchkey");
+			String keyword = request.getParameter("keyword");
+
+			if (keyword == null)
+				keyword = "";
+			if (searchkey == null)
+				searchkey = "title";
+			if (order == null)
+				order = "write_date";
+
+			int count = n_dao.getNoticeCount(searchkey, keyword);
+
+			int curPage = 1;
+			if (request.getParameter("page") != null) {
+				curPage = Integer.parseInt(request.getParameter("page"));
 			}
+			Pager pager = new Pager(count, curPage);
+			int start = pager.getPageBegin();
+			int end = pager.getPageEnd();
+
+			List<NoticeDTO> list = n_dao.getNoticeList(start, end, order, searchkey, keyword);
+
+			request.setAttribute("list", list);
+			request.setAttribute("page", pager);
+			request.setAttribute("count", count);
+			request.setAttribute("order", order);
+			request.setAttribute("searchkey", searchkey);
+			request.setAttribute("keyword", keyword);
+
+			String page = "/Admin/noticeList.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+		
+		}else if(url.indexOf("editNotice") != -1) {
+			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
+			NoticeDTO dto = n_dao.detailNoticeVeiw(f_idx);
+			request.setAttribute("dto", dto);
+			String page = "/Admin/editNotice.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+		
+		} else if(url.indexOf("updateNotice.do") != -1) {
+						
+			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
+			NoticeDTO dto = new NoticeDTO();
+			dto.setF_idx(f_idx);
+			dto.setTitle(title);
+			dto.setContent(content);
+			dto.setUpdate_date(new Date());
+			
+			n_dao.updateNotice(dto);
+			
+			String page = "/admin/board/notice";
+			response.sendRedirect(ctx + page);
+		
+		} else if (url.indexOf("addNotice") != -1) {
+			
+			String page = "/Admin/addNotice.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+		
+		} else if (url.indexOf("writeNotice.do") != -1) {
+			
+			String userid = request.getParameter("userid");
+			int m_idx = n_dao.getM_idx(userid);
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
+			NoticeDTO dto = new NoticeDTO();
+			dto.setM_idx(m_idx);
+			dto.setTitle(title);
+			dto.setContent(content);
+			
+			n_dao.writeNotice(dto);
+
+			String page = "/admin/board/notice";
+			response.sendRedirect(ctx + page);
+		
+		} else if (url.indexOf("deleteNotice.do") != -1) {
+
+			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
+			n_dao.deleteNotice(f_idx);
+			String page = "/admin/board/notice";
 			response.sendRedirect(ctx + page);
 		}
 

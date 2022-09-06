@@ -25,12 +25,7 @@ public class AdminMainController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 			
-		} else if(url.indexOf("main") != -1) { //관리자 메인		
-			String page = "/Admin/main.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(page);
-			rd.forward(request, response);
-		}
-	
+		} 	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
