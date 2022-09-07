@@ -26,6 +26,31 @@ $(function() {
 		$(".result-id").text("");
 		$(".result-pwd").text("");
 	});
+	
+	//서머노트 구현
+	$("#content").summernote({
+		height : 300,
+		minHeight : null,
+		maxHeight : null,
+		tabsize: 2,
+		focus : true,
+		lang : "ko-KR",
+		toolbar: [
+		    // [groupName, [list of button]]
+		    ['fontname', ['fontname']],
+		    ['fontsize', ['fontsize']],
+		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+		    ['color', ['forecolor','color']],
+		    ['table', ['table']],
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['height', ['height']],
+		    ['insert', ['link']],
+		    ['view', ['codeview']]
+		  ],
+		fontNames: ['맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36']
+	});
+	
 });
 
 
@@ -405,5 +430,38 @@ function deleteNoticeSubmit(f){
 		f.submit();
 	}	
 }
+
+
+// 답변 달러 갈기
+function replyInquirySubmit(f){
+	var PATH = getContextPath();
+	f.action = PATH + "/admin/board/replyInquiry";
+	f.submit();
+}
+
+// 답변 작성
+function writeReplyInquirySubmit(f){
+	var PATH = getContextPath();
+	var title = $("#title").val();
+	
+	if(title == ""){
+		alert("제목은 필수입력 사항입니다.");
+		return false;
+	}
+	
+	f.action = PATH + "/admin/board/writeReply.do";
+	f.submit();
+}
+
+// 1:1문의글 글 삭제
+function deleteInquirySubmit(f){
+	var PATH = getContextPath();
+	if(confirm("정말 삭제하시겠습니까?")){
+		f.action = PATH + "/admin/board/deleteInquiry.do";
+		f.submit();
+	}	
+}
+
+
 
 

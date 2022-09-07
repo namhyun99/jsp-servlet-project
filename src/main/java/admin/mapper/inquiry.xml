@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="inquiry">
+
+  <!-- 컨텐츠 리스트 -->
+  <select id="getInquiryList" parameterType="map" resultType="iDto">
+  	select * 
+  	from (
+  		select A.*, rownum as rn
+  		from ( select 
+  		i.i_idx, 
+  		i.title, 
+  		i.m_idx,
+  		m.userid, 
+  		i.view_cnt, 
+  		i.write_date,
+  		i.update_date,
+  		i.complete,
+  		i.show,
+  		i.ref,
+  		i.re_step,
+  		i.re_level
+  		from inquiry i join member m on i.m_idx = m.m_idx
+  		where ${searchkey} like #{keyword}
+  		order by ${order} desc) A
+  	) where rn between #{start} and #{end}
+  </select> 
+  
+  <!-- 컨텐츠 갯수 -->
+  <select id="getInquiryCount" parameterType="map" resultType="int">
+    select count(*) from inquiry
+    where ${searchkey} like #{keyword}
+  </select>
+  
+         
+  <!-- 게시글 조회 -->
+  <select id="detailInquiryVeiw" parameterType="map" resultType="iDto">
+  	select  
+  		i.i_idx, 
+  		i.title, 
+  		i.content,
+  		i.m_idx,
+  		m.userid, 
+  		i.view_cnt, 
+  		i.write_date,
+  		i.update_date,
+  		i.complete,
+  		i.show,
+  		i.ref,
+  		i.re_step,
+  		i.re_level
+    from inquiry i join member m
+    on i.m_idx = m.m_idx
+  	where i_idx=#{i_idx}
+  </select>
+  
+  <!-- 작성자 m_idx값 가져오기 -->
+  <select id="getM_idx" parameterType="String" resultType="int">
+  	select m_idx from member
+  	where userid=#{userid}
+  </select>
+  
+  <!-- 답글 순서 조성 -->
+  <update id="updateStep" parameterType="iDto">
+  	update inquiry
+  	set re_step = re_step+1
+  	where ref=#{ref} and re_step >= #{re_step}
+  </update>
+  
+  <!-- 답글 쓰기 -->
+  <insert id="writeReply" parameterType="iDto">
+  	insert into inquiry
+  	(i_idx, m_idx, title, content, ref, re_step, re_level, show, complete) 
+  	values ((select nvl(max(i_idx)+1,1) from inquiry),
+  	#{m_idx}, #{title}, #{content},
+  	#{ref}, #{re_step}, #{re_level},
+  	#{show}, #{complete})
+  </insert>
+  
+  <!-- 원글 답변완료 처리 -->
+  <update id="updateComplete" parameterType="map">
+  	update inquiry
+  	set complete=#{complete}
+  	where i_idx=#{i_idx}
+  </update>
+  
+  <!-- 문의 삭제 -->
+  <delete id="deleteInquiry" parameterType="int">
+  	delete from inquiry
+  	where i_idx=#{i_idx}
+  </delete>
+
+  
+</mapper>
+

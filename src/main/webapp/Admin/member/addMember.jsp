@@ -16,7 +16,11 @@
 		</c:choose>
 	</div>
 	<form method="post" name="detailForm" enctype="multipart/form-data">
-		<table> 
+		<table>
+			<colgroup>
+            	<col width="20%">
+            	<col width="80%">
+            </colgroup> 
 			<tr>
 				<td colspan="2" class="thumb"><img src="${path}/Admin/resources/asset/images/no_profile.png"></td>
 			</tr>
@@ -100,7 +104,7 @@
 				<td class="error-msg phone"></td>
 			</tr>
 			<tr>
-				<td>썸네일등록</td>
+				<td>프로필사진</td>
 				<td class="input-box-noborder">
 					<input type="file" id="filename" name="profile_img" onchange="uploadFileCheck()">
 				</td>

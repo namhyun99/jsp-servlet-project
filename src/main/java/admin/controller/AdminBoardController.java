@@ -21,6 +21,7 @@ import admin.dao.InquiryDAO;
 import admin.dao.NoticeDAO;
 import dto.CategoryDTO;
 import dto.ContentsDTO;
+import dto.InquiryDTO;
 import dto.NoticeDTO;
 import util.FileRenamePoicy;
 import util.FileUpload;
@@ -269,7 +270,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
-		}else if(url.indexOf("editNotice") != -1) {
+		} else if(url.indexOf("editNotice") != -1) {
 			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
 			NoticeDTO dto = n_dao.detailNoticeVeiw(f_idx);
 			request.setAttribute("dto", dto);
@@ -313,7 +314,6 @@ public class AdminBoardController extends HttpServlet {
 			dto.setContent(content);
 			
 			n_dao.writeNotice(dto);
-
 			String page = "/admin/board/notice";
 			response.sendRedirect(ctx + page);
 		
@@ -322,6 +322,95 @@ public class AdminBoardController extends HttpServlet {
 			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
 			n_dao.deleteNotice(f_idx);
 			String page = "/admin/board/notice";
+			response.sendRedirect(ctx + page);
+			
+		} else if (url.indexOf("inquiry") != -1) {
+			String order = request.getParameter("order");
+			String searchkey = request.getParameter("searchkey");
+			String keyword = request.getParameter("keyword");
+
+			if (keyword == null)
+				keyword = "";
+			if (searchkey == null)
+				searchkey = "title";
+			if (order == null)
+				order = "write_date";
+
+			int count = i_dao.getInquiryCount(searchkey, keyword);
+
+			int curPage = 1;
+			if (request.getParameter("page") != null) {
+				curPage = Integer.parseInt(request.getParameter("page"));
+			}
+			Pager pager = new Pager(count, curPage);
+			int start = pager.getPageBegin();
+			int end = pager.getPageEnd();
+
+			List<InquiryDTO> list = i_dao.getInquiryList(start, end, order, searchkey, keyword);
+
+			request.setAttribute("list", list);
+			request.setAttribute("page", pager);
+			request.setAttribute("count", count);
+			request.setAttribute("order", order);
+			request.setAttribute("searchkey", searchkey);
+			request.setAttribute("keyword", keyword);
+
+			String page = "/Admin/inquiryList.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+		
+		} else if(url.indexOf("viewInquiry") != -1) {
+			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
+			InquiryDTO dto = i_dao.detailInquiryVeiw(i_idx);
+			request.setAttribute("dto", dto);
+			String page = "/Admin/viewInquiry.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+		
+		} else if(url.indexOf("replyInquiry") != -1) {
+			
+			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
+			InquiryDTO dto = i_dao.detailInquiryVeiw(i_idx);
+			dto.setContent("==== 문의글의 내용 ==== \n <br> " + dto.getContent());
+			request.setAttribute("dto", dto);
+			String page = "/Admin/replyInquiry.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+			
+		} else if(url.indexOf("writeReply.do") != -1) {
+			
+			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
+			InquiryDTO dto = i_dao.detailInquiryVeiw(i_idx);
+			int ref = dto.getRef();
+			int re_step = dto.getRe_step()+1;
+			int re_level = dto.getRe_level()+1;
+			String userid = request.getParameter("userid");
+			int m_idx = i_dao.getM_idx(userid);
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			String complete = request.getParameter("complete");
+			String show = request.getParameter("show");
+			
+			dto.setM_idx(m_idx);
+			dto.setTitle(title);
+			dto.setContent(content);
+			dto.setComplete(complete);
+			dto.setShow(show);
+			dto.setRef(ref);
+			dto.setRe_step(re_step);
+			dto.setRe_level(re_level);
+			
+			i_dao.updateStep(ref, re_step); 
+			i_dao.writeReply(dto);
+			i_dao.updateComplete(i_idx, complete);
+			
+			String page = "/admin/board/inquiry";
+			response.sendRedirect(ctx + page);
+			
+		} else if (url.indexOf("deleteInquiry.do") != -1) {
+			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
+			i_dao.deleteInquiry(i_idx);
+			String page = "/admin/board/inquiry";
 			response.sendRedirect(ctx + page);
 		}
 

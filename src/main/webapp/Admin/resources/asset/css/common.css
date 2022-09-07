@@ -108,7 +108,6 @@ ul {
 
 .input-box-underline {
 	position: relative;
-	display: block;
 	width: 100%;
 }
 
@@ -555,7 +554,9 @@ ul {
 
 
 #btnSave,
-#btnAdd{
+#btnAdd,
+#btnReply,
+#btnWrtieReply{
 	width: 100%;
 	height: 48px;
 	margin-top: 10px;

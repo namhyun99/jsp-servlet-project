@@ -8,12 +8,13 @@ public class InquiryDTO {
 	private String title;
 	private String content;
 	private int ref;
-	private int rs_step;
+	private int re_step;
 	private int re_level;
 	private String show;
 	private Date write_date;
 	private Date update_date;
 	private String userid;
+	private String complete;
 	private int view_cnt;
 	private int rn;
 
@@ -57,12 +58,12 @@ public class InquiryDTO {
 		this.ref = ref;
 	}
 
-	public int getRs_step() {
-		return rs_step;
+	public int getRe_step() {
+		return re_step;
 	}
 
-	public void setRs_step(int rs_step) {
-		this.rs_step = rs_step;
+	public void setRe_step(int re_step) {
+		this.re_step = re_step;
 	}
 
 	public int getRe_level() {
@@ -105,6 +106,14 @@ public class InquiryDTO {
 		this.userid = userid;
 	}
 
+	public String getComplete() {
+		return complete;
+	}
+
+	public void setComplete(String complete) {
+		this.complete = complete;
+	}
+
 	public int getView_cnt() {
 		return view_cnt;
 	}
@@ -124,9 +133,9 @@ public class InquiryDTO {
 	@Override
 	public String toString() {
 		return "InquiryDTO [i_idx=" + i_idx + ", m_idx=" + m_idx + ", title=" + title + ", content=" + content
-				+ ", ref=" + ref + ", rs_step=" + rs_step + ", re_level=" + re_level + ", show=" + show
-				+ ", write_date=" + write_date + ", update_date=" + update_date + ", userid=" + userid + ", view_cnt="
-				+ view_cnt + ", rn=" + rn + "]";
+				+ ", ref=" + ref + ", re_step=" + re_step + ", re_level=" + re_level + ", show=" + show
+				+ ", write_date=" + write_date + ", update_date=" + update_date + ", userid=" + userid + ", complete="
+				+ complete + ", view_cnt=" + view_cnt + ", rn=" + rn + "]";
 	}
 
 }

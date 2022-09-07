@@ -17,7 +17,8 @@
 				<div class="search-order">
 					<div class="order-wrap">
 						<form method="get" id="orderForm" name="orderForm">
-							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${searchkey
+							<select name="order" id="order"
+								onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
 								<option value="name"
 									<c:if test="${order=='name'}">selected</c:if>>이름순</option>
 								<option value="join_date"
