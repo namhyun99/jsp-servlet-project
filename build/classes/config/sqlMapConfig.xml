@@ -29,6 +29,7 @@
   	<mapper resource="/admin/mapper/contents.xml"/>
   	<mapper resource="/admin/mapper/notice.xml"/>
   	<mapper resource="/admin/mapper/inquiry.xml"/>
+  	<mapper resource="/mapper/service.xml"/>
   </mappers>
 </configuration>
 

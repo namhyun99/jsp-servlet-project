@@ -17,10 +17,11 @@ public class ContentsDTO {
 	private Date write_date; // 작성일자
 	private Date update_date; // 수정일자
 	private String ext; // 첨부파일의 확장자, 테이블에는 없음.(필요에 의해 임의추가)
-	private String cate_name; //카테고리 이름
+	private String cate_name; // 카테고리 이름
 	private int cmt_count; // 댓글 갯수
 	private String userid; // 아이디
 	private int rn; // row넘버
+	private String profile_img;
 
 	// getter, setter ,toString
 	public int getC_idx() {
@@ -159,13 +160,21 @@ public class ContentsDTO {
 		this.cate_name = cate_name;
 	}
 
+	public String getProfile_img() {
+		return profile_img;
+	}
+
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
+
 	@Override
 	public String toString() {
 		return "ContentsDTO [c_idx=" + c_idx + ", cate_no=" + cate_no + ", m_idx=" + m_idx + ", subject=" + subject
 				+ ", content=" + content + ", view_cnt=" + view_cnt + ", ip=" + ip + ", show=" + show + ", filename="
 				+ filename + ", filesize=" + filesize + ", write_date=" + write_date + ", update_date=" + update_date
 				+ ", ext=" + ext + ", cate_name=" + cate_name + ", cmt_count=" + cmt_count + ", userid=" + userid
-				+ ", rn=" + rn + "]";
+				+ ", rn=" + rn + ", profile_img=" + profile_img + "]";
 	}
 
 }
