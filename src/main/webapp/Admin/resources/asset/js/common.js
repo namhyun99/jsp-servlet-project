@@ -382,7 +382,7 @@ function uploadFileCheck(){
 	if(filename != ""){
 		var ext = filename.split('.').pop().toLowerCase();
 		if($.inArray(ext, ['jpg','jpeg','gif','png']) == -1){
-			alert("jpg, gif, gpeg, png 파일만 업로드 할수 있습니다.");
+			alert("jpg, gif, jpeg, png 파일만 업로드 할수 있습니다.");
 			$("#filename").val("");
 			return false;
 		};
