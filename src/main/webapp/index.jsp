@@ -2,4 +2,4 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="./include/header.jsp" %>
-<c:redirect url="/main.do"></c:redirect>
+<c:redirect url="/main"></c:redirect>

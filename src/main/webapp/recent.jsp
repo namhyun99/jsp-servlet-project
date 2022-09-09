@@ -12,13 +12,13 @@
 <div id="contents-wrap" class="screen">
 	<nav id="nav">
 		<div class="option-wrap">
-			<span class="title"> 
-				<a href="${path}/main.do" class="selected"> 
+			<span> 
+				<a href="${path}/main" class="noselected"> 
 					<i class="fas fa-chart-line"></i> 트렌딩
 				</a>
 			</span> 
-			<span> 
-				<a href="${path}/recent" class="noselected"> 
+			<span class="title"> 
+				<a href="${path}/recent" class="selected"> 
 					<i class="far fa-clock"></i> 최신
 				</a>
 			</span> 

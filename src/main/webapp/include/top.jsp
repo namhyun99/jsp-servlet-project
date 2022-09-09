@@ -23,7 +23,7 @@ $(function(){
 	<div class="screen">
 		<header id="header">
 			<div class="logo">
-				<a href="${path}/main.do">
+				<a href="${path}/main">
 					<h1>Welog</h1>
 				</a>
 			</div>
@@ -34,7 +34,7 @@ $(function(){
 					</span>
 				</div>
 				<div class="search">
-					<a href="${path}/search.do">
+					<a href="${path}/search">
 						<span><i class="fas fa-search"></i></span>
 					</a>
 				</div>

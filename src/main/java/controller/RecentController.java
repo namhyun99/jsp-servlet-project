@@ -13,22 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import dao.BoardDAO;
 import dto.ContentsDTO;
 
-@WebServlet("/main")
-public class MainController extends HttpServlet {
+@WebServlet("/recent")
+public class RecentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
 		BoardDAO dao = new BoardDAO();
-		String order="view_cnt";		
+		String order="write_date";		
 		List<ContentsDTO> list = dao.getContentsList(order);
 		
 		request.setAttribute("list", list);
-		String page = "/main.jsp";
+		String page = "/recent.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
