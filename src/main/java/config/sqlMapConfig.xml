@@ -10,6 +10,7 @@
   	<typeAlias type="dto.ContentsDTO" alias="cDto"/>
   	<typeAlias type="dto.NoticeDTO" alias="nDto"/>
   	<typeAlias type="dto.InquiryDTO" alias="iDto"/>
+  	<typeAlias type="dto.ContentsCommentDTO" alias="cmtDto"/>
   	<typeAlias type="dto.CategoryDTO" alias="cateDto"/>
   </typeAliases>
   

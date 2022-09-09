@@ -77,7 +77,7 @@ public class MemberController extends HttpServlet {
 		} else if (uri.indexOf("logout.do") != -1) {
 			HttpSession session = request.getSession();
 			session.invalidate();
-			response.sendRedirect(ctx+"/main.do");		
+			response.sendRedirect(ctx+"/main");		
 		
 		} else if(uri.indexOf("actionID") != -1) { //아이디찾기
 			String name = request.getParameter("name");

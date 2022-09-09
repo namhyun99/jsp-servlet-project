@@ -68,5 +68,54 @@
     #{phone}, #{profile_img}, #{consent}, #{privacy}, #{authority})
   </insert>
   
+  
+  <!-- 컨텐츠 게시글 상세 조회 -->
+  <select id="getDetailContentsView" parameterType="int" resultType="cDto">
+  	select  
+        c.c_idx, 
+        c.cate_no,
+  		c.subject, 
+        c.content,
+  		m.userid, 
+  		c.view_cnt, 
+  		c.write_date,
+  		c.update_date,
+  		c.show,
+        c.filename,
+        c.filesize,
+        c.m_idx,
+        (select count(*) from contents_comment where c_idx= c.c_idx)cmt_count,
+        (select cate_name from category where cate_no=c.cate_no)cate_name   
+    from contents c join member m
+    on c.m_idx = m.m_idx
+  	where c_idx=#{c_idx}
+  </select>
+  
+  <!-- 댓글 리스트 조회 -->
+  <select id="getCommentList" parameterType="int" resultType="cmtDto">
+    select 
+      cc.cmt_idx,
+      cc.c_idx,
+      cc.writer,
+      cc.content,
+      cc.write_date,
+      m.userid,
+      m.profile_img
+      from contents_comment cc left join member m 
+      on cc.writer = m.userid where c_idx=#{c_idx}
+  </select>
+  
+  <!-- 댓글 추가 작성 -->
+  <insert id="addComment" parameterType="cmtDto">
+  	insert into contents_comment(cmt_idx, c_idx, writer, content)
+  	values(contents_comment_seq.nextval, #{c_idx}, #{writer}, #{content})  
+  </insert>
+  
+  <!-- 댓글 삭제 하기 -->
+  <delete id="deleteComment" parameterType="int">
+  	delete from contents_comment
+  	where cmt_idx=#{cmt_idx}
+  </delete>
+  
 </mapper>
 

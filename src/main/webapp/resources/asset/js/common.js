@@ -119,6 +119,56 @@ function uploadFileCheck() {
     }
 }
 
+//옵션 체크
 function myOptionList() {
     $(".option-list").toggleClass('on ');
+}
+
+
+//댓글 리스트 보기
+function showCommentList(c_idx){
+	var PATH = getContextPath();
+	$.ajax({
+		type : "post",
+		url : PATH + "/board/commentList.do",
+		data : {"c_idx" : c_idx},
+		success : function(result){
+			$(".comment-list").html(result);
+		}
+	});
+}
+
+
+// 댓글 작성하기
+function addCommentSubmit(c_idx){
+	var PATH = getContextPath();
+	var writer = $("#writer").val();
+	var content = $("#cmt_content").val();
+	console.log(c_idx);
+	
+	$.ajax({
+		type : "post",
+		url : PATH + "/board/addComment.do",
+		data : {"c_idx": c_idx , "writer" : writer , "content" : content},
+		success : function(){
+			$("#cmt_content").val(" ");
+			showCommentList(c_idx);
+		}
+	});
+}
+
+//댓글 삭제하기
+function deleteCommentSubmit(cmt_idx, c_idx){
+	var PATH = getContextPath();
+	
+	if(confirm("정말 삭제하겠습니까?")){
+		$.ajax({
+			type : "post",
+			url : PATH + "/board/deleteComment.do",
+			data : {"cmt_idx": cmt_idx},
+			success : function(){
+				showCommentList(c_idx);
+			}
+		});
+	}
 }

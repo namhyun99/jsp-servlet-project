@@ -144,8 +144,6 @@ body{
     background-color:  var(--bg-page1);
 }
 
-
-
 /* load 영역 */
 #load {
 	width: 100%;
@@ -912,6 +910,18 @@ body{
     border-bottom: 1px solid var(--bg-board-2);
 }
 
+#contents-view-wrap .contents p {
+	background-color: var(--bg-page1) !important;
+    color : var(--text-1) !important;
+}
+
+#contents-view-wrap .contents span {
+	background-color: var(--bg-page1) !important;
+    color : var(--text-1) !important;
+}
+
+
+
 #contents-view-wrap .other {
     margin-top: 9rem 0;
 }
@@ -980,6 +990,11 @@ body{
     cursor: pointer;
 }
 
+#contents-view-wrap .comment-wrap .btn-cmt button:disabled{
+	opacity: 0.5;
+	cursor: default;
+}
+
 #contents-view-wrap .comment-list .info-profile{
     display: flex;
     justify-content: space-between;
@@ -1016,14 +1031,24 @@ body{
 
 
 #contents-view-wrap .comment-list .comment-result {
-    margin: 1.7rem 0;
+    margin: 1rem 0;
     padding-bottom: 1rem;
     font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.7;
     color: var(--text-1);
     overflow-wrap: break-word;
+}
+
+#contents-view-wrap .comment-list .comment-control {
+
     border-bottom: 1px solid var(--gray-color-2);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+#contents-view-wrap .comment-list .comment-control a {
+	text-decoration: underline;
 }
 
 #contents-wrap .btn-back_to_top {
