@@ -117,5 +117,76 @@
   	where cmt_idx=#{cmt_idx}
   </delete>
   
+  <!-- 다른 콘텐츠 불러오기 -->
+  <select id="getOtherContentList" resultType="cDto">
+  select * 
+  	from (
+  		select A.*, rownum as rn
+  		from (select c.c_idx, 
+  		c.subject, 
+  		c.content,
+  		m.userid,
+  		m.profile_img,
+  		c.view_cnt, 
+  		c.show,
+        c.filename,
+        c.filesize
+  		from contents c join member m on c.m_idx = m.m_idx
+  	order by view_cnt desc) A
+  	) where rn between 1 and 6
+
+  </select>
+  
+  <!-- 조회수 증가 처리 -->
+  <update id="plusViewCount" parameterType="int">
+    update contents 
+    set view_cnt = view_cnt+1
+    where c_idx=${c_idx}
+  </update>
+  
+  <!-- 카테고리 리스트 가져오기 -->
+  <select id="getCateName" resultType="cateDto">
+    select * from category
+  </select>
+  
+  <!-- 작성자 m_idx값 가져오기 -->
+  <select id="getM_idx" parameterType="String"  resultType="int">
+  	select m_idx from member
+  	where userid=#{userid}
+  </select>
+  
+  <!-- 게시글 작성 -->
+  <insert id="insertContents" parameterType="cDto">
+  	 insert into contents
+  	 (c_idx, cate_no, m_idx, subject, content, ip, filename, filesize, show)
+  	 values
+  	 ((select nvl(max(c_idx)+1,1) from contents)
+  	 ,#{cate_no}, #{m_idx}, #{subject}
+  	 ,#{content}, #{ip}, #{filename}, #{filesize},
+  	 #{show})
+  </insert>
+  
+  <!-- 게시글 삭제 -->
+  <delete id="deleteContents" parameterType="int">
+  	delete from contents
+  	where c_idx=#{c_idx}
+  </delete>
+  
+  <!-- 파일이름 조회 -->
+  <select id="getFileName" parameterType="int" resultType="String">
+  	select filename from contents
+  	where c_idx=#{c_idx}
+  </select>
+  
+   <!-- 게시물 업데이트 -->
+  <update id="updateContents" parameterType="cDto">
+  	update contents 
+  	set cate_no=#{cate_no}, subject=#{subject}, content=#{content},
+  	show=#{show}, update_date=#{update_date}, ip=#{ip},
+  	filename=#{filename}, filesize=#{filesize}
+  	where c_idx=#{c_idx}
+  </update>
+  
+  
 </mapper>
 

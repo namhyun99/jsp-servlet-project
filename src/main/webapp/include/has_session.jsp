@@ -3,9 +3,9 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${sessionScope.userid == null}">
+<c:if test="${sessionScope.userid != null}">
 	<script>
-		alert("로그인하신 후 사용하세요.");
-		location.href="${path}/admin/login.do";
+		alert("이미 로그인 되어 있습니다.");
+		location.href="${path}/main.do";
 	</script>
 </c:if>

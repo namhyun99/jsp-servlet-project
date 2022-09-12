@@ -11,12 +11,9 @@ public class FileRenamePoicy implements FileRenamePolicy{
 		String name = f.getName();
 		String ext = "";
 		
-		System.out.println(name);
-		
 		int dot = name.lastIndexOf("."); //마지막 인덱스 값에 . 이없으면 -1
 		if(dot != -1) { 
 			ext = name.substring(dot);
-			System.out.println(ext);
 		} else {
 			ext = "";
 		}

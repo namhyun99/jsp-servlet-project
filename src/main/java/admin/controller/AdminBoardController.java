@@ -145,7 +145,7 @@ public class AdminBoardController extends HttpServlet {
 			String fileDel = multi.getParameter("fileDel");
 			if (fileDel != null && fileDel.equals("on")) {
 				String fileName = c_dao.getFileName(c_idx);
-				File f = new File(FileUpload.PRO_UPLOAD_PATH + fileName);
+				File f = new File(FileUpload.UPLOAD_PATH + fileName);
 				f.delete(); // 파일 삭제
 				dto.setFilename("-");
 				dto.setFilesize(0);
@@ -221,7 +221,7 @@ public class AdminBoardController extends HttpServlet {
 			response.sendRedirect(ctx + page);
 		
 		} else if (url.indexOf("deleteContents.do") != -1) {
-			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.UPLOAD_PATH, FileUpload.MAX_UPLOAD,
 					"utf-8", new FileRenamePoicy());
 
 			int c_idx = Integer.parseInt(multi.getParameter("c_idx"));

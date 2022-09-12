@@ -18,10 +18,19 @@
 		</div>
 
 		<div class="info">
-			<span class="writer">${dto.userid}</span> <span class="separator">·</span>
-			<span class="writer-date"> <fmt:formatDate
-					value="${dto.write_date}" pattern="yyyy년 M월 d일" />
+			<span class="writer">${dto.userid}</span> 
+			<span class="separator">·</span>
+			<span class="writer-date"> 
+			<fmt:formatDate	value="${dto.write_date}" pattern="yyyy년 M월 d일" />
 			</span>
+			<c:if test="${sessionScope.userid == dto.userid}">
+				<span class="separator">·</span>
+				<div class="control-btn">
+					<a href="${path}/board/edit?c_idx=${dto.c_idx}">수정</a>
+					<span>/</span>
+					<a onclick="deleteContentsSubmit('${dto.c_idx}')">삭제</a>
+				</div>
+			</c:if>
 		</div>
 
 		<article class="contents">
@@ -33,42 +42,26 @@
 
 		<div class="other">
 			<div class="other-title">
-				<h2>관심 있을 만한 포스트</h2>
+				<h3>관심 있을 만한 포스트</h3>
 			</div>
 			<div class="items-list">
-				<div class="items">
-					<img src="./resources/asset/images/thumb1.jpg">
-					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-						Ipsum, officiis.</p>
-				</div>
-				<div class="items">
-					<img src="./resources/asset/images/thumb2.jpg">
-					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-						Ipsum, officiis.</p>
-				</div>
-				<div class="items">
-					<img src="./resources/asset/images/thumb3.jpg">
-					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-						Ipsum, officiis.</p>
-				</div>
-				<div class="items">
-					<img src="./resources/asset/images/thumb4.jpg">
-					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-						Ipsum, officiis.</p>
-				</div>
-				<div class="items">
-					<img src="./resources/asset/images/thumb5.jpg">
-					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-						Ipsum, officiis.</p>
-				</div>
-				<div class="items">
-					<img src="./resources/asset/images/thumb6.jpg">
-					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-						Ipsum, officiis.</p>
-				</div>
+			<c:forEach var="otherDto" items="${list}">
+				<a href="${path}/board/view?c_idx=${otherDto.c_idx}">
+					<div class="items">
+						<c:choose>
+							<c:when test="${otherDto.filesize > 0}">
+								<img src="${path}/upload/content/${otherDto.filename}">
+							</c:when>
+							<c:otherwise>
+								<img src="${path}/resources/asset/images/no_thumb.png">
+							</c:otherwise>
+						</c:choose>
+						<p>${otherDto.subject}</p>
+					</div>
+				</a>
+			</c:forEach>
 			</div>
 		</div>
-
 		<div class="comment-wrap">
 			<div class="comment-title">
 				<h3>${dto.cmt_count}개의 댓글</h3>
@@ -98,9 +91,8 @@
 		</div>
 	</div>
 	<div class="btn-back_to_top">
-		<img src="${path}/resources/asset/images/arrow_up.png">
+		<img src="${path}/resources/asset/images/btn_up.png">
 	</div>
-
 </div>
 </body>
 

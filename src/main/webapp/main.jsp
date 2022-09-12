@@ -8,6 +8,13 @@
 <%@ include file="./include/header.jsp"%>
 <%@ include file="./include/top.jsp"%>
 
+
+<c:if test="${param.msg != null}">
+	<script>
+		alert('${param.msg}');
+	</script>
+</c:if>
+
 <!--contents-->
 <div id="contents-wrap" class="screen">
 	<nav id="nav">

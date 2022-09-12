@@ -172,3 +172,70 @@ function deleteCommentSubmit(cmt_idx, c_idx){
 		});
 	}
 }
+
+
+//게시글 작성하기
+function insertContentsSubmit(f){
+	var PATH = getContextPath();
+	var cate_no = $("#cate_no").val();
+	var subject = $("#subject").val();
+	var show = $("#show");
+	
+	
+	if(cate_no == ""){
+		alert("카테고리 선택은 필수 사항입니다.");
+		return false;
+	}
+	
+	if(subject == ""){
+		alert("제목은 필수입력 사항입니다.");
+		return false;
+	}
+	
+	if(!show.is(":checked")){
+		alert("공개/비굥개 여부를 체크해주세요.");
+		return false;
+	}
+	
+	f.action = PATH + "/board/insertContents.do";
+	f.submit();
+	
+}
+
+//게시글 수정하기
+function updateContentsSubmit(f){
+	var PATH = getContextPath();
+	var subject = $("#subject").val();
+	
+	if(subject == ""){
+		alert("제목은 필수 입력사항 입니다.");
+		return false;
+	}
+	
+	f.action = PATH + "/board/updateContents.do";
+	f.submit();
+}
+
+
+//게시글 삭제하기
+function deleteContentsSubmit(c_idx){
+	var PATH = getContextPath();
+	
+	if(confirm("정말 삭제하겠습니까?")){
+		$.ajax({
+			type : "post",
+			data : {"c_idx" : c_idx},
+			url : PATH + "/board/deleteContents.do",
+			success : function(data){
+				if(data == 'true'){
+					alert("삭제가 완료되었습니다.");
+					location.href= PATH + "/main";
+				} else {
+					location.href = PATH + "/error/error.jsp";
+				}
+			}
+		})
+	}
+}
+	
+

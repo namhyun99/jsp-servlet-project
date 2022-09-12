@@ -40,11 +40,11 @@ $(function(){
 				</div>
 				<c:choose>
 					<c:when test="${sessionScope.userid != null}">
-						<button type="button" id="btnWrite">글쓰기</button>
+						<button type="button" id="btnWrite" onclick="location.href='${path}/board/write'">글쓰기</button>
 						<div class="profile">
 							<a href="#" onclick="myOptionList()"> 
 							<c:choose>
-								<c:when test="${dto.profile_img != '-'}">
+								<c:when test="${profile_img != '-'}">
 									<img src="${path}/upload/profile/${profile_img}">
 								</c:when>
 								<c:otherwise>

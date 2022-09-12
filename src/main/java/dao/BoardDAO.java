@@ -2,8 +2,11 @@ package dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 
+import dto.CategoryDTO;
 import dto.ContentsCommentDTO;
 import dto.ContentsDTO;
 import mybatis.MybatisManager;
@@ -66,6 +69,101 @@ public class BoardDAO {
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
 			 session.delete("service.deleteComment", cmt_idx);
 			 session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//추천 콘텐츠 가져오기
+	public List<ContentsDTO> getOtherContentList() {
+		List<ContentsDTO> list =null;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			list = session.selectList("service.getOtherContentList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	//조회수 증가 처리
+	public void plusViewCount(int c_idx, HttpSession count_session) {
+		long view_time = 0;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			if(count_session.getAttribute("view_time_"+c_idx) != null) {
+				view_time = (long)count_session.getAttribute("view_time_"+c_idx);
+			}
+			long current_time = System.currentTimeMillis();
+			if(current_time - view_time > 5*1000) {
+				session.update("service.plusViewCount", c_idx);
+				session.commit();
+				count_session.setAttribute("view_tiem_"+c_idx, current_time);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//카테고리 리스트 가져오기
+	public List<CategoryDTO> getCateName() {
+		List<CategoryDTO> list =null;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			list = session.selectList("service.getCateName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	//m_idx 조회하기
+	public int getM_idx(String userid) {
+		int result = -1;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			result = session.selectOne("service.getM_idx", userid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//글작성 하기
+	public void insertContents(ContentsDTO dto) {
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			session.insert("service.insertContents", dto);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//파일이름 가져오기
+	public String getFileName(int c_idx) {
+		String result = "";
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			result = session.selectOne("service.getFileName", c_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	
+	//글삭제 하기
+	public int deleteContents(int c_idx) {
+		int result = 0;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			result = session.delete("service.deleteContents", c_idx);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//글수정 하기
+	public void updateContents(ContentsDTO dto) {
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			session.update("service.updateContents", dto);
+			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
