@@ -19,6 +19,11 @@ public class SearchController extends HttpServlet {
 		String page = "/search.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
+		
+		
+		String q = request.getParameter("q");
+		System.out.println(q);
+		
 	
 	}
 	

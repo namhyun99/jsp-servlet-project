@@ -5,6 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/no_session.jsp" %>
+
 
 <div id="contents-wrap" class="screen">
 	<div class="btn-back-icon">

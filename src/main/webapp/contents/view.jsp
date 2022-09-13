@@ -5,6 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/top.jsp"%>
+
 <script>
 	$(function(){
 		showCommentList('${dto.c_idx}');

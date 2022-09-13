@@ -313,4 +313,91 @@ function e_select(obj) {
     $("[name=email2]").val(obj.value);
 }
 
+//회원정보 수정
+function memberUpdateSubmit(f){
+	var PATH = getContextPath();
+	var passwd = $("#passwd").val();
+	var name = $("#name").val();
+	var email = $("#email").val();
+	var phone = $("#phone").val(); 	
+	
+	if(passwd == ""){
+		$("#passwd").addClass("error");
+		$(".error-msg.passwd").show();
+		$(".error-msg.passwd").text("비밃번호를 입력하세요");
+		return false;	
+		
+	} else if(!check["passwd-exp"].test(passwd)){
+		$("#passwd").addClass("error");
+		$(".error-msg.passwd").show();
+		$(".error-msg.passwd").text("비밀번호는 영문소문자,숫자,특수기호(!@#$%^*+=-)를 모두 사용해서 8~12자리로 입력하세요.");
+		return false;
+		
+	} else {
+		$("#passwd").removeClass("error");
+		$(".error-msg.passwd").hide();
+	}
+		
+		
+	if(name == ""){
+		$("#name").addClass("error");
+		$(".error-msg.name").show();
+		$(".error-msg.name").text("이름을 입력해주세요");
+		return false;
+		
+	}  else {
+		$("#name").removeClass("error");
+		$(".error-msg.name").hide();
+	}
+	
+	if(email == ""){
+		$("#email").addClass("error");
+		$(".error-msg.email").show();
+		$(".error-msg.email").text("이메일 주소를 입력해주세요");
+		return false;
+		
+	} else if(email != ""){
+		if(!check["email-exp"].test(email)){
+			$("#email").addClass("error");
+			$(".error-msg.email").show();
+			$(".error-msg.email").text("이메일 형식에 맞지 않습니다.");
+			return false;
+		}
+	} else {
+		$("#email").removeClass("error");
+		$(".error-msg.email").hide();
+	}
+	
+	if(phone == ""){
+		$("#phone").addClass("error");
+		$(".error-msg.phone").show();
+		$(".error-msg.phone").text("전화번호를 입력해주세요.");
+		return false;
+		
+	} else if(phone != ""){
+		if(!check["phone-exp"].test(phone) || phone.length < 10){
+			$("#phone").addClass("error");
+			$(".error-msg.phone").show();
+			$(".error-msg.phone").text("전화번호는 11자리 숫자만 입력해주세요.");
+			return false;
+		}
+		
+	} else {
+		$("#phone").removeClass("error");
+		$(".error-msg.phone").hide();
+	}
+
+	f.action = PATH + "/member/updateMember.do";
+	f.submit();
+}
+
+//회원정보 삭제
+function memberDeleteSubmit(f){
+	var PATH = getContextPath();
+	if(confirm("탈퇴시 작성한 글과 모든 정보가 삭제됩니다. \n 정말 탈퇴 하시겠습니까?")){
+		f.action = PATH + "/member/deleteMember.do";
+		f.submit();
+	}	
+}
+
 

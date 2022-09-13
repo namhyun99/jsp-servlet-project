@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.BoardDAO;
 import dto.ContentsDTO;
+import util.Pager;
 
 @WebServlet("/recent")
 public class RecentController extends HttpServlet {
@@ -21,10 +22,19 @@ public class RecentController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		BoardDAO dao = new BoardDAO();
+		int count = dao.getContentsCount();
+		int curPage = 1;
+		if (request.getParameter("page") != null) {
+			curPage = Integer.parseInt(request.getParameter("page"));
+		}
+		Pager pager = new Pager(count, curPage);
+		int start = pager.getPageBegin();
+		int end = pager.getPageEnd();
 		String order="write_date";		
-		List<ContentsDTO> list = dao.getContentsList(order);
-		
+		List<ContentsDTO> list = dao.getContentsList(start, end, order);
 		request.setAttribute("list", list);
+		request.setAttribute("page", pager);
+		request.setAttribute("count", count);
 		String page = "/recent.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);

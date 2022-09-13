@@ -90,4 +90,52 @@ public class MemberDAO {
 		}
 	}
 
+	// 회원정보 불러오기
+	public MemberDTO getMemberDetailView(int m_idx) {
+		MemberDTO dto = null;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			dto = session.selectOne("service.getMemberDetailView", m_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	// 첨부파일 이름 가져오기
+	public String getProfileImg(int m_idx) {
+		String result = "";
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			result = session.selectOne("service.getProfileImg", m_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 회원정보 업데이트
+	public void updateMember(MemberDTO dto, String dbPasswd) {
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+
+			if (!dto.getPasswd().equals(dbPasswd)) {
+				// 기존 비밀번호와 다르면 BCrypt 비밀번호 암호화
+				String passwd = BCrypt.hashpw(dto.getPasswd(), BCrypt.gensalt());
+				dto.setPasswd(passwd);
+			}
+			session.update("service.updateMember", dto);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 회원정보 삭제
+	public void deleteMember(int m_idx) {
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			session.delete("service.deleteMember", m_idx);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

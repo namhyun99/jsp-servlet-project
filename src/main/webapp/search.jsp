@@ -11,8 +11,12 @@
     <div class="sub-screen">
         <div class="search-form">
             <div class="icon"><i class="fas fa-search"></i></div>
-            <input id="search" name="keyword" placeholder="검색어를 입력하세요">
+            <input id="search" name="keyword" placeholder="검색어를 입력하세요" onkeyup="searchOnkeyUpHandler()" value="${param.q}">
         </div>
+    </div>
+    
+    <div class="search-result">
+    	
     </div>
 </body>
 </html>

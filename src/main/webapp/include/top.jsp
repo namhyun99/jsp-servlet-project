@@ -56,9 +56,9 @@ $(function(){
 						</div>
 						<div class="option-list">
 							<ul>
-								<li><a href="notice.html">공지사항</a></li>
-								<li><a href="qna.html">1:1문의</a></li>
-								<li><a href="mypage.html">설정</a></li>
+								<li><a href="${path}/board/notice">공지사항</a></li>
+								<li><a href="${path}/board/questions">문의하기</a></li>
+								<li><a href="${path}/member/setting?m_idx=${m_idx}">설정</a></li>
 								<li><a href="${path}/member/logout.do">로그아웃</a></li>
 								<c:if test="${authority == '관리자'}">
 									<li><a href="${path}/admin/member/userList">관리자 페이지</a>

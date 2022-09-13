@@ -34,17 +34,17 @@ public class MemberController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 
 		if (uri.indexOf("login") != -1) {
-			String page = "/login.jsp";
+			String page = "/account/login.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
 		} else if (uri.indexOf("remind") != -1) {
-			String page = "/remind.jsp";
+			String page = "/account/remind.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
 		} else if (uri.indexOf("join") != -1) {
-			String page = "/join.jsp";
+			String page = "/account/join.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
@@ -65,6 +65,7 @@ public class MemberController extends HttpServlet {
 					response.getWriter().print("false"); // ajax호출 결과값 보내기
 				} else { // admin이 맞다면..
 					HttpSession session = request.getSession();
+					session.setAttribute("m_idx", dto1.getM_idx());
 					session.setAttribute("userid", dto1.getUserid());
 					session.setAttribute("profile_img", dto1.getProfile_img());
 					session.setAttribute("name", dto1.getName());
@@ -173,6 +174,90 @@ public class MemberController extends HttpServlet {
 			String page = "/member/login";
 			String msg = URLEncoder.encode("가입완료! 로그인 부탁드립니다!", "utf-8");
 			response.sendRedirect(ctx + page + "?msg=" + msg);
+		
+		} else if(uri.indexOf("setting") != -1) {
+			
+			int m_idx = Integer.parseInt(request.getParameter("m_idx"));
+			MemberDTO dto = dao.getMemberDetailView(m_idx);
+			request.setAttribute("dto", dto);			
+			String page = "/mypage/setting.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(page);
+			rd.forward(request, response);
+		
+		} else if(uri.indexOf("updateMember.do") != -1) {
+			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
+			if (!uploadDir.exists()) {
+				uploadDir.mkdir();
+			}
+
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
+					"utf-8", new FileRenamePoicy() );
+			int m_idx = Integer.parseInt(multi.getParameter("m_idx"));
+			String userid = multi.getParameter("userid");
+			String passwd = multi.getParameter("passwd");
+			String name = multi.getParameter("name");
+			String email = multi.getParameter("email");
+			String phone = multi.getParameter("phone");
+			String profile_img = " ";
+
+			try {
+				Enumeration files = multi.getFileNames();
+				while (files.hasMoreElements()) {
+					String file1 = (String) files.nextElement();
+					profile_img = multi.getFilesystemName(file1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			MemberDTO dto = new MemberDTO();
+
+			dto.setM_idx(m_idx);
+			dto.setPasswd(passwd);
+			dto.setName(name);
+			dto.setEmail(email);
+			dto.setPhone(phone);
+
+			if (profile_img == null || profile_img.trim().equals("")) {
+				// 새로운 썸네일이 없을때
+				MemberDTO dto2 = dao.getMemberDetailView(m_idx);
+				String fName = dto2.getProfile_img();
+				dto.setProfile_img(fName);
+			} else {
+				// 새로운 썸네일이 있다면..
+				dto.setProfile_img(profile_img);
+			}
+
+			// 첨부파일 삭제
+			String fileDel = multi.getParameter("fileDel");
+			if (fileDel != null && fileDel.equals("on")) {
+				String profileImg = dao.getProfileImg(m_idx);
+				File f = new File(FileUpload.PRO_UPLOAD_PATH + profileImg);
+				f.delete(); // 파일 삭제
+				dto.setProfile_img("-");
+			}
+
+			String dbPasswd = dao.passwdCheck(userid);		
+			dao.updateMember(dto, dbPasswd);
+			String page = "/main";
+			response.sendRedirect(ctx + page);
+		
+		} else if (uri.indexOf("deleteMember.do") != -1) {
+			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
+					"utf-8", new FileRenamePoicy());
+
+			int m_idx = Integer.parseInt(multi.getParameter("m_idx"));	
+			
+			//프로필 이미지 파일삭제
+			String filename = dao.getProfileImg(m_idx);
+			File f = new File(FileUpload.PRO_UPLOAD_PATH + filename);
+			f.delete();
+
+			dao.deleteMember(m_idx);
+			HttpSession session = request.getSession();
+			session.invalidate();
+			String page = "/main";
+			response.sendRedirect(ctx + page);
 		}
 
 	}

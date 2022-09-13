@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.BoardDAO;
+import dao.MemberDAO;
 import dto.ContentsDTO;
+import dto.MemberDTO;
+import util.Pager;
 
 @WebServlet("/main")
 public class MainController extends HttpServlet {
@@ -21,10 +24,21 @@ public class MainController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		BoardDAO dao = new BoardDAO();
-		String order="view_cnt";		
-		List<ContentsDTO> list = dao.getContentsList(order);
+
+		int count = dao.getContentsCount();
+		int curPage = 1;
+		if (request.getParameter("page") != null) {
+			curPage = Integer.parseInt(request.getParameter("page"));
+		}
+		Pager pager = new Pager(count, curPage);
+		int start = pager.getPageBegin();
+		int end = pager.getPageEnd();
 		
+		String order="view_cnt";		
+		List<ContentsDTO> list = dao.getContentsList(start, end, order);
 		request.setAttribute("list", list);
+		request.setAttribute("page", pager);
+		request.setAttribute("count", count);
 		String page = "/main.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);

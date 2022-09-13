@@ -5,20 +5,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<%@ include file="./include/header.jsp"%>
-<%@ include file="./include/top.jsp"%>
+<c:if test="${param.msg != null}">
+	<script>
+		alert('${param.msg}');
+	</script>
+</c:if>
 
 <!--contents-->
 <div id="contents-wrap" class="screen">
 	<nav id="nav">
 		<div class="option-wrap">
-			<span> 
-				<a href="${path}/main" class="noselected"> 
+			<span class="title"> 
+				<a href="${path}/main.do" class="selected"> 
 					<i class="fas fa-chart-line"></i> 트렌딩
 				</a>
 			</span> 
-			<span class="title"> 
-				<a href="${path}/recent" class="selected"> 
+			<span> 
+				<a href="${path}/recent" class="noselected"> 
 					<i class="far fa-clock"></i> 최신
 				</a>
 			</span> 
@@ -74,10 +77,10 @@
 		</c:forEach>
 	</section>
 	
-    <%@ include file="../include/page.jsp" %>
+	<%@ include file="../include/page.jsp" %>
 </div>
 
 </body>
 </html>
 
-<%@ include file="./include/footer.jsp"%>
+

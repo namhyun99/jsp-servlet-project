@@ -5,7 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
+<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/has_session.jsp"%>
+<%@ include file="../include/top.jsp"%>
 
 <div id="contents-wrap" class="screen">
 	<div id="view-wrap">
@@ -98,9 +100,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" id="allCk">
-						전체동의 <input type="checkbox" id="consent" name="consent">
-						이용약관 <input type="checkbox" id="privacy" name="privacy">
+					<td colspan="2">
+					<input type="checkbox" id="allCk">
+						전체동의 <input type="checkbox" id="consent" name="consent" value="Y">
+						이용약관 <input type="checkbox" id="privacy" name="privacy" value="Y">
 						개인정보동의</td>
 				</tr>
 				<tr>

@@ -5,6 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/has_session.jsp" %>
+<%@ include file="../include/top.jsp"%>
+
 <div id="contents-wrap" class="screen">
 	<div id="remind-wrap">
 		<div class="tab-box">

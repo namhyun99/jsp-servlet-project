@@ -5,6 +5,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/has_session.jsp" %>
+<%@ include file="../include/top.jsp"%>
+
 
 <c:if test="${param.msg != null}">
 	<script>
@@ -28,7 +32,7 @@
 				</div>
 				<div class="input-box">
 					<input type="password" name="passwd" id="passwd"
-						placeholder="비밀번호를 입력해주세요">
+						placeholder="비밀번호를 입력해주세요" onkeypress="javascript:if(event.keyCode==13) loginAction()">
 				</div>
 				<p id="loginError" class="error-msg help error"></p>
 			</div>

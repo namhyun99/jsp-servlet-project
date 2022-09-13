@@ -237,5 +237,59 @@ function deleteContentsSubmit(c_idx){
 		})
 	}
 }
+
+//검색기능 구현
+function searchOnkeyUpHandler(){
+	var PATH = getContextPath();
+	var q = $("input[name='keyword']").val();
+	
+	
+	location.href= PATH + "/search?q="+q;
+	$("input[name='keyword']").val(q);
+	
+}
+
+//공지사항 및 1대1문의 내 검색 기능
+function listSearch(f){
+	f.submit();
+}
+
+
+//1대1 문의 작성하기
+function insertInquirySubmit(f){
+	var PATH = getContextPath();
+	var title = $("#title").val();
+	var show = $("input[name='show']");
+	
+	if(title == ""){
+		alert("제목은 필수입력 사항입니다.");
+		return false;
+	}
+	
+	if(!show.is(":checked")){
+		alert("공개/비공개 여부를 체크해주세요.");
+		return false;
+	}
+	
+	f.action = PATH + "/board/insertInquiry.do";
+	f.submit();
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
