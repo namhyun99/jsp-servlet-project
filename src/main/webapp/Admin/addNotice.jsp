@@ -3,6 +3,6 @@
 
 
 <%@ include file="./include/header.jsp" %>
-<%@ include file="./include/session_check.jsp" %>
+<%@ include file="./include/no_session.jsp" %>
 <%@ include file="./include/edit_top.jsp" %>
 <%@ include file="./board/addNotice.jsp" %>

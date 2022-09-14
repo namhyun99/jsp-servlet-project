@@ -2,4 +2,5 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="./include/header.jsp" %>
+<%@ include file="./include/has_session.jsp" %>
 <%@ include file="./login/login.jsp" %>
