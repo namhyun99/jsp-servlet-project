@@ -8,8 +8,8 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 public class FileRenamePoicy implements FileRenamePolicy{
 	@Override
 	public File rename(File f) {
-		String name = f.getName();
-		String ext = "";
+		String name = f.getName(); //업로드 파일명
+		String ext = ""; //확장자
 		
 		int dot = name.lastIndexOf("."); //마지막 인덱스 값에 . 이없으면 -1
 		if(dot != -1) { 
