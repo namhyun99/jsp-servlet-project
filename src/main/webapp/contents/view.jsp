@@ -23,6 +23,8 @@
 		<div class="info">
 			<span class="writer">${dto.userid}</span> 
 			<span class="separator">·</span>
+			<span class="cate-name">${dto.cate_name}</span>
+			<span class="separator">·</span>
 			<span class="writer-date"> 
 			<fmt:formatDate	value="${dto.write_date}" pattern="yyyy년 M월 d일" />
 			</span>

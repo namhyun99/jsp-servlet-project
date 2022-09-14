@@ -20,14 +20,9 @@
 				</div>
 				<div class="search-order">
 					<div class="search-wrap">
-						<form method="post" id="searchForm" name="searchForm"
-							action="${url}">
-							<select name="searchkey" id="searchkey">
-								<option value="title"
-									<c:if test="${searchkey=='title'}">selected</c:if>>제목</option>
-							</select>
+						<form method="post" name="searchForm" action="${url}">
 							<div class="search-input">
-								<input name="keyword" id="keyword"
+								<input name="keyword" id="keyword" placeholder="제목or내용or작성자를 입력해주세요"
 									onkeypress="javascript:if(event.keyCode==13) listSearch(searchForm)">
 							</div>
 							<div class="search-btn">

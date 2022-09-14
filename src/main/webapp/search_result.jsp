@@ -5,4 +5,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<c:forEach var="list" items="${list}">
+    ${list.subject} <br>
+    ${list.content} <br>
+    ${list.write_date }<br>
+    <br><br>
+</c:forEach>
 

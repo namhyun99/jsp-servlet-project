@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.BoardDAO;
+import dto.ContentsDTO;
+import util.Pager;
+
 @WebServlet("/search")
 public class SearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -16,15 +21,30 @@ public class SearchController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 	
+		BoardDAO dao = new BoardDAO();
+		String keyword = request.getParameter("keyword");
+		if(keyword == null) keyword = ""; 
+		int count = dao.getSearchCount(keyword);
+		
+		int curPage = 1;
+		if (request.getParameter("page") != null) {
+			curPage = Integer.parseInt(request.getParameter("page"));
+		}
+		Pager pager = new Pager(count, curPage);
+		int start = pager.getPageBegin();
+		int end = pager.getPageEnd();
+		String order="write_date";	
+		
+		List<ContentsDTO> list = dao.getSearchList(start, end, order, keyword);
+		request.setAttribute("list", list);
+		request.setAttribute("page", pager);
+		request.setAttribute("count", count);
+		request.setAttribute("keyword", keyword);
+		
 		String page = "/search.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
 		
-		
-		String q = request.getParameter("q");
-		System.out.println(q);
-		
-	
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 

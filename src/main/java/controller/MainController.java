@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.BoardDAO;
 import dao.MemberDAO;
+import dto.CategoryDTO;
 import dto.ContentsDTO;
 import dto.MemberDTO;
 import util.Pager;
@@ -33,8 +34,8 @@ public class MainController extends HttpServlet {
 		Pager pager = new Pager(count, curPage);
 		int start = pager.getPageBegin();
 		int end = pager.getPageEnd();
+		String order="view_cnt";	
 		
-		String order="view_cnt";		
 		List<ContentsDTO> list = dao.getContentsList(start, end, order);
 		request.setAttribute("list", list);
 		request.setAttribute("page", pager);

@@ -34,15 +34,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td>게시글 공개여부</td>
-					<td class="input-box-noborder">
-					<input type="radio" id="show" name="show" value="y">공개 
-					<input type="radio" id="show" name="show" value="n">비공개</td>
+					<td colspan="2">
+						<input type="hidden" name="userid" value="${sessionScope.userid}"> 
+						<input type="button" id="btnAdd" value="문의 작성" onclick="insertInquirySubmit(detailForm)">
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="hidden" name="userid" value="${sessionScope.userid}"> 
-						<input type="button" id="btnAdd" value="게시글 작성" onclick="insertInquirySubmit(detailForm)">
+						<input type="button" id="btnList" value="다른 문의 목록 보기" onclick="location.href='${path}/board/inquiry'">
 					</td>
 				</tr>
 			</table>

@@ -201,6 +201,7 @@ body{
 	margin : 0.25rem 0;
     font-size: 1rem;
 	border-bottom: 1px solid var(--gray-color-5);
+	background-color: var(--bg-board-1);
     color: var(--text-1);
 }
 
@@ -219,6 +220,7 @@ body{
 	margin : 0.25rem 0;
 	font-size: 1rem;
 	border-bottom: 1px solid var(--gray-color-5);
+	background-color: var(--bg-board-1);
     color: var(--text-1);
 }
 
@@ -245,6 +247,7 @@ body{
 	margin : 0.25rem 0;
 	font-size: 1rem;
 	border-bottom: 1px solid var(--gray-color-5);
+	background-color: var(--bg-board-1);
     color: var(--text-1);
 }
 
@@ -268,6 +271,10 @@ body{
 
 .input-box input:hover{
 	border: 1px solid var(--gray-color-6);
+}
+
+.input-box input:disabled {
+	color: var(--text-1);
 }
 
 .help {
@@ -596,6 +603,16 @@ body{
     outline: none;
 }
 
+.search_count {
+	margin : 1rem 0;
+	font-size : 1rem;
+	color: var(--text-1);
+}
+
+.search_count span {
+	font-weight: 700;
+}
+
 
 
 /* 로그인 페이지 영역 */
@@ -670,13 +687,17 @@ body{
 /* 회원가입 */
 
 #view-wrap {
-    width: 600px;
+    width: 800px;
 	margin : 1rem auto;
-    padding: 2rem 3rem;
     border-radius: 5%;
     color: var(--text-1);
     background-color: var(--bg-board-1);
     box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+}
+
+#view-wrap .title {
+	padding-top: 2rem;
+	padding-left: 2rem;
 }
 
 #view-wrap .title .sub {
@@ -687,6 +708,7 @@ body{
 
 #view-wrap table {
 	width: 100%;
+	padding: 0 2rem 2rem;
 }
 
 #view-wrap .thumb{
@@ -726,7 +748,8 @@ body{
     cursor: pointer; 
 }
 
-#btnDelete {
+#btnDelete,
+#btnList {
 	width: 100%;
 	height: 48px;
 	margin-top: 10px;
@@ -1226,13 +1249,13 @@ body{
 	background-color: var(--gray-color-2);
 	border-top: 3px solid var(--gray-color-6);
 	border-bottom: 1px solid var(--gray-color-6);
-	height: 3rem;
+	height: 2.5rem;
 }
 
 #board-list-wrap .main-content table tbody tr {
-	height: 4rem;
+	height: 3.5rem;
 	border-bottom: 1px dotted var(--gray-color-6);
-	background-color: var(--bg-page-2);
+	background-color: var(--bg-board-1);
 	color: var(--text-1);
 }
 
@@ -1280,7 +1303,7 @@ body{
     .screen {
         width: 1376px;
     }
-}
+    }
 
 @media screen and (max-width: 1440px) {
     .screen {
@@ -1314,6 +1337,26 @@ body{
 
 
 @media screen and (max-width: 860px) {
+    .sub-screen {
+    	width: 90%;
+    }
+    
+    .sub-screen .search-form {
+    	height: 3.5rem
+    }
+    
+    .sub-screen .search-form input {
+    	font-size : 1.2rem;
+    	line-height: 1.5rem;
+    	height: 1.5rem
+    }
+   
+   
+   	#view-wrap {
+   		width: 100%;
+   	}
+   	
+   
     #contents-view-wrap {
         width: 100%;
     }

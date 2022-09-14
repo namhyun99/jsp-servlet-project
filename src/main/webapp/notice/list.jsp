@@ -18,26 +18,10 @@
 					</h2>
 				</div>
 				<div class="search-order">
-					<div class="order-wrap">
-						<form method="get" id="orderForm" name="orderForm">
-							<select name="order" id="order"
-								onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
-								<option value="write_date"
-									<c:if test="${order=='write_date'}">selected</c:if>>작성일순</option>
-								<option value="view_cnt"
-									<c:if test="${order=='view_cnt'}">selected</c:if>>조회수높은순</option>
-							</select>
-						</form>
-					</div>
 					<div class="search-wrap">
-						<form method="post" id="searchForm" name="searchForm"
-							action="${url}">
-							<select name="searchkey" id="searchkey">
-								<option value="title"
-									<c:if test="${searchkey=='title'}">selected</c:if>>제목</option>
-							</select>
+						<form method="post" name="searchForm" action="${url}">
 							<div class="search-input">
-								<input name="keyword" id="keyword"
+								<input name="keyword" id="keyword" placeholder="제목or내용or작성자를 입력해주세요"
 									onkeypress="javascript:if(event.keyCode==13) listSearch(searchForm)">
 							</div>
 							<div class="search-btn">

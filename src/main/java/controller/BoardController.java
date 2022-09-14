@@ -251,19 +251,10 @@ public class BoardController extends HttpServlet {
 				rd.forward(request, response);
 
 			} else {
-				String order = request.getParameter("order");
-				String searchkey = request.getParameter("searchkey");
+				
 				String keyword = request.getParameter("keyword");
-
-				if (keyword == null)
-					keyword = "";
-				if (searchkey == null)
-					searchkey = "title";
-				if (order == null)
-					order = "write_date";
-
-				int count = dao.getNoticeCount(searchkey, keyword);
-
+				if (keyword == null) keyword = "";
+				int count = dao.getNoticeCount(keyword);
 				int curPage = 1;
 				if (request.getParameter("page") != null) {
 					curPage = Integer.parseInt(request.getParameter("page"));
@@ -272,13 +263,11 @@ public class BoardController extends HttpServlet {
 				int start = pager.getPageBegin();
 				int end = pager.getPageEnd();
 
-				List<NoticeDTO> list = dao.getNoticeList(start, end, order, searchkey, keyword);
+				List<NoticeDTO> list = dao.getNoticeList(start, end, keyword);
 
 				request.setAttribute("list", list);
 				request.setAttribute("page", pager);
 				request.setAttribute("count", count);
-				request.setAttribute("order", order);
-				request.setAttribute("searchkey", searchkey);
 				request.setAttribute("keyword", keyword);
 
 				String page = "/notice/list.jsp";
@@ -301,18 +290,9 @@ public class BoardController extends HttpServlet {
 				rd.forward(request, response);
 
 			} else {
-				String order = request.getParameter("order");
-				String searchkey = request.getParameter("searchkey");
 				String keyword = request.getParameter("keyword");
-
-				if (keyword == null)
-					keyword = "";
-				if (searchkey == null)
-					searchkey = "title";
-				if (order == null)
-					order = "write_date";
-
-				int count = dao.getInquiryCount(searchkey, keyword);
+				if (keyword == null) keyword = "";
+				int count = dao.getInquiryCount(keyword);
 
 				int curPage = 1;
 				if (request.getParameter("page") != null) {
@@ -322,13 +302,11 @@ public class BoardController extends HttpServlet {
 				int start = pager.getPageBegin();
 				int end = pager.getPageEnd();
 
-				List<InquiryDTO> list = dao.getInquiryList(start, end, order, searchkey, keyword);
+				List<InquiryDTO> list = dao.getInquiryList(start, end, keyword);
 
 				request.setAttribute("list", list);
 				request.setAttribute("page", pager);
 				request.setAttribute("count", count);
-				request.setAttribute("order", order);
-				request.setAttribute("searchkey", searchkey);
 				request.setAttribute("keyword", keyword);
 
 				String page = "/inquiry/list.jsp";
@@ -347,13 +325,11 @@ public class BoardController extends HttpServlet {
 			int m_idx = dao.getM_idx(userid);
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			String show = request.getParameter("show");
 			
 			InquiryDTO dto = new InquiryDTO();
 			dto.setM_idx(m_idx);
 			dto.setTitle(title);
 			dto.setContent(content);
-			dto.setShow(show);
 			
 			dao.insertInquiry(dto);
 			

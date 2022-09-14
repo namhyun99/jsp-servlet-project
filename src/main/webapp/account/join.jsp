@@ -12,9 +12,8 @@
 <div id="contents-wrap" class="screen">
 	<div id="view-wrap">
 		<div class="title">
-			<h2>
-				회원가입<span class="sub">(* 는 필수 입력사항 입니다.)</span>
-			</h2>
+			<h2>회원가입</h2>
+			<span class="sub">(* 는 필수 입력사항 입니다.)</span>
 		</div>
 		<form method="post" name="detailForm" enctype="multipart/form-data">
 			<table>
