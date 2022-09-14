@@ -432,12 +432,14 @@ function deleteNoticeSubmit(f){
 }
 
 
-// 답변 달러 갈기
+// 답변 달러 가기
 function replyInquirySubmit(f){
 	var PATH = getContextPath();
 	f.action = PATH + "/admin/board/replyInquiry";
 	f.submit();
 }
+
+
 
 // 답변 작성
 function writeReplyInquirySubmit(f){

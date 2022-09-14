@@ -16,24 +16,6 @@
             	<col width="15%">
             	<col width="35%">
             </colgroup>
-			<tr class="outline">
-				<td>답변여부</td>
-				<td class="txt_item">
-					<select name="complete">
-						<option value="n" <c:if test="${dto.complete == 'n'}">selected</c:if>>답변전</option>
-						<option value="y" <c:if test="${dto.complete == 'y'}">selected</c:if>>답변완료</option>
-					</select>
-				</td>
-			</tr>
-			<tr class="outline">
-				<td>공개여부</td>
-				<td class="txt_item">
-					<select name="show">
-						<option value="y" <c:if test="${dto.show == 'y'}">selected</c:if>>공개</option>
-						<option value="n" <c:if test="${dto.show == 'n'}">selected</c:if>>비공개</option>
-					</select>
-				</td>
-			</tr>
 			<tr>
 				<td>제목</td>
 				<td colspan="3" class="input-box-underline">

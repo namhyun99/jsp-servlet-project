@@ -556,7 +556,8 @@ ul {
 #btnSave,
 #btnAdd,
 #btnReply,
-#btnWrtieReply{
+#btnWrtieReply,
+#btnReplyEdit{
 	width: 100%;
 	height: 48px;
 	margin-top: 10px;

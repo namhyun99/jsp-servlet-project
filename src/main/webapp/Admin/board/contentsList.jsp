@@ -19,8 +19,9 @@
 				</div>
 				<div class="search-order">
 					<div class="order-wrap">
-						<form method="get" id="orderForm" name="orderForm">
-							<select name="order" id="order" onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
+						<form name="orderForm">
+							<select name="order" id="order" 
+							    onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
 								<option value="write_date"
 									<c:if test="${order=='write_date'}">selected</c:if>>작성일순</option>
 								<option value="view_cnt"
@@ -32,9 +33,12 @@
 						</form>
 					</div>
 					<div class="search-wrap">
-						<form method="post" id="searchForm" name="searchForm" action="${url}">
+						<form name="searchForm">
 							<select name="searchkey" id="searchkey">
+								<option value="all" <c:if test="${searchkey=='all'}">selected</c:if>>전체</option>
 								<option value="subject" <c:if test="${searchkey=='subject'}">selected</c:if>>제목</option>
+								<option value="content" <c:if test="${searchkey=='content'}">selected</c:if>>내용</option>
+								<option value="userid" <c:if test="${searchkey=='userid'}">selected</c:if>>작성자</option>
 							</select>
 							<div class="search-input">
 								<input name="keyword" id="keyword" onkeypress="javascript:if(event.keyCode==13) listSearch(searchForm)">
@@ -71,10 +75,12 @@
 									<td>${dto.rn}</td>
 									<c:choose>
 										<c:when test="${dto.filename == '-'}">
-											<td class="thumb"><img src="${path}/Admin/resources/asset/images/no_thumb.png"></td>
+											<td class="thumb">
+											<img src="${path}/Admin/resources/asset/images/no_thumb.png"></td>
 										</c:when>
 										<c:otherwise>
-											<td class="thumb"><img src="${path}/upload/content/${dto.filename}"></td>
+											<td class="thumb">
+											<img src="${path}/upload/content/${dto.filename}"></td>
 										</c:otherwise>
 									</c:choose>
 									<td><a href="${path}/admin/board/editContents?c_idx=${dto.c_idx}">${dto.subject}</a></td>

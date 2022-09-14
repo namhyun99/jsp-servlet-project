@@ -17,15 +17,20 @@
   		n.write_date,
   		n.update_date
   		from notice n join member m on n.m_idx = m.m_idx
-  		where ${searchkey} like #{keyword}
+  		where title like #{keyword}
+  		or content like #{keyword}
+  		or userid like #{keyword}
   		order by ${order} desc) A
   	) where rn between #{start} and #{end}
   </select> 
   
   <!-- 컨텐츠 갯수 -->
   <select id="getNoticeCount" parameterType="map" resultType="int">
-    select count(*) from notice
-    where ${searchkey} like #{keyword}
+    select count(*)
+    from notice n join member m on n.m_idx = m.m_idx
+    where title like #{keyword}
+  	or content like #{keyword}
+  	or userid like #{keyword}
   </select>
   
          

@@ -47,7 +47,7 @@ public class AdminBoardController extends HttpServlet {
 			if (keyword == null)
 				keyword = "";
 			if (searchkey == null)
-				searchkey = "subject";
+				searchkey = "all";
 			if (order == null)
 				order = "write_date";
 
@@ -236,18 +236,12 @@ public class AdminBoardController extends HttpServlet {
 			response.sendRedirect(ctx + page);
 			
 		} else if (url.indexOf("notice") != -1) {
-			String order = request.getParameter("order");
-			String searchkey = request.getParameter("searchkey");
+			
+			String order = "write_date";
 			String keyword = request.getParameter("keyword");
+			if (keyword == null)keyword = "";
 
-			if (keyword == null)
-				keyword = "";
-			if (searchkey == null)
-				searchkey = "title";
-			if (order == null)
-				order = "write_date";
-
-			int count = n_dao.getNoticeCount(searchkey, keyword);
+			int count = n_dao.getNoticeCount(keyword);
 
 			int curPage = 1;
 			if (request.getParameter("page") != null) {
@@ -257,13 +251,12 @@ public class AdminBoardController extends HttpServlet {
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
 
-			List<NoticeDTO> list = n_dao.getNoticeList(start, end, order, searchkey, keyword);
+			List<NoticeDTO> list = n_dao.getNoticeList(start, end, order, keyword);
 
 			request.setAttribute("list", list);
 			request.setAttribute("page", pager);
 			request.setAttribute("count", count);
 			request.setAttribute("order", order);
-			request.setAttribute("searchkey", searchkey);
 			request.setAttribute("keyword", keyword);
 
 			String page = "/Admin/noticeList.jsp";
@@ -326,17 +319,12 @@ public class AdminBoardController extends HttpServlet {
 			
 		} else if (url.indexOf("inquiry") != -1) {
 			String order = request.getParameter("order");
-			String searchkey = request.getParameter("searchkey");
 			String keyword = request.getParameter("keyword");
 
-			if (keyword == null)
-				keyword = "";
-			if (searchkey == null)
-				searchkey = "title";
-			if (order == null)
-				order = "write_date";
+			if (keyword == null) keyword = "";
+			if (order == null) order = "all";
 
-			int count = i_dao.getInquiryCount(searchkey, keyword);
+			int count = i_dao.getInquiryCount(order, keyword);
 
 			int curPage = 1;
 			if (request.getParameter("page") != null) {
@@ -346,13 +334,12 @@ public class AdminBoardController extends HttpServlet {
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
 
-			List<InquiryDTO> list = i_dao.getInquiryList(start, end, order, searchkey, keyword);
+			List<InquiryDTO> list = i_dao.getInquiryList(start, end, order, keyword);
 
 			request.setAttribute("list", list);
 			request.setAttribute("page", pager);
 			request.setAttribute("count", count);
 			request.setAttribute("order", order);
-			request.setAttribute("searchkey", searchkey);
 			request.setAttribute("keyword", keyword);
 
 			String page = "/Admin/inquiryList.jsp";
@@ -388,14 +375,12 @@ public class AdminBoardController extends HttpServlet {
 			int m_idx = i_dao.getM_idx(userid);
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			String complete = request.getParameter("complete");
-			String show = request.getParameter("show");
+			String complete = "y";
 			
 			dto.setM_idx(m_idx);
 			dto.setTitle(title);
 			dto.setContent(content);
 			dto.setComplete(complete);
-			dto.setShow(show);
 			dto.setRef(ref);
 			dto.setRe_step(re_step);
 			dto.setRe_level(re_level);

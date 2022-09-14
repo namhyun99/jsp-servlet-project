@@ -12,14 +12,13 @@ import mybatis.MybatisManager;
 public class NoticeDAO {
 
 	// 공지사항 게시글 리스트 불러오기
-	public List<NoticeDTO> getNoticeList(int start, int end, String order, String searchkey, String keyword) {
+	public List<NoticeDTO> getNoticeList(int start, int end, String order, String keyword) {
 		List<NoticeDTO> list = null;
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("start", start);
 			map.put("end", end);
 			map.put("order", order);
-			map.put("searchkey", searchkey);
 			map.put("keyword", "%" + keyword + "%");
 			list = session.selectList("notice.getNoticeList", map);
 		} catch (Exception e) {
@@ -29,13 +28,10 @@ public class NoticeDAO {
 	}
 
 	// 공지사항 갯수
-	public int getNoticeCount(String searchkey, String keyword) {
+	public int getNoticeCount(String keyword) {
 		int result = 0;
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
-			Map<String, Object> map = new HashMap<>();
-			map.put("searchkey", searchkey);
-			map.put("keyword", "%" + keyword + "%");
-			result = (int) session.selectOne("notice.getNoticeCount", map);
+			result = (int) session.selectOne("notice.getNoticeCount", "%" + keyword + "%");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -23,15 +23,42 @@
   		i.re_step,
   		i.re_level
   		from inquiry i join member m on i.m_idx = m.m_idx
-  		where ${searchkey} like #{keyword}
-  		order by ${order} desc) A
+  		<choose>
+    	<when test="order != 'all'">
+    		where complete=#{order}
+	 		and (title like #{keyword}
+	  		or content like #{keyword}
+	  		or userid like #{keyword})
+    	</when>
+    	<otherwise>
+    		where title like #{keyword}
+	  		or content like #{keyword}
+	  		or userid like #{keyword}
+    	</otherwise>
+   		</choose>
+  		order by ref desc, re_step asc) A
   	) where rn between #{start} and #{end}
   </select> 
   
   <!-- 컨텐츠 갯수 -->
   <select id="getInquiryCount" parameterType="map" resultType="int">
-    select count(*) from inquiry
-    where ${searchkey} like #{keyword}
+    select count(*) from inquiry i join member m
+    on i.m_idx = m.m_idx
+    <choose>
+    	<when test="order != 'all'">
+    		where complete=#{order}
+	 		and (title like #{keyword}
+	  		or content like #{keyword}
+	  		or userid like #{keyword})
+    	</when>
+    	<otherwise>
+    		where title like #{keyword}
+	  		or content like #{keyword}
+	  		or userid like #{keyword}
+    	</otherwise>
+    </choose>
+    
+   
   </select>
   
          
@@ -72,11 +99,10 @@
   <!-- 답글 쓰기 -->
   <insert id="writeReply" parameterType="iDto">
   	insert into inquiry
-  	(i_idx, m_idx, title, content, ref, re_step, re_level, show, complete) 
+  	(i_idx, m_idx, title, content, ref, re_step, re_level, complete) 
   	values ((select nvl(max(i_idx)+1,1) from inquiry),
   	#{m_idx}, #{title}, #{content},
-  	#{ref}, #{re_step}, #{re_level},
-  	#{show}, #{complete})
+  	#{ref}, #{re_step}, #{re_level}, #{complete})
   </insert>
   
   <!-- 원글 답변완료 처리 -->

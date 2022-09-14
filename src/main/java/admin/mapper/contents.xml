@@ -23,15 +23,35 @@
   		(select count(*) from contents_comment where c_idx= c.c_idx)cmt_count,
   		(select cate_name from category where cate_no=c.cate_no)cate_name 
   		from contents c join member m on c.m_idx = m.m_idx
-  		where ${searchkey} like #{keyword}
+  		<choose>
+  		  <when test="searchkey != 'all'">
+  		  	where ${searchkey} like #{keyword}
+  		  </when>
+  		  <otherwise>
+  		  	where subject like #{keyword}
+  		  	or content like #{keyword}
+  		  	or userid like #{keyword}
+  		  </otherwise>
+  		</choose>
   		order by ${order} desc) A
   	) where rn between #{start} and #{end}
   </select> 
   
   <!-- 컨텐츠 갯수 -->
   <select id="getContentsCount" parameterType="map" resultType="int">
-    select count(*) from contents
-    where ${searchkey} like #{keyword}
+    select count(*) 
+    from contents c join member m 
+    on c.m_idx = m.m_idx
+    <choose>
+      <when test="searchkey != 'all'">
+        where ${searchkey} like #{keyword}
+  	  </when>
+  	  <otherwise>
+  		where subject like #{keyword}
+  		or content like #{keyword}
+  		or userid like #{keyword}
+  		</otherwise>
+  	  </choose>
   </select>
   
          

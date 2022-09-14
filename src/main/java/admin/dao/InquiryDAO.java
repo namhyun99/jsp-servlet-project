@@ -12,14 +12,13 @@ import mybatis.MybatisManager;
 public class InquiryDAO {
 
 	// 1대 1 게시글 리스트 불러오기
-	public List<InquiryDTO> getInquiryList(int start, int end, String order, String searchkey, String keyword) {
+	public List<InquiryDTO> getInquiryList(int start, int end, String order, String keyword) {
 		List<InquiryDTO> list = null;
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("start", start);
 			map.put("end", end);
 			map.put("order", order);
-			map.put("searchkey", searchkey);
 			map.put("keyword", "%" + keyword + "%");
 			list = session.selectList("inquiry.getInquiryList", map);
 		} catch (Exception e) {
@@ -29,11 +28,11 @@ public class InquiryDAO {
 	}
 
 	// 1대1일 문의 갯수
-	public int getInquiryCount(String searchkey, String keyword) {
+	public int getInquiryCount(String order, String keyword) {
 		int result = 0;
 		try (SqlSession session = MybatisManager.getInstance().openSession()) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("searchkey", searchkey);
+			map.put("order", order);
 			map.put("keyword", "%" + keyword + "%");
 			result = (int) session.selectOne("inquiry.getInquiryCount", map);
 		} catch (Exception e) {

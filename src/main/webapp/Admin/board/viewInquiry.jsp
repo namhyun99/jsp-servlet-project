@@ -32,20 +32,9 @@
 					<span><fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd(E) HH:mm:ss"/></span>
 				</td>
 				<td>답변여부</td>
-				<td class="txt_item">
-					<select name="complete">
-						<option value="n" <c:if test="${dto.complete == 'n'}">selected</c:if>>답변전</option>
-						<option value="y" <c:if test="${dto.complete == 'y'}">selected</c:if>>답변완료</option>
-					</select>
-				</td>
-			</tr>
-			<tr class="outline">
-				<td>공개여부</td>
-				<td class="txt_item">
-					<select name="show">
-						<option value="y" <c:if test="${dto.show == 'y'}">selected</c:if>>공개</option>
-						<option value="n" <c:if test="${dto.show == 'n'}">selected</c:if>>비공개</option>
-					</select>
+				<td>
+					<c:if test="${dto.complete == 'n'}">답변전</c:if>
+					<c:if test="${dto.complete == 'y'}">답변완료</c:if>
 				</td>
 			</tr>
 			<tr class="outline">
@@ -62,8 +51,10 @@
 			</tr>
 			<tr >
 				<td colspan="4">
-					<input type="hidden" name="i_idx" value="${dto.i_idx}">
-					<input type="button" id="btnReply" value="문의 답변">		
+  					<input type="hidden" name="i_idx" value="${dto.i_idx}">
+				    <c:if test="${dto.complete == 'n' && dto.re_step == 1 }">
+				    	<input type="button" id="btnReply" value="문의 답변">		
+				    </c:if>
 				</td>
 			</tr>
 			<tr>
@@ -82,6 +73,10 @@ $(function(){
 	});
 	
 	$("#btnReply").click(function(){
+		replyInquirySubmit(detailForm);
+	});
+	
+	$("#btnReplyEdit").click(function(){
 		replyInquirySubmit(detailForm);
 	})
 
