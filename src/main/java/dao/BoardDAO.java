@@ -106,20 +106,28 @@ public class BoardDAO {
 
 	//조회수 증가 처리
 	public void plusViewCount(int c_idx, HttpSession count_session) {
-		long view_time = 0;
-		try (SqlSession session = MybatisManager.getInstance().openSession()) {
-			if(count_session.getAttribute("view_time_"+c_idx) != null) {
-				view_time = (long)count_session.getAttribute("view_time_"+c_idx);
+		SqlSession session = null;
+		try {
+			session = MybatisManager.getInstance().openSession();
+			long read_time = 0;
+			System.out.println(count_session.getAttribute("read_time_"+c_idx));
+			if(count_session.getAttribute("read_time_"+c_idx)!=null) {
+				read_time = (long)count_session.getAttribute("read_time_"+c_idx);
 			}
-			long current_time = System.currentTimeMillis();
-			if(current_time - view_time > 5*1000) {
+			long current_time = System.currentTimeMillis(); //현재시각
+			if(current_time - read_time > 24*60*60*1000) { 
+				System.out.println("조회수 증가");
 				session.update("service.plusViewCount", c_idx);
 				session.commit();
-				count_session.setAttribute("view_tiem_"+c_idx, current_time);
+				//최근 열람 시간 업데이트
+				count_session.setAttribute("read_time_"+c_idx, current_time);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} finally {
+			if(session != null)	session.close();
+		}		
 	}
 
 	//카테고리 리스트 가져오기
@@ -217,20 +225,28 @@ public class BoardDAO {
 	
 	//공지사항 조회수 증가
 	public void plusViewCountNotice(int f_idx, HttpSession count_session) {
-		long view_time = 0;
-		try (SqlSession session = MybatisManager.getInstance().openSession()) {
-			if(count_session.getAttribute("view_time_"+f_idx) != null) {
-				view_time = (long)count_session.getAttribute("view_time_"+f_idx);
+		SqlSession session = null;
+		try {
+			session = MybatisManager.getInstance().openSession();
+			long read_time = 0;
+			System.out.println(count_session.getAttribute("read_time_"+f_idx));
+			if(count_session.getAttribute("read_time_"+f_idx)!=null) {
+				read_time = (long)count_session.getAttribute("read_time_"+f_idx);
 			}
-			long current_time = System.currentTimeMillis();
-			if(current_time - view_time > 5*1000) {
+			long current_time = System.currentTimeMillis(); //현재시각
+			if(current_time - read_time > 24*60*60*1000) { 
+				System.out.println("조회수 증가");
 				session.update("service.plusViewCountNotice", f_idx);
 				session.commit();
-				count_session.setAttribute("view_tiem_"+f_idx, current_time);
+				//최근 열람 시간 업데이트
+				count_session.setAttribute("read_time_"+f_idx, current_time);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} finally {
+			if(session != null)	session.close();
+		}		
 	}
 
 	//공지사항 정보 불러오기
@@ -275,20 +291,27 @@ public class BoardDAO {
 	
 	//1대1 문의 조회수 증가
 	public void plusViewCountInquiry(int i_idx, HttpSession count_session) {
-		long view_time = 0;
-		try (SqlSession session = MybatisManager.getInstance().openSession()) {
-			if(count_session.getAttribute("view_time_"+i_idx) != null) {
-				view_time = (long)count_session.getAttribute("view_time_"+i_idx);
+		SqlSession session = null;
+		try {
+			session = MybatisManager.getInstance().openSession();
+			long read_time = 0;
+//			System.out.println(count_session.getAttribute("read_time_"+i_idx));
+			if(count_session.getAttribute("read_time_"+i_idx)!=null) {
+				read_time = (long)count_session.getAttribute("read_time_"+i_idx);
 			}
-			long current_time = System.currentTimeMillis();
-			if(current_time - view_time > 5*1000) {
+			long current_time = System.currentTimeMillis(); //현재시각
+			if(current_time - read_time > 24*60*60*1000) {  
 				session.update("service.plusViewCountInquiry", i_idx);
 				session.commit();
-				count_session.setAttribute("view_tiem_"+i_idx, current_time);
+				//최근 열람 시간 업데이트
+				count_session.setAttribute("read_time_"+i_idx, current_time);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} finally {
+			if(session != null)	session.close();
+		}		
 		
 	}
 

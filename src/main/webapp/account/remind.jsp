@@ -47,7 +47,7 @@
 							</div>
 							<div class="input-box">
 								<input name="phone2" id="phone2" placeholder="나머지 연락처를 입력해주세요."
-									autocomplete="off">
+									autocomplete="off" maxlength="8">
 							</div>
 						</div>
 					</div>

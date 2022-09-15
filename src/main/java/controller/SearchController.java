@@ -35,7 +35,7 @@ public class SearchController extends HttpServlet {
 			Pager pager = new Pager(count, curPage);
 			int start = pager.getPageBegin();
 			int end = pager.getPageEnd();
-			String order="write_date";	
+			String order="view_cnt";	
 			
 			List<ContentsDTO> list = dao.getSearchList(start, end, order, keyword);
 			request.setAttribute("list", list);

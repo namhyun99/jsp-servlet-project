@@ -26,12 +26,6 @@ function loginAction() {
 				location.href = PATH + "/main";
 			}
 		},
-		beforeSend: function() {
-			$("#load").show();
-		},
-		complete: function() {
-			$("#load").hide();
-		},
 		error: function() {
 			location.href = PATH + "/error/error.jsp";
 		}
@@ -86,12 +80,6 @@ function btnRemindIdClick() {
 			} else {
 				$(".result-id").text("없는 아이디 입니다,");
 			}
-		},
-		beforeSend: function() {
-			$("#load").show();
-		},
-		complete: function() {
-			$("#load").hide();
 		},
 		error: function() {
 			location.href = PATH + "/error/error.jsp";
@@ -148,19 +136,13 @@ function btnRemindPwdClick() {
 		success: function(data) {
 			console.log(data);
 			if (data != "null") {
-				$(".result-pwd").text("임시비밀번호 [" + data + "]가 생성되었습니다.");
+				$(".result-pwd").text("임시비밀번호 [ " + data + " ] 으로 로그인 부탁드립니다.");
 				$("#userid").val("");
 				$("#email1").val("");
 				$("#email2").val("");
 			} else {
 				$(".result-pwd").text("가입되지 않은 아이디 입니다.");
 			}
-		},
-		beforeSend: function() {
-			$("#load").show();
-		},
-		complete: function() {
-			$("#load").hide();
 		},
 		error: function() {
 			location.href = PATH + "/error/error.jsp";

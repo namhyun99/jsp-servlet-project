@@ -193,8 +193,11 @@ public class MemberController extends HttpServlet {
 		
 		// 설정 화면
 		} else if(uri.indexOf("setting") != -1) {
-			
-			int m_idx = Integer.parseInt(request.getParameter("m_idx"));
+			//url 다이렉트 접속시 에러 막기위해 아래와 같이 처리
+			int m_idx = -1;
+			if (request.getParameter("m_idx") != null) {
+				m_idx = Integer.parseInt(request.getParameter("m_idx"));
+			}
 			MemberDTO dto = dao.getMemberDetailView(m_idx);
 			request.setAttribute("dto", dto);			
 			String page = "/mypage/setting.jsp";

@@ -42,7 +42,9 @@ public class BoardController extends HttpServlet {
 		if (uri.indexOf("view") != -1) {
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 
+			System.out.println("컨트롤러 : " + c_idx);
 			HttpSession session = request.getSession(); // 중복 조회수 방지 기법
+			System.out.println("컨트롤러 : " + session);
 			dao.plusViewCount(c_idx, session);	// 조회수 증가 처리
 
 			ContentsDTO dto = dao.getDetailContentsView(c_idx);
