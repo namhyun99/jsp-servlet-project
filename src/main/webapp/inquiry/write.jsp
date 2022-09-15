@@ -10,7 +10,7 @@
 
 <div id="contents-wrap" class="screen">
 	<div class="btn-back-icon">
-		<img src="${path}/resources/asset/images/btn_exit.png" onclick="history.back()">
+		<img src="../resources/asset/images/btn_exit.png" onclick="history.back()">
 	</div>
 	<div id="contents-write-wrap">
 		<div class="title" style="display:none;">

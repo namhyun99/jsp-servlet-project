@@ -39,7 +39,7 @@
 
 	</div>
 	<div class="btn-back_to_top">
-		<img src="${path}/resources/asset/images/btn_up.png">
+		<img src="../resources/asset/images/btn_up.png">
 	</div>
 </div>
 </body>

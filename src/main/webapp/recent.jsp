@@ -32,10 +32,10 @@
 					<div class="thumb_img">
 						<c:choose>
 							<c:when test="${dto.filesize > 0}">
-								<img src="${path}/upload/content/${dto.filename}">
+								<img src="/thumbnail/${dto.filename}">
 							</c:when>
 							<c:otherwise>
-								<img src="${path}/resources/asset/images/no_thumb.png">
+								<img src="./resources/asset/images/no_thumb.png">
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -57,10 +57,10 @@
 						<div class="profile">
 							<c:choose>
 								<c:when test="${dto.profile_img != '-'}">
-									<img src="${path}/upload/profile/${dto.profile_img}">
+									<img src="/profile/${dto.profile_img}">
 								</c:when>
 								<c:otherwise>
-									<img src="${path}/resources/asset/images/no_profile.png">
+									<img src="./resources/asset/images/no_profile.png">
 								</c:otherwise>
 							</c:choose>
 							by.<span>${dto.userid}</span>

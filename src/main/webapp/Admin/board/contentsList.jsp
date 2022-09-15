@@ -80,7 +80,7 @@
 										</c:when>
 										<c:otherwise>
 											<td class="thumb">
-											<img src="${path}/upload/content/${dto.filename}"></td>
+											<img src="/thumbnail/${dto.filename}"></td>
 										</c:otherwise>
 									</c:choose>
 									<td><a href="${path}/admin/board/editContents?c_idx=${dto.c_idx}">${dto.subject}</a></td>

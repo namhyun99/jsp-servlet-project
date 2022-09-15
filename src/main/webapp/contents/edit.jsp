@@ -11,7 +11,7 @@
 
 <div id="contents-wrap" class="screen">
 	<div class="btn-back-icon">
-		<img src="${path}/resources/asset/images/btn_exit.png" onclick="history.back()">
+		<img src="../resources/asset/images/btn_exit.png" onclick="history.back()">
 	</div>
 	<div id="contents-edit-wrap">
 		<div class="title" style="display:none;">
@@ -61,13 +61,13 @@
 					<c:choose>
 						<c:when test="${dto.filesize > 0}">
 							<td colspan="2" class="thumb">
-								<img src="${path}/upload/content/${dto.filename}">
+								<img src="/thumbnail/${dto.filename}">
 								<input type="checkbox" name="fileDel">썸네일 삭제
 							</td>
 						</c:when>
 						<c:otherwise>
 							<td colspan="2" class="thumb">
-								<img src="${path}/resources/asset/images/no_thumb.png">
+								<img src="../resources/asset/images/no_thumb.png">
 								업로드된 썸네일 없음
 							</td>
 						</c:otherwise>

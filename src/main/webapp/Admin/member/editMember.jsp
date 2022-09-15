@@ -23,7 +23,7 @@
 						<td colspan="2" class="thumb"><img src="${path}/Admin/resources/asset/images/no_profile.png"></td>
 					</c:when>
 					<c:otherwise>
-						<td colspan="2" class="thumb"><img src="${path}/upload/profile/${dto.profile_img}"></td>
+						<td colspan="2" class="thumb"><img src="/profile/${dto.profile_img}"></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>

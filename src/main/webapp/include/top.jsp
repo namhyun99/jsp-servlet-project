@@ -45,7 +45,7 @@ $(function(){
 							<a href="#" onclick="myOptionList()"> 
 							<c:choose>
 								<c:when test="${profile_img != '-'}">
-									<img src="${path}/upload/profile/${profile_img}">
+									<img src="/profile/${profile_img}">
 								</c:when>
 								<c:otherwise>
 									<img src="${path}/resources/asset/images/no_profile.png">

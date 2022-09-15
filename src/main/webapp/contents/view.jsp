@@ -40,7 +40,7 @@
 
 		<article class="contents">
 			<c:if test="${dto.filesize > 0}">
-				<img src="${path}/upload/content/${dto.filename}" width="100%">
+				<img src="/thumbnail/${dto.filename}" width="100%">
 			</c:if>
 		${dto.content}
 		</article>
@@ -55,10 +55,10 @@
 					<div class="items">
 						<c:choose>
 							<c:when test="${otherDto.filesize > 0}">
-								<img src="${path}/upload/content/${otherDto.filename}">
+								<img src="/thumbnail/${otherDto.filename}">
 							</c:when>
 							<c:otherwise>
-								<img src="${path}/resources/asset/images/no_thumb.png">
+								<img src="../resources/asset/images/no_thumb.png">
 							</c:otherwise>
 						</c:choose>
 						<p>${otherDto.subject}</p>
@@ -96,7 +96,7 @@
 		</div>
 	</div>
 	<div class="btn-back_to_top">
-		<img src="${path}/resources/asset/images/btn_up.png">
+		<img src="../resources/asset/images/btn_up.png">
 	</div>
 </div>
 </body>

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class FileUpload {
 	//파일 업로드되고 관리되는 디렉토리 
-	public static final String UPLOAD_PATH = "c:\\work_java\\jsp-servlet-project\\src\\main\\webapp\\upload\\content\\";
+	public static final String UPLOAD_PATH = "c:\\work_java\\jsp-servlet-project\\src\\main\\webapp\\upload\\thumbnail\\";
 	public static final String PRO_UPLOAD_PATH = "c:\\work_java\\jsp-servlet-project\\src\\main\\webapp\\upload\\profile\\";
 	public static final String EDITOR_UPLOAD_PATH = "c:\\work_java\\jsp-servlet-project\\src\\main\\webapp\\upload\\editorImage\\";
 	

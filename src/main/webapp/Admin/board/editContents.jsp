@@ -62,7 +62,7 @@
 				<c:choose>
 					<c:when test="${dto.filesize > 0}">
 						<td class="thumb">
-							<img src="${path}/upload/content/${dto.filename}">
+							<img src="/thumbnail/${dto.filename}">
 							<input type="checkbox" name="fileDel">썸네일 삭제
 						</td>
 					</c:when>

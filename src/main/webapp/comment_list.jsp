@@ -11,10 +11,10 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${cmt.profile_img != '-'}">
-					<img src='${path}/upload/profile/${cmt.profile_img}'>
+					<img src='/profile/${cmt.profile_img}'>
 				</c:when>
 				<c:otherwise>
-					<img src="${path}/resources/asset/images/no_profile.png">
+					<img src="../resources/asset/images/no_profile.png">
 				</c:otherwise>
 			</c:choose>
 			<div class="comment-info">
