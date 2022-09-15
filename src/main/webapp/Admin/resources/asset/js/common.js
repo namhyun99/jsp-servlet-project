@@ -30,7 +30,8 @@ $(function() {
 	//서머노트 구현
 	$("#content").summernote(
 	{
-		height : 300,
+		width : 860,
+		height : 400,
 		minHeight : null,
 		maxHeight : null,
 		tabsize : 2,

@@ -116,7 +116,7 @@ function uploadFileCheck() {
     var filesize = $("#filename")[0].files[0].size;
 
     if (filename != "") {
-        var ext = filename.split('.').pop().toLowerCase();
+        var ext = filename.split('.').pop().toLowerCase(); //확장자
         if ($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png']) == -1) {
             alert("jpg, gif, jpeg, png 파일만 업로드 할수 있습니다.");
             $("#filename").val("");
@@ -250,13 +250,20 @@ function deleteContentsSubmit(c_idx){
 	}
 }
 
-//검색기능 구현
+//검색기능 구현 (비동기)
 function searchAction(){
 	var PATH = getContextPath();
 	var keyword = $("#search").val();
-	
-	location.href= PATH + "/search?keyword="+keyword;
-
+//	location.href= PATH + "/search?keyword="+keyword;
+	$.ajax({
+		type : "get",
+		url : PATH + "/search",
+		data : {"keyword" : keyword},
+		success : function(data){
+			console.log(data);
+			$("#search_result").html(data);
+		}
+	})
 }
 
 //공지사항 및 1대1문의 내 검색 기능

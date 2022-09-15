@@ -1,0 +1,7 @@
+1) 오라클 백업용 프로그램 exp.exe
+C:\oraclexe\app\oracle\product\11.2.0\server\bin
+
+2) 복원용 프로그램 : imp.exe
+
+imp hr/hr file=c:/test/test.bak full=y ignore=y
+full=y 풀옵션 복원, ignore=y 에러메시지 무시 
