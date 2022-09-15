@@ -31,8 +31,8 @@ public class AdminMemberController extends HttpServlet {
 		String ctx = request.getContextPath();
 		MemberDAO dao = new MemberDAO();
 		
+		//사용자 리스트 
 		if (url.indexOf("userList") != -1) { // 회원목록 리스트
-
 			String order = request.getParameter("order");
 			String searchkey = request.getParameter("searchkey");
 			String keyword = request.getParameter("keyword");
@@ -68,6 +68,7 @@ public class AdminMemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 			
+		//어드민 리스트
 		} else if (url.indexOf("adminList") != -1) {
 			String order = request.getParameter("order");
 			String searchkey = request.getParameter("searchkey");
@@ -104,6 +105,7 @@ public class AdminMemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//회원정보수정 화면
 		} else if (url.indexOf("editMember") != -1) {
 			int m_idx = Integer.parseInt(request.getParameter("m_idx"));
 			MemberDTO dto = dao.detailVeiw(m_idx);
@@ -112,6 +114,7 @@ public class AdminMemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//회원정보 수정하기
 		} else if (url.indexOf("updateMember.do") != -1) {
 			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
 			if (!uploadDir.exists()) {
@@ -177,6 +180,7 @@ public class AdminMemberController extends HttpServlet {
 			}
 			response.sendRedirect(ctx + page);
 
+		//회원정보 삭제하기
 		} else if (url.indexOf("deleteMember.do") != -1) {
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
 					"utf-8", new FileRenamePoicy());
@@ -199,19 +203,21 @@ public class AdminMemberController extends HttpServlet {
 			}
 			response.sendRedirect(ctx + page);
 
+		//회원등록 화면
 		} else if (url.indexOf("addMember") != -1) {
 			String page = "/Admin/addMember.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//아이디 중복체크
 		} else if (url.indexOf("duplicate.do") != -1) {
-			//아이디 중복체크
 			String userid = request.getParameter("userid");
 			String result = dao.useridCheck(userid);
 			if (result == null) {
 				response.getWriter().write("0");
 			}
 		
+		//회원등록 하기
 		} else if (url.indexOf("joinMember.do") != -1) {
 			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
 			if(!uploadDir.exists()) {

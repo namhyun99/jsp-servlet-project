@@ -12,13 +12,14 @@
 			</div>
 			<div class="title-search">
 				<div class="title">
+					<h1>${keyword}</h1>
 					<h2>1:1문의 목록<span>(${count})</span></h2>
 				</div>
 				<div class="search-order">
 				<div class="order-wrap">
 						<form name="orderForm">
 							<select name="order" id="order" 
-							onchange="orderSelect(orderForm, '${order}','${keyword}')">
+							onchange="orderSelect(orderForm, '${order}','${searchkey}', '${keyword}')">
 								<option value="all" selected> 전체 </option>
 								<option value="n"
 									<c:if test="${order=='n'}">selected</c:if>>답변전</option>

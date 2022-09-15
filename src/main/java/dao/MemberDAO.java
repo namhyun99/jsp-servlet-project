@@ -138,4 +138,16 @@ public class MemberDAO {
 		}
 	}
 
+	// 아이디 중복체크
+	public String useridCheck(String userid) {
+		String result = "";
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			result = session.selectOne("service.useridCheck", userid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 }

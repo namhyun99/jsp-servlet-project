@@ -25,6 +25,7 @@ function pagination(page, keyword) {
 	}
 }
 
+
 $(function () {
     modeCheck();
 
@@ -278,6 +279,32 @@ function insertInquirySubmit(f){
 	f.action = PATH + "/board/insertInquiry.do";
 	f.submit();
 	
+}
+
+
+//서머노트 이미지 ajax 업로드 
+function sendFile(file, editor) {
+	var PATH = getContextPath();
+	data = new FormData();
+
+	
+	console.log(file);
+	console.log(editor);
+	data.append("uploadFile", file);
+
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: PATH + "/summernoteImageUpload.do",
+		enctype: "multipart/form-data",
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(data) {
+			console.log(data);
+			$(editor).summernote('editor.insertImage', data.url);
+		}
+	})
 }
 
 

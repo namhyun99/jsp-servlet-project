@@ -6,6 +6,6 @@
 <c:if test="${sessionScope.userid != null}">
 	<script>
 		alert("이미 로그인 되어 있습니다.");
-		location.href="${path}/main";
+		location.href="${path}/admin/member/userList";
 	</script>
 </c:if>

@@ -277,7 +277,7 @@ function useridDuplicateCheck() {
 
     $.ajax({
         type: "post",
-        url: PATH + "/admin/member/duplicate.do",
+        url: PATH + "/member/duplicate.do",
         data: { "userid": userid },
         success: function (data) {
             if (data != '0') {

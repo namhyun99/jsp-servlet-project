@@ -342,4 +342,15 @@ public class BoardDAO {
 		return result;
 	}
 
+	//마지막 글번호 불러오기
+	public int MaxCidx() {
+		int result = 0;
+		try (SqlSession session = MybatisManager.getInstance().openSession()) {
+			result = (int) session.selectOne("service.MaxCidx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

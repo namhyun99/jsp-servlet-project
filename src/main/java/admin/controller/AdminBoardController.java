@@ -39,6 +39,7 @@ public class AdminBoardController extends HttpServlet {
 		NoticeDAO n_dao = new NoticeDAO();
 		InquiryDAO i_dao = new InquiryDAO();
 		
+		//컨텐츠 리스트 화면
 		if (url.indexOf("contents") != -1) {
 			String order = request.getParameter("order");
 			String searchkey = request.getParameter("searchkey");
@@ -74,6 +75,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//컨텐츠 수정화면
 		} else if(url.indexOf("editContents") != -1) {
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 			
@@ -85,6 +87,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//컨텐츠 수정하기
 		} else if(url.indexOf("updateContents.do") != -1) {
 			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if (!uploadDir.exists()) {
@@ -155,8 +158,8 @@ public class AdminBoardController extends HttpServlet {
 			String page = "/admin/board/contents";
 			response.sendRedirect(ctx + page);
 		
+		//컨텐츠 작성화면
 		} else if (url.indexOf("addContents") != -1) {
-			
 			List<CategoryDTO> cateList = c_dao.getCateName();
 			request.setAttribute("cateList", cateList);
 			
@@ -164,6 +167,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//컨텐츠 작성하기
 		} else if (url.indexOf("writeContents.do") != -1) {
 			
 			File uploadDir = new File(FileUpload.UPLOAD_PATH);
@@ -220,6 +224,7 @@ public class AdminBoardController extends HttpServlet {
 			String page = "/admin/board/contents";
 			response.sendRedirect(ctx + page);
 		
+		//컨텐츠 삭제하기
 		} else if (url.indexOf("deleteContents.do") != -1) {
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.UPLOAD_PATH, FileUpload.MAX_UPLOAD,
 					"utf-8", new FileRenamePoicy());
@@ -235,8 +240,8 @@ public class AdminBoardController extends HttpServlet {
 			String page = "/admin/board/contents";
 			response.sendRedirect(ctx + page);
 			
+		//공지사항 화면
 		} else if (url.indexOf("notice") != -1) {
-			
 			String order = "write_date";
 			String keyword = request.getParameter("keyword");
 			if (keyword == null)keyword = "";
@@ -263,6 +268,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//공지사항 수정화면
 		} else if(url.indexOf("editNotice") != -1) {
 			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
 			NoticeDTO dto = n_dao.detailNoticeVeiw(f_idx);
@@ -271,6 +277,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//공지사항 수정하기
 		} else if(url.indexOf("updateNotice.do") != -1) {
 						
 			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
@@ -288,12 +295,14 @@ public class AdminBoardController extends HttpServlet {
 			String page = "/admin/board/notice";
 			response.sendRedirect(ctx + page);
 		
+		//공지사항 작성화면
 		} else if (url.indexOf("addNotice") != -1) {
 			
 			String page = "/Admin/addNotice.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//공지사항 작성하기
 		} else if (url.indexOf("writeNotice.do") != -1) {
 			
 			String userid = request.getParameter("userid");
@@ -310,19 +319,23 @@ public class AdminBoardController extends HttpServlet {
 			String page = "/admin/board/notice";
 			response.sendRedirect(ctx + page);
 		
+		//공지사항 삭제하기
 		} else if (url.indexOf("deleteNotice.do") != -1) {
-
 			int f_idx = Integer.parseInt(request.getParameter("f_idx"));
 			n_dao.deleteNotice(f_idx);
 			String page = "/admin/board/notice";
 			response.sendRedirect(ctx + page);
 			
+		//1대1 문의 리스트
 		} else if (url.indexOf("inquiry") != -1) {
 			String order = request.getParameter("order");
 			String keyword = request.getParameter("keyword");
 
 			if (keyword == null) keyword = "";
 			if (order == null) order = "all";
+			
+			System.out.println(keyword);
+			System.out.println(order);
 
 			int count = i_dao.getInquiryCount(order, keyword);
 
@@ -346,6 +359,7 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//1대1 문의 보기화면
 		} else if(url.indexOf("viewInquiry") != -1) {
 			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
 			InquiryDTO dto = i_dao.detailInquiryVeiw(i_idx);
@@ -354,8 +368,8 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		//1대1 문의 답변화면
 		} else if(url.indexOf("replyInquiry") != -1) {
-			
 			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
 			InquiryDTO dto = i_dao.detailInquiryVeiw(i_idx);
 			dto.setContent("==== 문의글의 내용 ==== \n <br> " + dto.getContent());
@@ -364,8 +378,8 @@ public class AdminBoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 			
+		//1대1문의 답변 쓰기
 		} else if(url.indexOf("writeReply.do") != -1) {
-			
 			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
 			InquiryDTO dto = i_dao.detailInquiryVeiw(i_idx);
 			int ref = dto.getRef();
@@ -392,6 +406,7 @@ public class AdminBoardController extends HttpServlet {
 			String page = "/admin/board/inquiry";
 			response.sendRedirect(ctx + page);
 			
+		//1대1문의 삭제하기
 		} else if (url.indexOf("deleteInquiry.do") != -1) {
 			int i_idx = Integer.parseInt(request.getParameter("i_idx"));
 			i_dao.deleteInquiry(i_idx);

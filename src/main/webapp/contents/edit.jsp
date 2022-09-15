@@ -110,7 +110,12 @@
 					[ 'view', [ 'codeview' ] ] ],
 			fontNames : [ '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],
 			fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
-						'20', '22', '24', '28', '30', '36' ]
+						'20', '22', '24', '28', '30', '36' ],
+			callbacks: {
+				onImageUpload : function(files, editor, welEditable){
+					sendFile(files[0], this);
+				}
+			}
 		});
 	})
 </script>

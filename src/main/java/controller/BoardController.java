@@ -38,16 +38,12 @@ public class BoardController extends HttpServlet {
 		String ctx = request.getContextPath();
 		BoardDAO dao = new BoardDAO();
 
+		//컨텐츠 보기화면
 		if (uri.indexOf("view") != -1) {
-			int c_idx = 0;
-			if (request.getParameter("c_idx") != null) {
-				c_idx = Integer.parseInt(request.getParameter("c_idx"));
-			}
+			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 
-			// 중복 조회수 방지 기법
-			HttpSession session = request.getSession();
-			// 조회수 증가 처리
-			dao.plusViewCount(c_idx, session);
+			HttpSession session = request.getSession(); // 중복 조회수 방지 기법
+			dao.plusViewCount(c_idx, session);	// 조회수 증가 처리
 
 			ContentsDTO dto = dao.getDetailContentsView(c_idx);
 			List<ContentsDTO> list = dao.getOtherContentList();
@@ -57,6 +53,7 @@ public class BoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//댓글리스트 불러오기
 		} else if (uri.indexOf("commentList.do") != -1) {
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 			List<ContentsCommentDTO> list = dao.getCommentList(c_idx);
@@ -65,6 +62,7 @@ public class BoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//댓글추가
 		} else if (uri.indexOf("addComment.do") != -1) {
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 			String writer = request.getParameter("writer");
@@ -75,10 +73,12 @@ public class BoardController extends HttpServlet {
 			dto.setContent(content);
 			dao.addComment(dto);
 
+		//댓글삭제
 		} else if (uri.indexOf("deleteComment.do") != -1) {
 			int cmt_idx = Integer.parseInt(request.getParameter("cmt_idx"));
 			dao.deleteComment(cmt_idx);
 
+		//컨텐츠 글쓰기화면
 		} else if (uri.indexOf("write") != -1) {
 			List<CategoryDTO> cateList = dao.getCateName();
 			request.setAttribute("cateList", cateList);
@@ -86,6 +86,7 @@ public class BoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//컨텐츠 글작성 하기
 		} else if (uri.indexOf("insertContents.do") != -1) {
 			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if (!uploadDir.exists()) {
@@ -137,12 +138,18 @@ public class BoardController extends HttpServlet {
 			dto.setFilesize(filesize);
 
 			dao.insertContents(dto);
+			
+			//게시글 번호 불러오기
+			int maxCidx = dao.MaxCidx();
+			
+			System.out.println(maxCidx);
 
-			String page = "/main";
+
+			String page = "/board/view?c_idx="+maxCidx;
 			response.sendRedirect(ctx + page);
 
+		//컨텐츠 삭제하기
 		} else if (uri.indexOf("deleteContents.do") != -1) {
-
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 			// 썸네일 이미지 삭제
 			String filename = dao.getFileName(c_idx);
@@ -156,6 +163,7 @@ public class BoardController extends HttpServlet {
 				response.getWriter().write("false");
 			}
 
+		//컨텐츠 수정 화면
 		} else if (uri.indexOf("edit") != -1) {
 			int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 			ContentsDTO dto = dao.getDetailContentsView(c_idx);
@@ -166,6 +174,7 @@ public class BoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//컨텐츠 수정하기
 		} else if (uri.indexOf("updateContents.do") != -1) {
 			File uploadDir = new File(FileUpload.UPLOAD_PATH);
 			if (!uploadDir.exists()) {
@@ -233,12 +242,14 @@ public class BoardController extends HttpServlet {
 			}
 
 			dao.updateContents(dto);
-			String page = "/main";
+			String page = "/board/view?c_idx="+c_idx;
 			response.sendRedirect(ctx + page);
 
+		//공지사항 화면
 		} else if (uri.indexOf("notice") != -1) {
 
-			if (request.getParameter("f_idx") != null) {
+			//f_idx 값이 있으면 보기 화면으로 이동
+			if (request.getParameter("f_idx") != null) { 
 				int f_idx = Integer.parseInt(request.getParameter("f_idx"));
 
 				HttpSession session = request.getSession();
@@ -250,8 +261,7 @@ public class BoardController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(page);
 				rd.forward(request, response);
 
-			} else {
-				
+			} else { //그렇지 않으면 목록 리스트 출력
 				String keyword = request.getParameter("keyword");
 				if (keyword == null) keyword = "";
 				int count = dao.getNoticeCount(keyword);
@@ -275,8 +285,9 @@ public class BoardController extends HttpServlet {
 				rd.forward(request, response);
 			}
 
+		//1대1 문의 화면
 		} else if (uri.indexOf("inquiry") != -1) {
-
+			//i_idx 값이 있으면 보기 화면으로 이동
 			if (request.getParameter("i_idx") != null) {
 				int i_idx = Integer.parseInt(request.getParameter("i_idx"));
 
@@ -289,7 +300,7 @@ public class BoardController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(page);
 				rd.forward(request, response);
 
-			} else {
+			} else { //그렇지 않으면 목록 리스트 출력
 				String keyword = request.getParameter("keyword");
 				if (keyword == null) keyword = "";
 				int count = dao.getInquiryCount(keyword);
@@ -314,13 +325,14 @@ public class BoardController extends HttpServlet {
 				rd.forward(request, response);
 			}
 
+		// 1대1 문의 작성하기 화면
 		} else if(uri.indexOf("questions") != -1) {
 			String page = "/inquiry/write.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		// 1대1 문의 작성하기
 		} else if(uri.indexOf("insertInquiry.do") != -1) {
-			
 			String userid = request.getParameter("userid");
 			int m_idx = dao.getM_idx(userid);
 			String title = request.getParameter("title");
@@ -335,9 +347,7 @@ public class BoardController extends HttpServlet {
 			
 			String page = "/board/inquiry";
 			response.sendRedirect(ctx + page);
-			
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

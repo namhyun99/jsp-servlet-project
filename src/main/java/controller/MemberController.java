@@ -33,21 +33,25 @@ public class MemberController extends HttpServlet {
 		String ctx = request.getContextPath();
 		MemberDAO dao = new MemberDAO();
 
+		// 로그인 화면
 		if (uri.indexOf("login") != -1) {
 			String page = "/account/login.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
-
+		
+		// ID,PW 찾기 화면
 		} else if (uri.indexOf("remind") != -1) {
 			String page = "/account/remind.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//회원가입 화면
 		} else if (uri.indexOf("join") != -1) {
 			String page = "/account/join.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 
+		//로그인 하기
 		} else if (uri.indexOf("actionLogin.do") != -1) {
 
 			String userid = request.getParameter("userid");
@@ -55,15 +59,15 @@ public class MemberController extends HttpServlet {
 			MemberDTO dto = new MemberDTO();
 			dto.setUserid(userid);
 			dto.setPasswd(passwd);
-			String dbPasswd = dao.passwdCheck(userid);		
+			String dbPasswd = dao.passwdCheck(userid); //db에 저장된 비밀번호 호출
 			if (dbPasswd == null) {
 				response.getWriter().print("false");
 			} else if (BCrypt.checkpw(dto.getPasswd(), dbPasswd)) {
-				dto.setPasswd(dbPasswd);
+				dto.setPasswd(dbPasswd); //dto비밀번호랑 db에서 호출한 비밀번호 비교후 맞으면 db페스워드로 셋팅
 				MemberDTO dto1 = dao.loginCheck(userid, dbPasswd);
-				if (dto1 == null) { // 만약값이 null이거나, admin이 아니라면
+				if (dto1 == null) { // 만약값이 null이면
 					response.getWriter().print("false"); // ajax호출 결과값 보내기
-				} else { // admin이 맞다면..
+				} else { // 값이 있다면..
 					HttpSession session = request.getSession();
 					session.setAttribute("m_idx", dto1.getM_idx());
 					session.setAttribute("userid", dto1.getUserid());
@@ -75,11 +79,13 @@ public class MemberController extends HttpServlet {
 				response.getWriter().print("false");
 			}
 
+	    //로그아웃 하기
 		} else if (uri.indexOf("logout.do") != -1) {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(ctx+"/main");		
 		
+		//아이디 찾기
 		} else if(uri.indexOf("actionID") != -1) { //아이디찾기
 			String name = request.getParameter("name");
 			String phone = request.getParameter("phone");
@@ -89,6 +95,7 @@ public class MemberController extends HttpServlet {
 			String result = dao.remindID(dto);
 			response.getWriter().print(result);
 		
+		//비밀번호 찾기
 		} else if(uri.indexOf("actionPwd") != -1) { //비밀번호찾기
 			String userid = request.getParameter("userid");
 			String email = request.getParameter("email");
@@ -106,6 +113,15 @@ public class MemberController extends HttpServlet {
 				response.getWriter().print("null");				
 			}
 			
+		//아이디 중복체크
+		} else if (uri.indexOf("duplicate.do") != -1) {
+			String userid = request.getParameter("userid");
+			String result = dao.useridCheck(userid);
+			if (result == null) {
+				response.getWriter().write("0");
+			}
+		
+		//회원가입 하기
 		} else if(uri.indexOf("insertMember.do") != -1) {
 			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
 			if(!uploadDir.exists()) {
@@ -175,6 +191,7 @@ public class MemberController extends HttpServlet {
 			String msg = URLEncoder.encode("가입완료! 로그인 부탁드립니다!", "utf-8");
 			response.sendRedirect(ctx + page + "?msg=" + msg);
 		
+		// 설정 화면
 		} else if(uri.indexOf("setting") != -1) {
 			
 			int m_idx = Integer.parseInt(request.getParameter("m_idx"));
@@ -184,6 +201,7 @@ public class MemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		
+		// 회원정보 수정하기
 		} else if(uri.indexOf("updateMember.do") != -1) {
 			File uploadDir = new File(FileUpload.PRO_UPLOAD_PATH);
 			if (!uploadDir.exists()) {
@@ -242,6 +260,7 @@ public class MemberController extends HttpServlet {
 			String page = "/main";
 			response.sendRedirect(ctx + page);
 		
+		//회원탈퇴 하기
 		} else if (uri.indexOf("deleteMember.do") != -1) {
 			MultipartRequest multi = new MultipartRequest(request, FileUpload.PRO_UPLOAD_PATH, FileUpload.MAX_UPLOAD,
 					"utf-8", new FileRenamePoicy());
@@ -255,7 +274,7 @@ public class MemberController extends HttpServlet {
 
 			dao.deleteMember(m_idx);
 			HttpSession session = request.getSession();
-			session.invalidate();
+			session.invalidate(); //탈퇴시 세션 초기화 
 			String page = "/main";
 			response.sendRedirect(ctx + page);
 		}

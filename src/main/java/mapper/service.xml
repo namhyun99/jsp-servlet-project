@@ -41,6 +41,12 @@
     where userid=#{userid} and passwd=#{passwd}
   </select>
   
+  <!-- 아이디 중복 체크 -->
+  <select id="useridCheck" parameterType="String" resultType="String">
+  	select userid from member
+  	where userid=#{userid}
+  </select>
+  
   <!-- 비밀번호 체크 -->
   <select id="passwdCheck" parameterType="String" resultType="String">
   	select passwd from member
@@ -375,5 +381,9 @@
     where subject like #{keyword} or content like #{keyword} and show='y'
   </select>
   
+  <!-- 마지막 게시물 번호 불러오기 -->
+  <select id="MaxCidx" resultType="int">
+	select MAX(c_idx) from contents  
+  </select>
 </mapper>
 

@@ -37,16 +37,6 @@
 				</td>
 			</tr>
 			<tr class="outline">
-				<td>조회수</td>
-				<td class="txt_item">
-					<span>${dto.view_cnt}</span>
-				</td>
-				<td>댓글수</td>
-				<td class="txt_item">
-					<span>${dto.cmt_count}</span>
-				</td>
-			</tr>
-			<tr class="outline">
 				<td>카테고리</td>
 				<td class="txt_item">
 				    <select name="cate_no">
