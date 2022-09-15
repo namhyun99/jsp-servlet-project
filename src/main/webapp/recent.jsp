@@ -13,12 +13,12 @@
 	<nav id="nav">
 		<div class="option-wrap">
 			<span> 
-				<a href="${path}/main" class="noselected"> 
+				<a href="./main" class="noselected"> 
 					<i class="fas fa-chart-line"></i> 트렌딩
 				</a>
 			</span> 
 			<span class="title"> 
-				<a href="${path}/recent" class="selected"> 
+				<a href="./recent" class="selected"> 
 					<i class="far fa-clock"></i> 최신
 				</a>
 			</span> 
@@ -28,7 +28,7 @@
 	<section id="list-wrap">
 		<c:forEach var="dto" items="${list}">
 			<div class="items">
-				<a href="${path}/board/view?c_idx=${dto.c_idx}">
+				<a href="./board/view?c_idx=${dto.c_idx}">
 					<div class="thumb_img">
 						<c:choose>
 							<c:when test="${dto.filesize > 0}">
@@ -41,10 +41,12 @@
 					</div>
 				</a>
 				<div class="text-wrap">
-					<a href="${path}/board/view?c_idx=${dto.c_idx}">
+					<a href="./board/view?c_idx=${dto.c_idx}">
 						<div class="contents">
 							<h3>${dto.subject}</h3>
-							<!-- <div class="desc">${dto.content}</div> -->
+							<div class="desc">
+								<p>${dto.content}</p>
+							</div>
 						</div>
 					</a>
 					<div class="sub-info">

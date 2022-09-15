@@ -33,7 +33,7 @@ public class BoardDAO {
 		
 		for(ContentsDTO dto : list) {
 			String contents = dto.getContent();
-			contents = contents.replace("<p>", "").replace("</p>", "").replace("<br>", "");
+			contents = contents.replace("<p>", "").replace("</p>", "").replace("<br>", "").replace("<b>", "").replace("</b>", "");
 			dto.setContent(contents);
 		}
 		
