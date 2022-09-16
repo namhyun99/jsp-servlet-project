@@ -16,7 +16,7 @@ velog사이트를 참고하여 제작한 블로그 사이트 입니다.
 
 ## 유투브 영상URL
 
-[시연영상 보러가기](https://youtu.be/18GWxeG4aKE)
+[https://youtu.be/18GWxeG4aK](https://youtu.be/18GWxeG4aKE)
 
 
 ## 스크린샷
