@@ -36,12 +36,10 @@ public class SummernoteImageController extends HttpServlet {
 			e.printStackTrace();
 		}
 		String url = "/editorImage/" + fileName;
-		System.out.println(url);
 		//json 데이터로 변환
 		JSONObject jsonData = new JSONObject();
 		jsonData.put("url", url);
 		response.setContentType("aplication/json");
-		System.out.println(jsonData.toJSONString());
 		response.getWriter().print(jsonData.toJSONString());
 	}
 

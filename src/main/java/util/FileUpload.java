@@ -18,7 +18,6 @@ public class FileUpload {
 		String filename = f.getName();
 		return filename;
 	}
-
 	//새로 생성한 파일 이름 리턴
 	public File CreateFileName(File f) {
 		String orignalFileName = OrignalFileName(f);
