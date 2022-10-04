@@ -24,3 +24,6 @@ velog사이트를 참고하여 제작한 블로그 사이트 입니다.
 ![p1](https://user-images.githubusercontent.com/99003162/190565263-c1210119-9f3a-41b2-81f1-0620ac5655a1.jpg)
 ![p2](https://user-images.githubusercontent.com/99003162/190566111-408fe159-8b94-41df-b406-b6c5dc9d1e1a.jpg)
 
+
+## 오류수정 및 기능추가 내용
+- 2022.10.04 : ajax를 활용한 무한 스크롤 페이징 구현 완료 (적용페이지 =>검색페이지, 메인 글목록)
