@@ -34,11 +34,13 @@ public class MainController extends HttpServlet {
 		Pager pager = new Pager(count, curPage);
 		int start = pager.getPageBegin();
 		int end = pager.getPageEnd();
+		int totPage = pager.getTotPage();
 		String order="view_cnt";	
 		
 		List<ContentsDTO> list = dao.getContentsList(start, end, order);
 		request.setAttribute("list", list);
 		request.setAttribute("page", pager);
+		request.setAttribute("totPage", totPage);
 		request.setAttribute("count", count);
 		String page = "/main.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(page);

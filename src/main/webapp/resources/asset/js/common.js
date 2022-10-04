@@ -250,17 +250,27 @@ function deleteContentsSubmit(c_idx){
 	}
 }
 
+//url에 파라미터값 추가
+function insertURLParam(){
+	var keyword = $("#search").val();
+	history.pushState(null, null, "search?q="+keyword);
+}
+
 //검색기능 구현 (비동기)
 function searchAction(){
+	insertURLParam();
+	const locationURL = location.href; //현재주소
+	const searchParams = new URL(locationURL).searchParams; //
+	const keyword = searchParams.get('q');
+//	console.log("결과 : " + keyword);
 	var PATH = getContextPath();
-	var keyword = $("#search").val();
 //	location.href= PATH + "/search?keyword="+keyword;
 	$.ajax({
 		type : "get",
 		url : PATH + "/search",
 		data : {"keyword" : keyword},
 		success : function(data){
-			console.log(data);
+//			console.log(data);
 			$("#search_result").html(data);
 		}
 	})

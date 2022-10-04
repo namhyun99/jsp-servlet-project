@@ -7,7 +7,6 @@
 
 <%@ include file="./include/header.jsp"%>
 <%@ include file="./include/top.jsp"%>
-
 <div class="title" style="display: none">검색</div>
 <div class="sub-screen">
 	<div class="search-form">
@@ -19,9 +18,11 @@
 	</div>
 </div>
 
-<div id="search_result">
-
+<div id="contents-wrap" class="screen">
+	<div id="search_result"></div>
 </div>
+
+
 
 </body>
 </html>
